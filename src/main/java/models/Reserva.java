@@ -6,10 +6,11 @@ package models;
 
 /**
  *
- * @author guilherme.freitas4
+ * @author Guilherme Luvison
  */
 public class Reserva {
 
+    // Atributos
     private int codigo;
     private String nomeCliente;
     private int mesa;
@@ -18,6 +19,7 @@ public class Reserva {
     private String dataReserva;
     private String status;
 
+    // Métodos Construtores
     public Reserva(String nomeCliente, int mesa, int qtdePessoas, String observacao, String dataReserva, String status) {
         this.nomeCliente = nomeCliente;
         this.mesa = mesa;
@@ -27,6 +29,10 @@ public class Reserva {
         this.status = status;
     }
 
+    public Reserva() {
+    }
+
+    // Getters e Setters
     public int getCodigo() {
         return codigo;
     }
@@ -83,4 +89,16 @@ public class Reserva {
         this.status = status;
     }
 
+    // Método de Impressão
+    public void imprimeAtributos() {
+        System.out.println("DETALHES DA RESERVA:");
+        System.out.println("Código: " + codigo);
+        System.out.println("Nome do Cliente: " + nomeCliente);
+        System.out.println("Mesa: " + mesa);
+        System.out.println("Quantidade de Pessoas: " + qtdePessoas);
+        System.out.println("Observação: " + observacao);
+        System.out.println("Data da Reserva: " + dataReserva);
+        System.out.println("Status: " + status);
+        System.out.println("");
+    }
 }
