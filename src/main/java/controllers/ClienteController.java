@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import models.Cliente;
 import org.apache.commons.validator.GenericValidator;
-import org.apache.commons.validator.routines.EmailValidator;
 import resources.Entrada;
 
 /**
@@ -38,10 +37,10 @@ public class ClienteController {
         String cpf;
         do {
             cpf = Entrada.leiaString("CPF do Cliente:");
-            if (!EmailValidator.getInstance().isValid(cpf)) {
+            if (GenericValidator.isBlankOrNull(cpf)) {
                 System.out.println("CPF inválido: não pode ficar em branco! Tente novamente.");
             }
-        } while (!EmailValidator.getInstance().isValid(cpf));
+        } while (GenericValidator.isBlankOrNull(cpf));
 
         String telefone = Entrada.leiaString("Telefone do Cliente (Opcional):");
         String email = Entrada.leiaString("Email do Cliente (Opcional):");
@@ -49,10 +48,10 @@ public class ClienteController {
         String dataNascimento;
         do {
             dataNascimento = Entrada.leiaString("Data de Nascimento do Cliente:");
-            if (!EmailValidator.getInstance().isValid(dataNascimento)) {
+            if (GenericValidator.isBlankOrNull(dataNascimento)) {
                 System.out.println("Data de Nascimento inválida: não pode ficar em branco! Tente novamente.");
             }
-        } while (!EmailValidator.getInstance().isValid(dataNascimento));
+        } while (GenericValidator.isBlankOrNull(dataNascimento));
 
         String sql = "INSERT INTO clientes (nome, cpf, telefone, email, data_nascimento) VALUES (?, ?, ?, ?, ?)";
 
@@ -72,7 +71,7 @@ public class ClienteController {
 
     // Método de Listagem
     public void listar() {
-        String sql = "SELECT oodigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes ORDER BY codigo";
+        String sql = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes ORDER BY codigo";
 
         try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             System.out.println("===[CLIENTES CADASTRADOS]===");
@@ -115,10 +114,10 @@ public class ClienteController {
         String novoNome;
         do {
             novoNome = Entrada.leiaString("Novo nome:");
-            if (!EmailValidator.getInstance().isValid(novoNome)) {
+            if (GenericValidator.isBlankOrNull(novoNome)) {
                 System.out.println("Nome inválido: não pode ficar em branco! Tente novamente.");
             }
-        } while (!EmailValidator.getInstance().isValid(novoNome));
+        } while (GenericValidator.isBlankOrNull(novoNome));
 
         String novoTelefone = Entrada.leiaString("Novo telefone (Repita caso não queira atualizar/adicionar):");
         String novoEmail = Entrada.leiaString("Novo email (Repita caso não queira atualizar/adicionar):");
@@ -176,8 +175,8 @@ public class ClienteController {
         c.setCpf(rs.getString("cpf"));
         c.setTelefone(rs.getString("telefone"));
         c.setEmail(rs.getString("email"));
-        c.setDataNascimento(rs.getString("dataNascimento"));
-        c.setDataCadastro(rs.getString("dataCadastro"));
+        c.setDataNascimento(rs.getString("data_nascimento"));
+        c.setDataCadastro(rs.getString("data_cadastro"));
         c.imprimeAtributos();
     }
 }

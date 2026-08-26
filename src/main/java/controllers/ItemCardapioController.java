@@ -11,7 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import models.ItemCardapio;
 import org.apache.commons.validator.GenericValidator;
-import org.apache.commons.validator.routines.EmailValidator;
 import resources.Entrada;
 
 /**
@@ -131,38 +130,38 @@ public class ItemCardapioController {
         String novoNome;
         do {
             novoNome = Entrada.leiaString("Novo nome:");
-            if (!EmailValidator.getInstance().isValid(novoNome)) {
+            if (GenericValidator.isBlankOrNull(novoNome)) {
                 System.out.println("Nome inválido: não pode ficar em branco! Tente novamente.");
             }
-        } while (!EmailValidator.getInstance().isValid(novoNome));
+        } while (GenericValidator.isBlankOrNull(novoNome));
 
         String novoIngredientes;
         do {
             novoIngredientes = Entrada.leiaString("Novos ingredientes:");
-            if (!EmailValidator.getInstance().isValid(novoIngredientes)) {
+            if (GenericValidator.isBlankOrNull(novoIngredientes)) {
                 System.out.println("Ingredientes inválidos: não pode ficar em branco! Tente novamente.");
             }
-        } while (!EmailValidator.getInstance().isValid(novoIngredientes));
+        } while (GenericValidator.isBlankOrNull(novoIngredientes));
 
         String novoTipoPrato;
         do {
             novoTipoPrato = Entrada.leiaString("Novo tipo de prato:");
-            if (!EmailValidator.getInstance().isValid(novoTipoPrato)) {
+            if (GenericValidator.isBlankOrNull(novoTipoPrato)) {
                 System.out.println("Tipo de Prato inválido: não pode ficar em branco! Tente novamente.");
             }
-        } while (!EmailValidator.getInstance().isValid(novoTipoPrato));
+        } while (GenericValidator.isBlankOrNull(novoTipoPrato));
 
         double novoPreco = Entrada.leiaDouble("Novo preço:");
 
         String novoTempoPreparo;
         do {
             novoTempoPreparo = Entrada.leiaString("Novo tempo de preparo:");
-            if (!EmailValidator.getInstance().isValid(novoTempoPreparo)) {
+            if (GenericValidator.isBlankOrNull(novoTempoPreparo)) {
                 System.out.println("Tempo de Preparo inválido: não pode ficar em branco! Tente novamente.");
             }
-        } while (!EmailValidator.getInstance().isValid(novoTempoPreparo));
+        } while (GenericValidator.isBlankOrNull(novoTempoPreparo));
 
-        String sql = "UPDATE itenscardapio SET nome, ingredientes, tipo_prato, preco, tempo_preparo = ? WHERE codigo = ?";
+        String sql = "UPDATE itenscardapio SET nome = ?, ingredientes = ?, tipo_prato = ?, preco = ?, tempo_preparo = ? WHERE codigo = ?";
 
         try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, novoNome);
@@ -216,9 +215,9 @@ public class ItemCardapioController {
         ic.setNome(rs.getString("nome"));
         ic.setIngredientes(rs.getString("ingredientes"));
         ic.setCategoria(rs.getString("categoria"));
-        ic.setTipoPrato(rs.getString("tipoPrato"));
+        ic.setTipoPrato(rs.getString("tipo_prato"));
         ic.setPreco(rs.getDouble("preco"));
-        ic.setTempoPreparo(rs.getString("tempoPreparo"));
+        ic.setTempoPreparo(rs.getString("tempo_preparo"));
         ic.imprimeAtributos();
     }
 }
