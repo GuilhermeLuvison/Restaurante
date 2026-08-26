@@ -37,7 +37,7 @@ public class ReservaView extends javax.swing.JFrame {
     }
 
     private void montarTabela() {
-        ArrayList<Reserva> itens = rc.listar();
+        /*ArrayList<Reserva> itens = rc.listar();
         String[] colunas = {"Código", "Nome do Cliente", "Mesa", "Quantidade de Pessoas", "Observação", "Data da Reserva", "Status"};
         DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
 
@@ -47,7 +47,7 @@ public class ReservaView extends javax.swing.JFrame {
             modelo.addRow(linha);
         }
 
-        tblReservas.setModel(modelo);
+        tblReservas.setModel(modelo);*/
     }
 
     /**
@@ -240,7 +240,7 @@ public class ReservaView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        String nomeCliente = txtNomeCliente.getText();
+        /*String nomeCliente = txtNomeCliente.getText();
         int mesa = Integer.parseInt(intMesa.getText());
         int qtdePessoas = Integer.parseInt(intQtdePessoas.getText());
         String observacao = txtObservacao.getText();
@@ -260,11 +260,11 @@ public class ReservaView extends javax.swing.JFrame {
         }
 
         limparCampos();
-        montarTabela();
+        montarTabela();*/
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int codigoTabela = Integer.parseInt(String.valueOf(tblReservas.getValueAt(tblReservas.getSelectedRow(), 0)));
+        /*int codigoTabela = Integer.parseInt(String.valueOf(tblReservas.getValueAt(tblReservas.getSelectedRow(), 0)));
         Reserva temp = rc.procurar(codigoTabela);
 
         txtNomeCliente.setText(temp.getNomeCliente());
@@ -275,15 +275,15 @@ public class ReservaView extends javax.swing.JFrame {
         txtStatus.setText(temp.getStatus());
 
         btnRegistrar.setText("Atualizar Registro");
-        codigo = codigoTabela;
+        codigo = codigoTabela;*/
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        Object linha = tblReservas.getValueAt(tblReservas.getSelectedRow(), 0);
+        /*Object linha = tblReservas.getValueAt(tblReservas.getSelectedRow(), 0);
         String codigoString = String.valueOf(linha);
         int codigoConvertido = Integer.parseInt(codigoString);
         rc.excluir(codigoConvertido);
-        montarTabela();
+        montarTabela();*/
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabelaActionPerformed

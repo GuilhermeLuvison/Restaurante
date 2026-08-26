@@ -37,7 +37,7 @@ public class ClienteView extends javax.swing.JFrame {
     }
 
     private void montarTabela() {
-        ArrayList<Cliente> itens = clc.listar();
+        /*ArrayList<Cliente> itens = clc.listar();
         String[] colunas = {"Código", "Nome", "CPF", "Telefone", "Email", "Data de Nascimento", "Data de Cadastro"};
         DefaultTableModel modelo = new DefaultTableModel(colunas, 0);
 
@@ -47,7 +47,7 @@ public class ClienteView extends javax.swing.JFrame {
             modelo.addRow(linha);
         }
 
-        tblClientes.setModel(modelo);
+        tblClientes.setModel(modelo);*/
     }
 
     /**
@@ -242,7 +242,7 @@ public class ClienteView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        String nome = txtNome.getText();
+        /*String nome = txtNome.getText();
         String cpf = txtCpf.getText();
         String telefone = txtTelefone.getText();
         String email = txtEmail.getText();
@@ -262,11 +262,11 @@ public class ClienteView extends javax.swing.JFrame {
         }
 
         limparCampos();
-        montarTabela();
+        montarTabela();*/
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        int codigoTabela = Integer.parseInt(String.valueOf(tblClientes.getValueAt(tblClientes.getSelectedRow(), 0)));
+        /*int codigoTabela = Integer.parseInt(String.valueOf(tblClientes.getValueAt(tblClientes.getSelectedRow(), 0)));
         Cliente temp = clc.procurar(codigoTabela);
 
         txtNome.setText(temp.getNome());
@@ -277,19 +277,19 @@ public class ClienteView extends javax.swing.JFrame {
         txtDataCadastro.setText(temp.getDataCadastro());
 
         btnCadastrar.setText("Atualizar Cadastro");
-        codigo = codigoTabela;
+        codigo = codigoTabela;*/
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        Object linha = tblClientes.getValueAt(tblClientes.getSelectedRow(), 0);
+        /*Object linha = tblClientes.getValueAt(tblClientes.getSelectedRow(), 0);
         String codigoString = String.valueOf(linha);
         int codigoConvertido = Integer.parseInt(codigoString);
         clc.excluir(codigoConvertido);
-        montarTabela();
+        montarTabela();*/
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarTabelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarTabelaActionPerformed
-        montarTabela();
+        //montarTabela();
     }//GEN-LAST:event_btnAtualizarTabelaActionPerformed
 
     /**
