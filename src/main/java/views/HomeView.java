@@ -96,9 +96,7 @@ public class HomeView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClienteActionPerformed
 
     private void btnCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCardapioActionPerformed
-        CardapioView cav = new CardapioView();
-        cav.setVisible(true);
-        this.setVisible(false);
+        
     }//GEN-LAST:event_btnCardapioActionPerformed
 
     private void btnReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReservaActionPerformed
