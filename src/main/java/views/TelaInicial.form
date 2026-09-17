@@ -6,7 +6,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
-    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -27,13 +27,13 @@
               <EmptySpace min="-2" pref="293" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnCadastrarCliente" max="32767" attributes="0"/>
-                  <Component id="btnCadastrarItemCardapio" pref="225" max="32767" attributes="0"/>
+                  <Component id="btnCadastrarItemCardapio" pref="215" max="32767" attributes="0"/>
                   <Component id="btnCadastrarReserva" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="292" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="332" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="327" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>

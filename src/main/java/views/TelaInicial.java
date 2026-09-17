@@ -9,9 +9,9 @@ package views;
  * @author Guilherme Luvison
  */
 public class TelaInicial extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(TelaInicial.class.getName());
-    
+
     /**
      * Creates new form TelaInicial
      */
@@ -67,11 +67,11 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addGap(293, 293, 293)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCadastrarItemCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                    .addComponent(btnCadastrarItemCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
                     .addComponent(btnCadastrarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(292, 292, 292))
             .addGroup(layout.createSequentialGroup()
-                .addGap(332, 332, 332)
+                .addGap(327, 327, 327)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -90,6 +90,7 @@ public class TelaInicial extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarClienteActionPerformed
@@ -98,13 +99,13 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarClienteActionPerformed
 
     private void btnCadastrarItemCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarItemCardapioActionPerformed
-        CadastrarItemCardapio tela = new CadastrarItemCardapio(this, true);
-        tela.setVisible(true);
+        //CadastrarItemCardapio tela = new CadastrarItemCardapio(this, true);
+        //tela.setVisible(true);
     }//GEN-LAST:event_btnCadastrarItemCardapioActionPerformed
 
     private void btnCadastrarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarReservaActionPerformed
-        CadastrarReserva tela = new CadastrarReserva(this, true);
-        tela.setVisible(true);
+        //CadastrarReserva tela = new CadastrarReserva(this, true);
+        //tela.setVisible(true);
     }//GEN-LAST:event_btnCadastrarReservaActionPerformed
 
     /**
