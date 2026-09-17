@@ -9,6 +9,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import models.Reserva;
 import org.apache.commons.validator.GenericValidator;
 import resources.Entrada;
@@ -25,48 +27,12 @@ public class ReservaController {
     String senha = "postgres";
 
     // Método de Cadastro
-    public void cadastrar() {
-        String nomeCliente;
-        do {
-            nomeCliente = Entrada.leiaString("Nome do Cliente:");
-            if (GenericValidator.isBlankOrNull(nomeCliente)) {
-                System.out.println("Nome inválido: não pode ficar em branco! Tente novamente.");
-            }
-        } while (GenericValidator.isBlankOrNull(nomeCliente));
-
-        int mesa;
-        do {
-            mesa = Entrada.leiaInt("Número da mesa:");
-            if (mesa <= 0) {
-                System.out.println("Número da mesa inválido: não pode ficar em branco! Tente novamente.");
-            }
-        } while (mesa <= 0);
-
-        int qtdePessoas;
-        do {
-            qtdePessoas = Entrada.leiaInt("Quantidade de Pessoas:");
-            if (qtdePessoas <= 0) {
-                System.out.println("Quantidade de pessoas inválida: não pode ficar em branco! Tente novamente.");
-            }
-        } while (qtdePessoas <= 0);
-
-        String observacao = Entrada.leiaString("Observação (Opcional):");
-
-        String dataReserva;
-        do {
-            dataReserva = Entrada.leiaString("Data da Reserva:");
-            if (GenericValidator.isBlankOrNull(dataReserva)) {
-                System.out.println("Data da Reserva inválida: não pode ficar em branco! Tente novamente.");
-            }
-        } while (GenericValidator.isBlankOrNull(dataReserva));
-
-        String status;
-        do {
-            status = Entrada.leiaString("Status:");
-            if (GenericValidator.isBlankOrNull(status)) {
-                System.out.println("Status inválido: não pode ficar em branco! Tente novamente.");
-            }
-        } while (GenericValidator.isBlankOrNull(status));
+    public void cadastrar(String nomeCliente, int mesa, int qtdePessoas, String observacao, String dataReserva, String status) throws SQLException {
+        validarNomeCliente(nomeCliente);
+        validarMesa(mesa);
+        validarQtdePessoas(qtdePessoas);
+        validarDataReserva(dataReserva);
+        validarStatus(status);
 
         String sql = "INSERT INTO reservas (nome_cliente, mesa, quantidade_pessoas, observacao, data_reserva, status) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -78,81 +44,44 @@ public class ReservaController {
             pstmt.setString(5, dataReserva);
             pstmt.setString(6, status);
             pstmt.executeUpdate();
-            System.out.println("Reserva cadastrada com sucesso!");
-            System.out.println("");
-        } catch (SQLException e) {
-            System.err.println("Erro: " + e.getMessage());
         }
     }
 
     // Método de Listagem
-    public void listar() {
+    public List<Reserva> listar() throws SQLException {
+        List<Reserva> reservas = new ArrayList<>();
         String sql = "SELECT codigo, nome_cliente, mesa, quantidade_pessoas, observacao, data_reserva, status FROM reservas ORDER BY codigo";
 
         try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
-            System.out.println("===[RESERVAS CADASTRADAS]===");
             while (rs.next()) {
-                imprimeReserva(rs);
+                reservas.add(mapearReserva(rs));
             }
-        } catch (SQLException e) {
-            System.err.println("Erro: " + e.getMessage());
         }
+        return reservas;
     }
 
     // Método de Busca
-    public void buscarPorNome() {
-        String termo = Entrada.leiaString("Digite o nome do cliente (ou parte dele) para buscar:");
-        String sql = "SELECT codigo, nome_cliente, mesa, quantidade_pessoas, observacao, data_reserva, status FROM reservas WHERE nome_c"
-                + "liente ILIKE ? ORDER BY codigo";
+    public List<Reserva> buscarPorNome(String termo) throws SQLException {
+        List<Reserva> reservas = new ArrayList<>();
+        String sql = "SELECT codigo, nome_cliente, mesa, quantidade_pessoas, observacao, data_reserva, status FROM reservas WHERE nome_cliente ILIKE ? ORDER BY codigo";
 
         try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, "%" + termo + "%");
 
             try (ResultSet rs = pstmt.executeQuery()) {
-                boolean encontrouAlgum = false;
-                System.out.println("===[RESERVAS ENCONTRADAS]===");
                 while (rs.next()) {
-                    imprimeReserva(rs);
-                    encontrouAlgum = true;
-                }
-                if (!encontrouAlgum) {
-                    System.out.println("Nenhuma reserva encontrada com esse cliente.");
+                    reservas.add(mapearReserva(rs));
                 }
             }
-        } catch (SQLException e) {
-            System.err.println("Erro: " + e.getMessage());
         }
+        return reservas;
     }
 
     // Método de Atualização
-    public void atualizar() {
-        int codigo = Entrada.leiaInt("Digite o Código da reserva que deseja atualizar:");
-
-        int novoQtdePessoas;
-        do {
-            novoQtdePessoas = Entrada.leiaInt("Nova quantidade de pessoas:");
-            if (novoQtdePessoas <= 0) {
-                System.out.println("Quantidade de pessoas inválida: não pode ficar em branco! Tente novamente.");
-            }
-        } while (novoQtdePessoas <= 0);
-
-        String novoObservacao = Entrada.leiaString("Nova Observação (Repita caso não queira atualizar/adicionar):");
-
-        String novoDataReserva;
-        do {
-            novoDataReserva = Entrada.leiaString("Nova data da reserva:");
-            if (GenericValidator.isBlankOrNull(novoDataReserva)) {
-                System.out.println("Data de reserva inválida: não pode ficar em branco! Tente novamente.");
-            }
-        } while (GenericValidator.isBlankOrNull(novoDataReserva));
-
-        String novoStatus;
-        do {
-            novoStatus = Entrada.leiaString("Novo status:");
-            if (GenericValidator.isBlankOrNull(novoStatus)) {
-                System.out.println("Status inválido: não pode ficar em branco! Tente novamente.");
-            }
-        } while (GenericValidator.isBlankOrNull(novoStatus));
+    public void atualizar(int codigo, int novoQtdePessoas, String novoObservacao, String novoDataReserva, String novoStatus) throws SQLException {
+        validarQtdePessoas(novoQtdePessoas);
+        validarDataReserva(novoDataReserva);
+        validarStatus(novoStatus);
 
         String sql = "UPDATE reservas SET quantidade_pessoas = ?, observacao = ?, data_reserva = ?, status = ?  WHERE codigo = ?";
 
@@ -163,45 +92,58 @@ public class ReservaController {
             pstmt.setString(4, novoStatus);
             pstmt.setInt(5, codigo);
             int linhas = pstmt.executeUpdate();
-            if (linhas > 0) {
-                System.out.println("Dados atualizados com sucesso!");
-                System.out.println("");
-            } else {
-                System.out.println("Nenhuma reserva encontrada com o Código " + codigo + ".");
+            if (linhas == 0) {
+                throw new IllegalArgumentException("Nenhum cliente encontrado com o Código " + codigo + ".");
             }
-        } catch (SQLException e) {
-            System.err.println("Erro: " + e.getMessage());
         }
     }
 
     // Método de Remoção
-    public void remover() {
-        int codigo = Entrada.leiaInt("Digite o Código da reserva que deseja remover:");
-        boolean confirma = Entrada.leiaBoolean("Tem certeza que deseja remover a reserva de Código " + codigo + "?");
-
-        if (!confirma) {
-            System.out.println("Remoção cancelada.");
-            return;
-        }
-
+    public void remover(int codigo) throws SQLException {
         String sql = "DELETE FROM reservas WHERE codigo = ?";
 
         try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, codigo);
             int linhas = pstmt.executeUpdate();
-            if (linhas > 0) {
-                System.out.println("Reserva removida com sucesso!");
-                System.out.println("");
-            } else {
-                System.out.println("Nenhum reserva encontrada com o Código " + codigo + ".");
+            if (linhas == 0) {
+                throw new IllegalArgumentException("Nenhum cliente encontrado com o Código " + codigo + ".");
             }
-        } catch (SQLException e) {
-            System.err.println("Erro: " + e.getMessage());
+        }
+    }
+
+    // Métodos de Validação
+    private void validarNomeCliente(String nomeCliente) {
+        if (GenericValidator.isBlankOrNull(nomeCliente)) {
+            throw new IllegalArgumentException("Nome inválido: não pode ficar em branco! Tente novamente.");
+        }
+    }
+
+    private void validarMesa(int mesa) {
+        if (mesa <= 0) {
+            throw new IllegalArgumentException("Número da mesa inválido: não pode ser negativo ou igual a 0! Tente novamente.");
+        }
+    }
+
+    private void validarQtdePessoas(int qtdePessoas) {
+        if (qtdePessoas <= 0) {
+            throw new IllegalArgumentException("Quantidade de pessoas inválido: não pode ser negativo ou igual a 0! Tente novamente.");
+        }
+    }
+
+    private void validarDataReserva(String dataReserva) {
+        if (GenericValidator.isBlankOrNull(dataReserva)) {
+            throw new IllegalArgumentException("Data da Reserva inválida: não pode ficar em branco! Tente novamente.");
+        }
+    }
+
+    private void validarStatus(String status) {
+        if (GenericValidator.isBlankOrNull(status)) {
+            throw new IllegalArgumentException("Status inválido: não pode ficar em branco! Tente novamente.");
         }
     }
 
     // Método de Impressão de Cliente Específico
-    private void imprimeReserva(ResultSet rs) throws SQLException {
+    private Reserva mapearReserva(ResultSet rs) throws SQLException {
         Reserva r = new Reserva();
         r.setCodigo(rs.getInt("codigo"));
         r.setNomeCliente(rs.getString("nome_cliente"));
@@ -210,6 +152,6 @@ public class ReservaController {
         r.setObservacao(rs.getString("observacao"));
         r.setDataReserva(rs.getString("data_reserva"));
         r.setStatus(rs.getString("status"));
-        r.imprimeAtributos();
+        return r;
     }
 }
