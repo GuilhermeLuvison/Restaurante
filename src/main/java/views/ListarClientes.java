@@ -133,12 +133,12 @@ public class ListarClientes extends javax.swing.JDialog {
                         .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE)
+                        .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(btnAtualizarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRemoverCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 360, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 888, Short.MAX_VALUE))
+                        .addComponent(btnRemoverCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

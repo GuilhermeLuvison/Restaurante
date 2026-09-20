@@ -80,7 +80,7 @@ public class CadastrarCliente extends javax.swing.JDialog {
 
         jLabel3.setText("Nome:");
 
-        jLabel4.setText("CPF:");
+        jLabel4.setText("CPF (XXX.XXX.XXX-XX):");
 
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(this::btnCadastrarActionPerformed);
@@ -95,7 +95,7 @@ public class CadastrarCliente extends javax.swing.JDialog {
 
         jLabel6.setText("Email (Opcional):");
 
-        jLabel7.setText("Data de Nascimento:");
+        jLabel7.setText("Data de Nascimento (DD/MM/YYYY):");
 
         jLabel8.setText("Data de Cadastro:");
 
