@@ -99,8 +99,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadastrarClienteActionPerformed
 
     private void btnCadastrarItemCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarItemCardapioActionPerformed
-        //CadastrarItemCardapio tela = new CadastrarItemCardapio(this, true);
-        //tela.setVisible(true);
+        CadastrarItemCardapio tela = new CadastrarItemCardapio(this, true);
+        tela.setVisible(true);
     }//GEN-LAST:event_btnCadastrarItemCardapioActionPerformed
 
     private void btnCadastrarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarReservaActionPerformed
