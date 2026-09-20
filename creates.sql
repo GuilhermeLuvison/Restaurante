@@ -1,12 +1,15 @@
 -- CREATE TABLE (Em uso)
 CREATE TABLE clientes (
-    codigo SERIAL NOT NULL PRIMARY KEY,
-    nome VARCHAR(255),
-    cpf VARCHAR(15),
+    codigo SERIAL NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    cpf VARCHAR(15) NOT NULL,
     telefone VARCHAR(20),
     email VARCHAR(255),
-    data_nascimento VARCHAR(10),
-    data_cadastro DATE DEFAULT CURRENT_DATE
+    data_nascimento DATE NOT NULL,
+    data_cadastro DATE DEFAULT CURRENT_DATE,
+    CONSTRAINT PK_clientes PRIMARY KEY (codigo),
+    CONSTRAINT UN_cpfclientes UNIQUE (cpf),
+    CONSTRAINT CHK_data_nascimento CHECK (data_nascimento <= CURRENT_DATE - INTERVAL '18 YEARS')
 );
 
 CREATE TABLE itenscardapio (
@@ -30,19 +33,6 @@ CREATE TABLE reservas (
 );
 
 -- CREATE TABLE (Será implementado)
-CREATE TABLE clientes (
-    codigo SERIAL NOT NULL,
-    nome VARCHAR(255) NOT NULL,
-    cpf VARCHAR(15) NOT NULL,
-    telefone VARCHAR(20),
-    email VARCHAR(255),
-    data_nascimento DATE NOT NULL,
-    data_cadastro DATE DEFAULT CURRENT_DATE,
-    CONSTRAINT PK_clientes PRIMARY KEY (codigo),
-    CONSTRAINT UN_cpfclientes UNIQUE (cpf),
-    CONSTRAINT CHK_data_nascimento CHECK (data_nascimento <= CURRENT_DATE - INTERVAL '18 YEARS')
-);
-
 CREATE TABLE itenscardapio (
     codigo SERIAL NOT NULL,
     nome VARCHAR(255) NOT NULL,
