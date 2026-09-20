@@ -78,25 +78,25 @@ public class ItemCardapioController {
     }
 
     // Método de Atualização
-    public void atualizar(int codigo, String novoNome, String novoIngredientes, String novoTipoPrato, double novoPreco, String novoTempoPreparo) throws SQLException {
+    public void atualizar(int codigo, String novoNome, String novoIngredientes, String novoCategoria, double novoPreco, String novoTempoPreparo) throws SQLException {
         validarNome(novoNome);
         validarIngredientes(novoIngredientes);
-        validarTipoPrato(novoTipoPrato);
+        validarTipoPrato(novoCategoria);
         validarPreco(novoPreco);
         validarTempoPreaparo(novoTempoPreparo);
 
-        String sql = "UPDATE itenscardapio SET nome = ?, ingredientes = ?, tipo_prato = ?, preco = ?, tempo_preparo = ? WHERE codigo = ?";
+        String sql = "UPDATE itenscardapio SET nome = ?, ingredientes = ?, categoria = ?, preco = ?, tempo_preparo = ? WHERE codigo = ?";
 
         try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, novoNome);
             pstmt.setString(2, novoIngredientes);
-            pstmt.setString(3, novoTipoPrato);
+            pstmt.setString(3, novoCategoria);
             pstmt.setDouble(4, novoPreco);
             pstmt.setString(5, novoTempoPreparo);
             pstmt.setInt(6, codigo);
             int linhas = pstmt.executeUpdate();
             if (linhas == 0) {
-                throw new IllegalArgumentException("Nenhum cliente encontrado com o Código " + codigo + ".");
+                throw new IllegalArgumentException("Nenhum item de cardápio encontrado com o Código " + codigo + ".");
             }
         }
     }
@@ -109,7 +109,7 @@ public class ItemCardapioController {
             pstmt.setInt(1, codigo);
             int linhas = pstmt.executeUpdate();
             if (linhas == 0) {
-                throw new IllegalArgumentException("Nenhum cliente encontrado com o Código " + codigo + ".");
+                throw new IllegalArgumentException("Nenhum item de cardápio encontrado com o Código " + codigo + ".");
             }
         }
     }
@@ -117,37 +117,37 @@ public class ItemCardapioController {
     // Métodos de Validação
     private void validarNome(String nome) {
         if (GenericValidator.isBlankOrNull(nome)) {
-            throw new IllegalArgumentException("Nome inválido: não pode ficar em branco! Tente novamente.");
+            throw new IllegalArgumentException("Nome inválido: não pode ficar em branco!");
         }
     }
 
     private void validarIngredientes(String ingredientes) {
         if (GenericValidator.isBlankOrNull(ingredientes)) {
-            throw new IllegalArgumentException("Ingredientes inválidos: não pode ficar em branco! Tente novamente.");
+            throw new IllegalArgumentException("Ingredientes inválidos: não pode ficar em branco!");
         }
     }
 
     private void validarCategoria(String categoria) {
         if (GenericValidator.isBlankOrNull(categoria)) {
-            throw new IllegalArgumentException("Categoria inválida: não pode ficar em branco! Tente novamente.");
+            throw new IllegalArgumentException("Categoria inválida: não pode ficar em branco!");
         }
     }
 
     private void validarTipoPrato(String tipoPrato) {
         if (GenericValidator.isBlankOrNull(tipoPrato)) {
-            throw new IllegalArgumentException("Tipo de Prato inválido: não pode ficar em branco! Tente novamente.");
+            throw new IllegalArgumentException("Tipo de Prato inválido: não pode ficar em branco!");
         }
     }
 
     private void validarPreco(double preco) {
         if (preco < 0) {
-            throw new IllegalArgumentException("Preço inválido: não pode ser negativo! Tente novamente.");
+            throw new IllegalArgumentException("Preço inválido: não pode ser negativo!");
         }
     }
 
     private void validarTempoPreaparo(String tempoPreparo) {
         if (GenericValidator.isBlankOrNull(tempoPreparo)) {
-            throw new IllegalArgumentException("Tempo de Preparo inválido: não pode ficar em branco! Tente novamente.");
+            throw new IllegalArgumentException("Tempo de Preparo inválido: não pode ficar em branco!");
         }
     }
 
