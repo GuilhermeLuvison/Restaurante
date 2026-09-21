@@ -25,17 +25,6 @@ CREATE TABLE itenscardapio (
 );
 
 CREATE TABLE reservas (
-    codigo SERIAL NOT NULL PRIMARY KEY,
-    nome_cliente VARCHAR(255),
-    mesa INT,
-    quantidade_pessoas INT,
-    observacao VARCHAR(255),
-    data_reserva VARCHAR(10),
-    status VARCHAR(255)
-);
-
--- CREATE TABLE (Será implementado)
-CREATE TABLE reservas (
     codigo SERIAL NOT NULL,
     codigo_cliente INT NOT NULL,
     mesa INT NOT NULL,
@@ -48,6 +37,7 @@ CREATE TABLE reservas (
     CONSTRAINT CHK_status CHECK (status = 'Confirmada' OR status = 'Pendente' OR status = 'Cancelada')
 );
 
+-- CREATE TABLE (Será implementado)
 CREATE TABLE pedidos (
     codigo SERIAL NOT NULL,
     codigo_cliente INT NOT NULL,
