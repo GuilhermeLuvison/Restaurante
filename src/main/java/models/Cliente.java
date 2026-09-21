@@ -101,4 +101,10 @@ public class Cliente {
         System.out.println("Data de Cadastro: " + dataCadastro);
         System.out.println("");
     }
+
+    // Método para mostrar código e nome do cliente na ComboBox de CadastrarReserva
+    @Override
+    public String toString() {
+        return codigo + " - " + nome;
+    }
 }
