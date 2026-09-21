@@ -12,7 +12,8 @@ public class Reserva {
 
     // Atributos
     private int codigo;
-    private String nomeCliente;
+    private int codigoCliente; // Chave estrangeira para clientes.codigo - usado no INSERT/UPDATE
+    private String nomeCliente; // Exibição (JOIN com clientes)
     private int mesa;
     private int qtdePessoas;
     private String observacao;
@@ -39,6 +40,14 @@ public class Reserva {
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
+    }
+
+    public int getCodigoCliente() {
+        return codigoCliente;
+    }
+
+    public void setCodigoCliente(int codigoCliente) {
+        this.codigoCliente = codigoCliente;
     }
 
     public String getNomeCliente() {
