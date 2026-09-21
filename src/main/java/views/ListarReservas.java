@@ -35,7 +35,7 @@ public class ListarReservas extends javax.swing.JDialog {
     }
 
     private void configurarTabela() {
-        String[] colunas = {"Código", "Nome do Cliente", "Mesa", "Quantidade de Pessoas", "Observação", "Data da Reserva", "Status"};
+        String[] colunas = {"Código da Reserva", "Cliente", "Mesa", "Quantidade de Pessoas", "Observação", "Data da Reserva", "Status"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -106,7 +106,7 @@ public class ListarReservas extends javax.swing.JDialog {
         btnCadastrarReserva.setText("Cadastrar Nova Reserva");
         btnCadastrarReserva.addActionListener(this::btnCadastrarReservaActionPerformed);
 
-        btnBuscar.setText("Buscar por Nome");
+        btnBuscar.setText("Buscar por Nome de Cliente");
         btnBuscar.addActionListener(this::btnBuscarActionPerformed);
 
         jLabel5.setText("Buscar:");
@@ -127,9 +127,9 @@ public class ListarReservas extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtBusca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnCadastrarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)

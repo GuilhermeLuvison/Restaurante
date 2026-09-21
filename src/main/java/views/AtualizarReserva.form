@@ -128,7 +128,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel8">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Status:"/>
+        <Property name="text" type="java.lang.String" value="Status (Confirmada | Pendente | Cancelada):"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel4">
@@ -171,7 +171,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Data da Reserva:"/>
+        <Property name="text" type="java.lang.String" value="Data da Reserva (DD/MM/YYYY):"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">

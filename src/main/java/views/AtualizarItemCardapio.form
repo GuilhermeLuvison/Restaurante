@@ -170,7 +170,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel6">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Tipo de Prato (Entrada | Prato Principal | Sobremesa):"/>
+        <Property name="text" type="java.lang.String" value="Tipo de Prato:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">

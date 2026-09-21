@@ -98,7 +98,7 @@ public class AtualizarItemCardapio extends javax.swing.JDialog {
 
         jLabel4.setText("Ingredientes:");
 
-        jLabel6.setText("Tipo de Prato (Entrada | Prato Principal | Sobremesa):");
+        jLabel6.setText("Tipo de Prato:");
 
         jLabel5.setText("Categoria (Tradicional, Vegano, Infantil, Porções...):");
 

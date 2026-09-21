@@ -44,7 +44,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
         try {
             return Integer.parseInt(texto);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(nomeCampo + " inválido: digite um número inteiro.");
+            throw new IllegalArgumentException(nomeCampo + " inválida: digite um número.");
         }
     }
 
@@ -79,7 +79,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel8.setText("Status:");
+        jLabel8.setText("Status (Confirmada | Pendente | Cancelada):");
 
         jLabel4.setText("Mesa:");
 
@@ -95,7 +95,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
 
         jLabel3.setText("Cliente:");
 
-        jLabel7.setText("Data da Reserva:");
+        jLabel7.setText("Data da Reserva (DD/MM/YYYY):");
 
         jLabel6.setText("Observação (Opcional):");
 

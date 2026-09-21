@@ -141,7 +141,7 @@ public class ReservaController {
 
     private void validarQtdePessoas(int qtdePessoas) {
         if (qtdePessoas <= 0) {
-            throw new IllegalArgumentException("Quantidade de pessoas inválido: não pode ser negativo ou igual a 0!");
+            throw new IllegalArgumentException("Quantidade de pessoas inválida: não pode ser negativo ou igual a 0!");
         }
     }
 

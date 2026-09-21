@@ -32,9 +32,9 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="txtBusca" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnBuscar" min="-2" pref="140" max="-2" attributes="0"/>
+                      <Component id="btnBuscar" min="-2" pref="200" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnListar" min="-2" pref="140" max="-2" attributes="0"/>
+                      <Component id="btnListar" min="-2" pref="200" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
@@ -174,7 +174,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnBuscar">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Buscar por Nome"/>
+        <Property name="text" type="java.lang.String" value="Buscar por Nome de Cliente"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>

@@ -55,7 +55,7 @@ public class CadastrarReserva extends javax.swing.JDialog {
         try {
             return Integer.parseInt(texto);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(nomeCampo + " inválido: digite um número inteiro.");
+            throw new IllegalArgumentException(nomeCampo + " inválida: digite um número.");
         }
     }
 
@@ -94,7 +94,7 @@ public class CadastrarReserva extends javax.swing.JDialog {
         btnCadastrar.setText("Cadastrar");
         btnCadastrar.addActionListener(this::btnCadastrarActionPerformed);
 
-        jLabel7.setText("Data da Reserva:");
+        jLabel7.setText("Data da Reserva (DD/MM/YYYY):");
 
         jLabel5.setText("Quantidade de Pessoas:");
 
@@ -110,7 +110,7 @@ public class CadastrarReserva extends javax.swing.JDialog {
 
         jLabel6.setText("Observação (Opcional):");
 
-        jLabel8.setText("Status:");
+        jLabel8.setText("Status (Confirmada | Pendente | Cancelada):");
 
         jLabel1.setText("DADOS DA RESERVA");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
