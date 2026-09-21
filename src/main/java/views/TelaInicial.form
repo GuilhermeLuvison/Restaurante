@@ -23,19 +23,22 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="293" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="btnCadastrarCliente" max="32767" attributes="0"/>
-                  <Component id="btnCadastrarItemCardapio" pref="215" max="32767" attributes="0"/>
-                  <Component id="btnCadastrarReserva" max="32767" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="292" max="-2" attributes="0"/>
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace min="-2" pref="327" max="-2" attributes="0"/>
+              <Component id="jLabel1" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="327" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="327" max="-2" attributes="0"/>
-              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="257" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="btnListarItensCardapio" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnListarReservas" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnCadastrarReserva" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnCadastrarItemCardapio" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btnCadastrarCliente" max="32767" attributes="0"/>
+                  <Component id="btnListarClientes" alignment="1" max="32767" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="257" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -46,11 +49,17 @@
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnCadastrarCliente" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnListarClientes" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnCadastrarItemCardapio" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnListarItensCardapio" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnCadastrarReserva" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="443" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnListarReservas" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="344" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -77,12 +86,36 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarItemCardapioActionPerformed"/>
       </Events>
     </Component>
+    <Component class="javax.swing.JButton" name="btnListarClientes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Lista de Clientes"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarClientesActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnListarItensCardapio">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Itens de Card&#xe1;pio"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarItensCardapioActionPerformed"/>
+      </Events>
+    </Component>
     <Component class="javax.swing.JButton" name="btnCadastrarReserva">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cadastrar nova Reserva"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarReservaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnListarReservas">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Lista de Reservas"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarReservasActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

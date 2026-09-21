@@ -32,7 +32,10 @@ public class TelaInicial extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnCadastrarCliente = new javax.swing.JButton();
         btnCadastrarItemCardapio = new javax.swing.JButton();
+        btnListarClientes = new javax.swing.JButton();
+        btnListarItensCardapio = new javax.swing.JButton();
         btnCadastrarReserva = new javax.swing.JButton();
+        btnListarReservas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,6 +55,20 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        btnListarClientes.setText("Ver Lista de Clientes");
+        btnListarClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarClientesActionPerformed(evt);
+            }
+        });
+
+        btnListarItensCardapio.setText("Ver Itens de Cardápio");
+        btnListarItensCardapio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarItensCardapioActionPerformed(evt);
+            }
+        });
+
         btnCadastrarReserva.setText("Cadastrar nova Reserva");
         btnCadastrarReserva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,21 +76,31 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        btnListarReservas.setText("Ver Lista de Reservas");
+        btnListarReservas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarReservasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(293, 293, 293)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCadastrarItemCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
-                    .addComponent(btnCadastrarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(292, 292, 292))
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(327, 327, 327)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(327, 327, 327))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(257, 257, 257)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnListarItensCardapio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnListarReservas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCadastrarReserva, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCadastrarItemCardapio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnListarClientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(257, 257, 257))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -82,11 +109,17 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastrarCliente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnListarClientes)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastrarItemCardapio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnListarItensCardapio)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastrarReserva)
-                .addContainerGap(443, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnListarReservas)
+                .addContainerGap(344, Short.MAX_VALUE))
         );
 
         pack();
@@ -107,6 +140,21 @@ public class TelaInicial extends javax.swing.JFrame {
         CadastrarReserva tela = new CadastrarReserva(this, true);
         tela.setVisible(true);
     }//GEN-LAST:event_btnCadastrarReservaActionPerformed
+
+    private void btnListarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarClientesActionPerformed
+        ListarClientes tela = new ListarClientes(this, true);
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnListarClientesActionPerformed
+
+    private void btnListarItensCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarItensCardapioActionPerformed
+        ListarItensCardapio tela = new ListarItensCardapio(this, true);
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnListarItensCardapioActionPerformed
+
+    private void btnListarReservasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarReservasActionPerformed
+        ListarReservas tela = new ListarReservas(this, true);
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnListarReservasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,6 +195,9 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastrarCliente;
     private javax.swing.JButton btnCadastrarItemCardapio;
     private javax.swing.JButton btnCadastrarReserva;
+    private javax.swing.JButton btnListarClientes;
+    private javax.swing.JButton btnListarItensCardapio;
+    private javax.swing.JButton btnListarReservas;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }
