@@ -33,7 +33,7 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
         txtNome.setText("");
         txtIngredientes.setText("");
         txtCategoria.setText("");
-        txtTipoPrato.setText("");
+        cbxTipoPrato.setSelectedIndex(0);
         txtPreco.setText("");
         txtTempoPreparo.setText("");
         txtNome.requestFocus();
@@ -67,7 +67,6 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         txtCategoria = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtTipoPrato = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtPreco = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -76,6 +75,7 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
         btnLimpar = new javax.swing.JButton();
         btnListarItensCardapio = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
+        cbxTipoPrato = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -106,6 +106,8 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
 
         btnListarItensCardapio.setText("Ver Itens de Cardápio");
         btnListarItensCardapio.addActionListener(this::btnListarItensCardapioActionPerformed);
+
+        cbxTipoPrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Entrada", "Prato Principal", "Sobremesa" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,9 +142,12 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
                     .addComponent(txtIngredientes)
                     .addComponent(txtCodigo)
                     .addComponent(txtCategoria)
-                    .addComponent(txtTipoPrato)
                     .addComponent(txtPreco)
                     .addComponent(txtTempoPreparo))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxTipoPrato, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -171,8 +176,8 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtTipoPrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbxTipoPrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -197,7 +202,7 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
             double preco = converterPreco(txtPreco.getText().trim());
-            icc.cadastrar(txtNome.getText().trim(), txtIngredientes.getText().trim(), txtCategoria.getText().trim(), txtTipoPrato.getText().trim(), preco, txtTempoPreparo.getText().trim());
+            icc.cadastrar(txtNome.getText().trim(), txtIngredientes.getText().trim(), txtCategoria.getText().trim(), (String) cbxTipoPrato.getSelectedItem(), preco, txtTempoPreparo.getText().trim());
             JOptionPane.showMessageDialog(this, "Item de Cardápio cadastrado com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limpar();
@@ -259,6 +264,7 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnListarItensCardapio;
+    private javax.swing.JComboBox<String> cbxTipoPrato;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -275,6 +281,5 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtPreco;
     private javax.swing.JTextField txtTempoPreparo;
-    private javax.swing.JTextField txtTipoPrato;
     // End of variables declaration//GEN-END:variables
 }

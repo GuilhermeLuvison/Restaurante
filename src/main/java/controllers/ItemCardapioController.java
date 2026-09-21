@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import models.ItemCardapio;
 import org.apache.commons.validator.GenericValidator;
@@ -24,6 +25,9 @@ public class ItemCardapioController {
     String url = "jdbc:postgresql://localhost:5432/restaurante";
     String usuario = "postgres";
     String senha = "postgres";
+
+    // Tipos de Prato válidos para cadastro - conforme chave CHECK do PostgreSQL
+    public static final List<String> tiposPratoValidos = Arrays.asList("Entrada", "Prato Principal", "Sobremesa");
 
     // Método de Cadastro
     public void cadastrar(String nome, String ingredientes, String categoria, String tipoPrato, double preco, String tempoPreparo) throws SQLException {
@@ -81,7 +85,7 @@ public class ItemCardapioController {
     public void atualizar(int codigo, String novoNome, String novoIngredientes, String novoCategoria, double novoPreco, String novoTempoPreparo) throws SQLException {
         validarNome(novoNome);
         validarIngredientes(novoIngredientes);
-        validarTipoPrato(novoCategoria);
+        validarCategoria(novoCategoria);
         validarPreco(novoPreco);
         validarTempoPreaparo(novoTempoPreparo);
 
@@ -128,14 +132,26 @@ public class ItemCardapioController {
     }
 
     private void validarCategoria(String categoria) {
+        // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(categoria)) {
             throw new IllegalArgumentException("Categoria inválida: não pode ficar em branco!");
+        }
+
+        // Não pode ser digitado mais de 100 caracteres - VARCHAR(100) no PostgreSQL
+        if (categoria.length() > 100) {
+            throw new IllegalArgumentException("Categoria inválida: máximo de 100 caracteres.");
         }
     }
 
     private void validarTipoPrato(String tipoPrato) {
+        // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(tipoPrato)) {
             throw new IllegalArgumentException("Tipo de Prato inválido: não pode ficar em branco!");
+        }
+
+        // Somente pratos válidos registrados na chave CHECK do banco de dados
+        if (!tiposPratoValidos.contains(tipoPrato)) {
+            throw new IllegalArgumentException("Tipo de Prato inválido: deve ser Entrada, Prato Principal ou Sobremesa.");
         }
     }
 
@@ -146,8 +162,14 @@ public class ItemCardapioController {
     }
 
     private void validarTempoPreaparo(String tempoPreparo) {
+        // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(tempoPreparo)) {
             throw new IllegalArgumentException("Tempo de Preparo inválido: não pode ficar em branco!");
+        }
+
+        // Não pode ser digitado mais de 100 caracteres - VARCHAR(100) no PostgreSQL
+        if (tempoPreparo.length() > 100) {
+            throw new IllegalArgumentException("Tempo de Preparo inválido: máximo de 100 caracteres.");
         }
     }
 

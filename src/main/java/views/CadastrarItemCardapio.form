@@ -56,10 +56,14 @@
                   <Component id="txtIngredientes" alignment="0" max="32767" attributes="0"/>
                   <Component id="txtCodigo" alignment="0" max="32767" attributes="0"/>
                   <Component id="txtCategoria" alignment="0" max="32767" attributes="0"/>
-                  <Component id="txtTipoPrato" alignment="0" max="32767" attributes="0"/>
                   <Component id="txtPreco" alignment="0" max="32767" attributes="0"/>
                   <Component id="txtTempoPreparo" alignment="0" max="32767" attributes="0"/>
               </Group>
+              <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="cbxTipoPrato" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -90,8 +94,8 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtTipoPrato" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="cbxTipoPrato" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="txtPreco" min="-2" max="-2" attributes="0"/>
@@ -157,8 +161,6 @@
         <Property name="text" type="java.lang.String" value="Tipo de Prato (Entrada | Prato Principal | Sobremesa):"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtTipoPrato">
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
         <Property name="text" type="java.lang.String" value="Pre&#xe7;o:"/>
@@ -198,6 +200,20 @@
       </Events>
     </Component>
     <Component class="javax.swing.JSeparator" name="jSeparator2">
+    </Component>
+    <Component class="javax.swing.JComboBox" name="cbxTipoPrato">
+      <Properties>
+        <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+          <StringArray count="3">
+            <StringItem index="0" value="Entrada"/>
+            <StringItem index="1" value="Prato Principal"/>
+            <StringItem index="2" value="Sobremesa"/>
+          </StringArray>
+        </Property>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>
