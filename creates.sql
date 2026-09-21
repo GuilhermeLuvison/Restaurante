@@ -13,13 +13,15 @@ CREATE TABLE clientes (
 );
 
 CREATE TABLE itenscardapio (
-    codigo SERIAL NOT NULL PRIMARY KEY,
-    nome VARCHAR(255),
-    ingredientes VARCHAR(255),
-    categoria VARCHAR(255),
-    tipo_prato VARCHAR(255),
-    preco DECIMAL(10, 2),
-    tempo_preparo VARCHAR(255)
+    codigo SERIAL NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    ingredientes VARCHAR(255) NOT NULL,
+    categoria VARCHAR(100) NOT NULL,
+    tipo_prato VARCHAR(20) NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    tempo_preparo VARCHAR(100) NOT NULL,
+    CONSTRAINT PK_itenscardapio PRIMARY KEY (codigo),
+    CONSTRAINT CHK_tipo_prato CHECK (tipo_prato = 'Entrada' OR tipo_prato = 'Prato Principal' OR tipo_prato = 'Sobremesa')
 );
 
 CREATE TABLE reservas (
@@ -33,18 +35,6 @@ CREATE TABLE reservas (
 );
 
 -- CREATE TABLE (Será implementado)
-CREATE TABLE itenscardapio (
-    codigo SERIAL NOT NULL,
-    nome VARCHAR(255) NOT NULL,
-    ingredientes VARCHAR(255) NOT NULL,
-    categoria VARCHAR(100) NOT NULL,
-    tipo_prato VARCHAR(20) NOT NULL,
-    preco DECIMAL(10, 2) NOT NULL,
-    tempo_preparo VARCHAR(100) NOT NULL,
-    CONSTRAINT PK_itenscardapio PRIMARY KEY (codigo),
-    CONSTRAINT CHK_tipo_prato CHECK (tipo_prato = 'Entrada' OR tipo_prato = 'Prato Principal' OR tipo_prato = 'Sobremesa')
-);
-
 CREATE TABLE reservas (
     codigo SERIAL NOT NULL,
     codigo_cliente INT NOT NULL,
