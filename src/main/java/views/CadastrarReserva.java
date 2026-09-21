@@ -4,10 +4,12 @@
  */
 package views;
 
+import controllers.ClienteController;
 import controllers.ReservaController;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import models.Cliente;
 
 /**
  *
@@ -26,17 +28,27 @@ public class CadastrarReserva extends javax.swing.JDialog {
         super(owner, "Sistema de um Restaurante - Cadastrar Reserva", modal);
         this.telaInicial = owner;
         initComponents();
+
+        try {
+            new ClienteController().listar().forEach(cbxCliente::addItem);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void limpar() {
         txtCodigo.setText("");
-        txtNomeCliente.setText("");
+        if (cbxCliente.getItemCount() > 0) {
+            cbxCliente.setSelectedIndex(0);
+        }
         txtMesa.setText("");
         txtQtdePessoas.setText("");
         txtObservacao.setText("");
         txtDataReserva.setText("");
-        txtStatus.setText("");
-        txtNomeCliente.requestFocus();
+        if (cbxStatus.getItemCount() > 0) {
+            cbxStatus.setSelectedIndex(0);
+        }
+        txtMesa.requestFocus();
     }
 
     private int converterInteiro(String texto, String nomeCampo) {
@@ -65,7 +77,6 @@ public class CadastrarReserva extends javax.swing.JDialog {
         btnListarReservas = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         txtDataReserva = new javax.swing.JTextField();
-        txtNomeCliente = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txtMesa = new javax.swing.JTextField();
@@ -73,9 +84,10 @@ public class CadastrarReserva extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtObservacao = new javax.swing.JTextField();
-        txtStatus = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
+        cbxCliente = new javax.swing.JComboBox<>();
+        cbxStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -89,12 +101,12 @@ public class CadastrarReserva extends javax.swing.JDialog {
         btnLimpar.setText("Limpar");
         btnLimpar.addActionListener(this::btnLimparActionPerformed);
 
-        jLabel2.setText("Código:");
+        jLabel2.setText("Código da Reserva:");
 
         btnListarReservas.setText("Ver Lista de Reservas");
         btnListarReservas.addActionListener(this::btnListarReservasActionPerformed);
 
-        jLabel3.setText("Nome do Cliente:");
+        jLabel3.setText("Cliente:");
 
         jLabel6.setText("Observação (Opcional):");
 
@@ -106,6 +118,8 @@ public class CadastrarReserva extends javax.swing.JDialog {
         jLabel4.setText("Mesa:");
 
         txtCodigo.setEditable(false);
+
+        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Confirmada", "Pendente", "Cancelada" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -126,12 +140,10 @@ public class CadastrarReserva extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(btnListarReservas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtNomeCliente)
                     .addComponent(txtMesa, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtQtdePessoas)
                     .addComponent(txtObservacao)
                     .addComponent(txtDataReserva)
-                    .addComponent(txtStatus)
                     .addComponent(jSeparator2)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,6 +155,14 @@ public class CadastrarReserva extends javax.swing.JDialog {
                             .addComponent(jLabel7)
                             .addComponent(jLabel8))
                         .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cbxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -159,8 +179,8 @@ public class CadastrarReserva extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cbxCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtMesa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -179,7 +199,7 @@ public class CadastrarReserva extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -195,10 +215,18 @@ public class CadastrarReserva extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+        Cliente clienteSelecionado = (Cliente) cbxCliente.getSelectedItem();
+        if (clienteSelecionado == null) {
+            JOptionPane.showMessageDialog(this, "Nenhum cliente cadastrado. Cadastre um cliente antes de fazer uma reserva.",
+                    "Nenhum cliente disponível", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
         try {
             int mesa = converterInteiro(txtMesa.getText().trim(), "Mesa");
             int qtdePessoas = converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
-            rc.cadastrar(txtNomeCliente.getText().trim(), mesa, qtdePessoas, txtObservacao.getText().trim(), txtDataReserva.getText().trim(), txtStatus.getText().trim());
+            String status = (String) cbxStatus.getSelectedItem();
+            rc.cadastrar(clienteSelecionado.getCodigo(), mesa, qtdePessoas, txtObservacao.getText().trim(), txtDataReserva.getText().trim(), status);
             JOptionPane.showMessageDialog(this, "Reserva cadastrada com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limpar();
@@ -260,6 +288,8 @@ public class CadastrarReserva extends javax.swing.JDialog {
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnListarReservas;
+    private javax.swing.JComboBox<Cliente> cbxCliente;
+    private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -273,9 +303,7 @@ public class CadastrarReserva extends javax.swing.JDialog {
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDataReserva;
     private javax.swing.JTextField txtMesa;
-    private javax.swing.JTextField txtNomeCliente;
     private javax.swing.JTextField txtObservacao;
     private javax.swing.JTextField txtQtdePessoas;
-    private javax.swing.JTextField txtStatus;
     // End of variables declaration//GEN-END:variables
 }

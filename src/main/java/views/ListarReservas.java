@@ -92,7 +92,7 @@ public class ListarReservas extends javax.swing.JDialog {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "Código", "Nome do Cliente", "Mesa", "Quantidade de Pessoas", "Observação", "Data da Reserva", "Status"
+                "Código da Reserva", "Cliente", "Mesa", "Quantidade de Pessoas", "Observação", "Data da Reserva", "Status"
             }
         ));
         jScrollPane1.setViewportView(tblDadosReservas);

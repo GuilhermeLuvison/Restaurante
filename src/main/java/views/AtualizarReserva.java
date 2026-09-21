@@ -37,7 +37,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
         txtQtdePessoas.setText(String.valueOf(reserva.getQtdePessoas()));
         txtObservacao.setText(reserva.getObservacao());
         txtDataReserva.setText(reserva.getDataReserva());
-        txtStatus.setText(reserva.getStatus());
+        cbxStatus.setSelectedItem(reserva.getStatus());
     }
 
     private int converterInteiro(String texto, String nomeCampo) {
@@ -60,7 +60,6 @@ public class AtualizarReserva extends javax.swing.JDialog {
         txtQtdePessoas = new javax.swing.JTextField();
         txtDataReserva = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        txtStatus = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
@@ -76,6 +75,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
         txtObservacao = new javax.swing.JTextField();
         txtMesa = new javax.swing.JTextField();
         txtNomeCliente = new javax.swing.JTextField();
+        cbxStatus = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -93,13 +93,13 @@ public class AtualizarReserva extends javax.swing.JDialog {
 
         txtCodigo.setEditable(false);
 
-        jLabel3.setText("Nome do Cliente:");
+        jLabel3.setText("Cliente:");
 
         jLabel7.setText("Data da Reserva:");
 
         jLabel6.setText("Observação (Opcional):");
 
-        jLabel2.setText("Código:");
+        jLabel2.setText("Código da Reserva:");
 
         jLabel1.setText("DADOS DA RESERVA");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -108,41 +108,49 @@ public class AtualizarReserva extends javax.swing.JDialog {
 
         txtNomeCliente.setEditable(false);
 
+        cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Confirmada", "Pendente", "Cancelada" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtMesa, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtQtdePessoas)
-                    .addComponent(txtObservacao)
-                    .addComponent(txtDataReserva)
-                    .addComponent(txtStatus)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap()
+                        .addComponent(cbxStatus, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtCodigo)
-                    .addComponent(txtNomeCliente))
+                            .addComponent(jSeparator2)
+                            .addComponent(txtMesa, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtQtdePessoas)
+                            .addComponent(txtObservacao)
+                            .addComponent(txtDataReserva)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtCodigo)
+                            .addComponent(txtNomeCliente)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(346, 346, 346)
+                        .addComponent(jLabel1)
+                        .addGap(0, 340, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(346, 346, 346)
-                .addComponent(jLabel1)
-                .addContainerGap(346, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +186,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 99, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -199,7 +207,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
             int qtdePessoas = converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
-            rc.atualizar(reserva.getCodigo(), qtdePessoas, txtObservacao.getText().trim(), txtDataReserva.getText().trim(), txtStatus.getText().trim());
+            rc.atualizar(reserva.getCodigo(), qtdePessoas, txtObservacao.getText().trim(), txtDataReserva.getText().trim(), (String) cbxStatus.getSelectedItem());
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
@@ -253,6 +261,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -269,6 +278,5 @@ public class AtualizarReserva extends javax.swing.JDialog {
     private javax.swing.JTextField txtNomeCliente;
     private javax.swing.JTextField txtObservacao;
     private javax.swing.JTextField txtQtdePessoas;
-    private javax.swing.JTextField txtStatus;
     // End of variables declaration//GEN-END:variables
 }
