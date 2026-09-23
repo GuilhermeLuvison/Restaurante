@@ -11,15 +11,17 @@ package models;
 public class Pedido {
 
     private int codigo;
-    private int codigoCliente;
-    private int codigoReserva;
+    private int codigoCliente; // Chave estrangeira obrigatória para clientes.codigo - usado no INSERT/UPDATE
+    private String nomeCliente; // Exibição (JOIN com clientes)
+    private Integer codigoReserva; // Chave estrangeira opcional para reserva.codigo - usado no INSERT caso o campo não esteja vazio
     private int mesa;
     private int qtdePessoas;
     private String momentoPedido;
     private String status;
 
-    public Pedido(int codigoCliente, int codigoReserva, int mesa, int qtdePessoas, String momentoPedido, String status) {
+    public Pedido(int codigoCliente, String nomeCliente, Integer codigoReserva, int mesa, int qtdePessoas, String momentoPedido, String status) {
         this.codigoCliente = codigoCliente;
+        this.nomeCliente = nomeCliente;
         this.codigoReserva = codigoReserva;
         this.mesa = mesa;
         this.qtdePessoas = qtdePessoas;
@@ -46,11 +48,19 @@ public class Pedido {
         this.codigoCliente = codigoCliente;
     }
 
-    public int getCodigoReserva() {
+    public String getNomeCliente() {
+        return nomeCliente;
+    }
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
+    }
+
+    public Integer getCodigoReserva() {
         return codigoReserva;
     }
 
-    public void setCodigoReserva(int codigoReserva) {
+    public void setCodigoReserva(Integer codigoReserva) {
         this.codigoReserva = codigoReserva;
     }
 
