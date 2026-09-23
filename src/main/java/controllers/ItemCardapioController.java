@@ -21,7 +21,6 @@ import org.apache.commons.validator.GenericValidator;
  */
 public class ItemCardapioController {
 
-    // Atributos
     String url = "jdbc:postgresql://localhost:5432/restaurante";
     String usuario = "postgres";
     String senha = "postgres";
@@ -29,7 +28,6 @@ public class ItemCardapioController {
     // Tipos de Prato válidos para cadastro - conforme chave CHECK do PostgreSQL
     public static final List<String> tiposPratoValidos = Arrays.asList("Entrada", "Prato Principal", "Sobremesa");
 
-    // Método de Cadastro
     public void cadastrar(String nome, String ingredientes, String categoria, String tipoPrato, double preco, String tempoPreparo) throws SQLException {
         validarNome(nome);
         validarIngredientes(ingredientes);
@@ -51,7 +49,6 @@ public class ItemCardapioController {
         }
     }
 
-    // Método de Listagem
     public List<ItemCardapio> listar() throws SQLException {
         List<ItemCardapio> itensCardapio = new ArrayList<>();
         String sql = "SELECT codigo, nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo FROM itenscardapio ORDER BY codigo";
@@ -64,7 +61,6 @@ public class ItemCardapioController {
         return itensCardapio;
     }
 
-    // Método de Busca
     public List<ItemCardapio> buscarPorNome(String termo) throws SQLException {
         List<ItemCardapio> itensCardapio = new ArrayList<>();
         String sql = "SELECT codigo, nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo FROM itenscardapio WHERE nome ILIKE ? ORDER BY codigo";
@@ -81,7 +77,6 @@ public class ItemCardapioController {
         return itensCardapio;
     }
 
-    // Método de Atualização
     public void atualizar(int codigo, String novoNome, String novoIngredientes, String novoCategoria, double novoPreco, String novoTempoPreparo) throws SQLException {
         validarNome(novoNome);
         validarIngredientes(novoIngredientes);
@@ -105,7 +100,6 @@ public class ItemCardapioController {
         }
     }
 
-    // Método de Remoção
     public void remover(int codigo) throws SQLException {
         String sql = "DELETE FROM itenscardapio WHERE codigo = ?";
 
@@ -118,7 +112,6 @@ public class ItemCardapioController {
         }
     }
 
-    // Métodos de Validação
     private void validarNome(String nome) {
         if (GenericValidator.isBlankOrNull(nome)) {
             throw new IllegalArgumentException("Nome inválido: não pode ficar em branco!");
@@ -132,7 +125,6 @@ public class ItemCardapioController {
     }
 
     private void validarCategoria(String categoria) {
-        // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(categoria)) {
             throw new IllegalArgumentException("Categoria inválida: não pode ficar em branco!");
         }
@@ -144,7 +136,6 @@ public class ItemCardapioController {
     }
 
     private void validarTipoPrato(String tipoPrato) {
-        // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(tipoPrato)) {
             throw new IllegalArgumentException("Tipo de Prato inválido: não pode ficar em branco!");
         }
@@ -162,7 +153,6 @@ public class ItemCardapioController {
     }
 
     private void validarTempoPreparo(String tempoPreparo) {
-        // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(tempoPreparo)) {
             throw new IllegalArgumentException("Tempo de Preparo inválido: não pode ficar em branco!");
         }
@@ -173,7 +163,6 @@ public class ItemCardapioController {
         }
     }
 
-    // Método de Mapeamento
     private ItemCardapio mapearItemCardapio(ResultSet rs) throws SQLException {
         ItemCardapio ic = new ItemCardapio();
         ic.setCodigo(rs.getInt("codigo"));

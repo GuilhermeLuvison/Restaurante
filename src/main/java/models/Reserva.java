@@ -10,7 +10,6 @@ package models;
  */
 public class Reserva {
 
-    // Atributos
     private int codigo;
     private int codigoCliente; // Chave estrangeira para clientes.codigo - usado no INSERT/UPDATE
     private String nomeCliente; // Exibição (JOIN com clientes)
@@ -20,7 +19,6 @@ public class Reserva {
     private String dataReserva;
     private String status;
 
-    // Métodos Construtores
     public Reserva(String nomeCliente, int mesa, int qtdePessoas, String observacao, String dataReserva, String status) {
         this.nomeCliente = nomeCliente;
         this.mesa = mesa;
@@ -33,7 +31,6 @@ public class Reserva {
     public Reserva() {
     }
 
-    // Getters e Setters
     public int getCodigo() {
         return codigo;
     }
@@ -98,7 +95,6 @@ public class Reserva {
         this.status = status;
     }
 
-    // Método de Impressão
     public void imprimeAtributos() {
         System.out.println("DETALHES DA RESERVA:");
         System.out.println("Código: " + codigo);

@@ -23,18 +23,16 @@ import org.apache.commons.validator.GenericValidator;
  */
 public class ClienteController {
 
-    // Atributos
     private String url = "jdbc:postgresql://localhost:5432/restaurante";
     private String usuario = "postgres";
     private String senha = "postgres";
-    private static final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Formatar data e hora para dd/mm/yyyy
+    private static final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    // Método de Cadastro
     public void cadastrar(String nome, String cpf, String telefone, String email, String dataNascimento) throws SQLException {
         validarNome(nome);
         cpf = formatarCpf(cpf);
         validarCpf(cpf);
-        LocalDate dataNasc = validarDataNascimento(dataNascimento); // Data local puxa a data de nascimento para fazer a validação
+        LocalDate dataNasc = validarDataNascimento(dataNascimento);
 
         String sql = "INSERT INTO clientes (nome, cpf, telefone, email, data_nascimento) VALUES (?, ?, ?, ?, ?)";
 
@@ -43,7 +41,7 @@ public class ClienteController {
             pstmt.setString(2, cpf);
             pstmt.setString(3, telefone);
             pstmt.setString(4, email);
-            pstmt.setDate(5, java.sql.Date.valueOf(dataNasc)); // pstmt agora insere o dado como Date
+            pstmt.setDate(5, java.sql.Date.valueOf(dataNasc));
             pstmt.executeUpdate();
         } catch (SQLException e) { // Violação de Chave Única do PostgreSQL
             if ("23505".equals(e.getSQLState())) {
@@ -53,7 +51,6 @@ public class ClienteController {
         }
     }
 
-    // Método de Listagem
     public List<Cliente> listar() throws SQLException {
         List<Cliente> clientes = new ArrayList<>();
         String sql = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes ORDER BY codigo";
@@ -66,7 +63,6 @@ public class ClienteController {
         return clientes;
     }
 
-    // Método de Busca
     public List<Cliente> buscarPorNome(String termo) throws SQLException {
         List<Cliente> clientes = new ArrayList<>();
         String sql = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes WHERE nome ILIKE ? ORDER BY codigo";
@@ -83,7 +79,6 @@ public class ClienteController {
         return clientes;
     }
 
-    // Método de Atualização
     public void atualizar(int codigo, String novoNome, String novoTelefone, String novoEmail) throws SQLException {
         validarNome(novoNome);
 
@@ -101,7 +96,6 @@ public class ClienteController {
         }
     }
 
-    // Método de Remoção
     public void remover(int codigo) throws SQLException {
         String sql = "DELETE FROM clientes WHERE codigo = ?";
 
@@ -114,7 +108,6 @@ public class ClienteController {
         }
     }
 
-    // Métodos de Validação
     private void validarNome(String nome) {
         if (GenericValidator.isBlankOrNull(nome)) {
             throw new IllegalArgumentException("Nome inválido: não pode ficar em branco!");
@@ -122,7 +115,6 @@ public class ClienteController {
     }
 
     private void validarCpf(String cpf) {
-        // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(cpf)) {
             throw new IllegalArgumentException("CPF inválido: não pode ficar em branco!");
         }
@@ -133,8 +125,7 @@ public class ClienteController {
         }
     }
 
-    private LocalDate validarDataNascimento(String dataNascimento) { // Método agora delvoverá uma Data Local
-        // Campo não pode estar vazio
+    private LocalDate validarDataNascimento(String dataNascimento) {
         if (GenericValidator.isBlankOrNull(dataNascimento)) {
             throw new IllegalArgumentException("Data de Nascimento inválida: não pode ficar em branco!");
         }
@@ -155,7 +146,6 @@ public class ClienteController {
         return data;
     }
 
-    // Método de Mapeamento
     private Cliente mapearCliente(ResultSet rs) throws SQLException {
         Cliente c = new Cliente();
         c.setCodigo(rs.getInt("codigo"));
@@ -163,17 +153,15 @@ public class ClienteController {
         c.setCpf(rs.getString("cpf"));
         c.setTelefone(rs.getString("telefone"));
         c.setEmail(rs.getString("email"));
-        c.setDataNascimento(formatarData(rs.getDate("data_nascimento"))); // Puxam uma data ao invés de uma String com o método formatarData
+        c.setDataNascimento(formatarData(rs.getDate("data_nascimento")));
         c.setDataCadastro(formatarData(rs.getDate("data_cadastro")));
         return c;
     }
 
-    // Método de Formatação de CPF
     private String formatarCpf(String cpf) {
         return cpf == null ? null : cpf.replaceAll("[^0-9]", "");
     }
 
-    // Método de Formatação de Data
     private String formatarData(java.sql.Date data) {
         return data == null ? "" : data.toLocalDate().format(formatoData);
     }

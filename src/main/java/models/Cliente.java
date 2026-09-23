@@ -10,7 +10,6 @@ package models;
  */
 public class Cliente {
 
-    // Atributos
     private int codigo;
     private String nome;
     private String cpf;
@@ -19,7 +18,6 @@ public class Cliente {
     private String dataNascimento;
     private String dataCadastro;
 
-    // Métodos Construtores
     public Cliente(String nome, String cpf, String telefone, String email, String dataNascimento, String dataCadastro) {
         this.nome = nome;
         this.cpf = cpf;
@@ -32,7 +30,6 @@ public class Cliente {
     public Cliente() {
     }
 
-    // Getters e Setters
     public int getCodigo() {
         return codigo;
     }
@@ -89,7 +86,6 @@ public class Cliente {
         this.dataCadastro = dataCadastro;
     }
 
-    // Método de Impressão
     public void imprimeAtributos() {
         System.out.println("DETALHES DO CLIENTE:");
         System.out.println("Código: " + codigo);

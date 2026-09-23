@@ -10,7 +10,6 @@ package models;
  */
 public class ItemCardapio {
 
-    // Atributos
     private int codigo;
     private String nome;
     private String ingredientes;
@@ -19,7 +18,6 @@ public class ItemCardapio {
     private double preco;
     private String tempoPreparo;
 
-    // Métodos Construtores
     public ItemCardapio(String nome, String ingredientes, String categoria, String tipoPrato, double preco, String tempoPreparo) {
         this.nome = nome;
         this.ingredientes = ingredientes;
@@ -32,7 +30,6 @@ public class ItemCardapio {
     public ItemCardapio() {
     }
 
-    // Getters e Setters
     public int getCodigo() {
         return codigo;
     }
@@ -89,7 +86,6 @@ public class ItemCardapio {
         this.tempoPreparo = tempoPreparo;
     }
 
-    // Método de Impressão
     public void imprimeAtributos() {
         System.out.println("DETALHES DO ITEM DO CARDÁPIO:");
         System.out.println("Código: " + codigo);

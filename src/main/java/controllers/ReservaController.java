@@ -25,33 +25,29 @@ import org.apache.commons.validator.GenericValidator;
  */
 public class ReservaController {
 
-    // Atributos
     String url = "jdbc:postgresql://localhost:5432/restaurante";
     String usuario = "postgres";
     String senha = "postgres";
-
-    // Formatar data e hora para dd/mm/yyyy
     private static final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // Status válidos para cadastro e atualização, conforme chave CHECK do PostgreSQL
     public static final List<String> statusValidos = Arrays.asList("Confirmada", "Pendente", "Cancelada");
 
-    // Método de Cadastro
     public void cadastrar(int codigoCliente, int mesa, int qtdePessoas, String observacao, String dataReserva, String status) throws SQLException {
-        validarCodigoCliente(codigoCliente); // Validação para código de cliente existente
+        validarCodigoCliente(codigoCliente);
         validarMesa(mesa);
         validarQtdePessoas(qtdePessoas);
-        LocalDate data = validarDataReserva(dataReserva); // Inserção de data da reserva para fazer a validação
+        LocalDate data = validarDataReserva(dataReserva);
         validarStatus(status);
 
-        String sql = "INSERT INTO reservas (codigo_cliente, mesa, quantidade_pessoas, observacao, data_reserva, status) VALUES (?, ?, ?, ?, ?, ?)"; // INSERT com campo de chave estrangeira
+        String sql = "INSERT INTO reservas (codigo_cliente, mesa, quantidade_pessoas, observacao, data_reserva, status) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setInt(1, codigoCliente); // Inserção do código do cliente vindo da tabela clientes
+            pstmt.setInt(1, codigoCliente);
             pstmt.setInt(2, mesa);
             pstmt.setInt(3, qtdePessoas);
             pstmt.setString(4, observacao);
-            pstmt.setDate(5, Date.valueOf(data)); // pstmt agora insere o dado como Date
+            pstmt.setDate(5, Date.valueOf(data));
             pstmt.setString(6, status);
             pstmt.executeUpdate();
         } catch (SQLException e) { // Violação de Chave Estrangeira do PostgreSQL
@@ -62,7 +58,6 @@ public class ReservaController {
         }
     }
 
-    // Método de Listagem (agora usando JOIN para trazer o nome do cliente)
     public List<Reserva> listar() throws SQLException {
         List<Reserva> reservas = new ArrayList<>();
         String sql = "SELECT r.codigo, r.codigo_cliente, c.nome AS nome_cliente, r.mesa, r.quantidade_pessoas, r.observacao, r.data_reserva, r.status FROM reservas r JOIN clientes c ON r.codigo_cliente = c.codigo ORDER BY r.codigo";
@@ -75,7 +70,6 @@ public class ReservaController {
         return reservas;
     }
 
-    // Método de Busca (busca pelo nome do cliente usando JOIN, já que não existe mais o campo nome_cliente em reservas)
     public List<Reserva> buscarPorNome(String termo) throws SQLException {
         List<Reserva> reservas = new ArrayList<>();
         String sql = "SELECT r.codigo, r.codigo_cliente, c.nome AS nome_cliente, r.mesa, r.quantidade_pessoas, r.observacao, r.data_reserva, r.status FROM reservas r JOIN clientes c ON r.codigo_cliente = c.codigo WHERE c.nome ILIKE ? ORDER BY r.codigo";
@@ -92,10 +86,9 @@ public class ReservaController {
         return reservas;
     }
 
-    // Método de Atualização
     public void atualizar(int codigo, int novoQtdePessoas, String novoObservacao, String novoDataReserva, String novoStatus) throws SQLException {
         validarQtdePessoas(novoQtdePessoas);
-        LocalDate data = validarDataReserva(novoDataReserva); // Inserção de nova data da reserva para fazer a validação
+        LocalDate data = validarDataReserva(novoDataReserva);
         validarStatus(novoStatus);
 
         String sql = "UPDATE reservas SET quantidade_pessoas = ?, observacao = ?, data_reserva = ?, status = ?  WHERE codigo = ?";
@@ -103,7 +96,7 @@ public class ReservaController {
         try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, novoQtdePessoas);
             pstmt.setString(2, novoObservacao);
-            pstmt.setDate(3, Date.valueOf(data)); // pstmt agora atualiza o dado como Date
+            pstmt.setDate(3, Date.valueOf(data));
             pstmt.setString(4, novoStatus);
             pstmt.setInt(5, codigo);
             int linhas = pstmt.executeUpdate();
@@ -113,7 +106,6 @@ public class ReservaController {
         }
     }
 
-    // Método de Remoção
     public void remover(int codigo) throws SQLException {
         String sql = "DELETE FROM reservas WHERE codigo = ?";
 
@@ -126,8 +118,7 @@ public class ReservaController {
         }
     }
 
-    // Métodos de Validação
-    private void validarCodigoCliente(int codigoCliente) { // Método agora valida se existe cliente na tabela clientes
+    private void validarCodigoCliente(int codigoCliente) {
         if (codigoCliente <= 0) {
             throw new IllegalArgumentException("Selecione um cliente válido.");
         }
@@ -146,12 +137,10 @@ public class ReservaController {
     }
 
     private LocalDate validarDataReserva(String dataReserva) {
-        // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(dataReserva)) {
             throw new IllegalArgumentException("Data de Reserva inválida: não pode ficar em branco!");
         }
 
-        // A data deve estar em formato DD/MM/YYYY
         LocalDate data;
         try {
             data = LocalDate.parse(dataReserva, formatoData);
@@ -163,7 +152,6 @@ public class ReservaController {
     }
 
     private void validarStatus(String status) {
-        // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(status)) {
             throw new IllegalArgumentException("Status inválido: não pode ficar em branco!");
         }
@@ -174,21 +162,19 @@ public class ReservaController {
         }
     }
 
-    // Método de Mapeamento
     private Reserva mapearReserva(ResultSet rs) throws SQLException {
         Reserva r = new Reserva();
         r.setCodigo(rs.getInt("codigo"));
-        r.setCodigoCliente(rs.getInt("codigo_cliente")); // Mapea código do cliente existente
+        r.setCodigoCliente(rs.getInt("codigo_cliente"));
         r.setNomeCliente(rs.getString("nome_cliente"));
         r.setMesa(rs.getInt("mesa"));
         r.setQtdePessoas(rs.getInt("quantidade_pessoas"));
         r.setObservacao(rs.getString("observacao"));
-        r.setDataReserva(formatarData(rs.getDate("data_reserva"))); // Puxa uma data ao invés de uma String com o método formatarData
+        r.setDataReserva(formatarData(rs.getDate("data_reserva")));
         r.setStatus(rs.getString("status"));
         return r;
     }
 
-    // Método de Formatação de Data
     private String formatarData(java.sql.Date data) {
         return data == null ? "" : data.toLocalDate().format(formatoData);
     }
