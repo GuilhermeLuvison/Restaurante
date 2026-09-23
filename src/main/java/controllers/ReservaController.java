@@ -4,9 +4,9 @@
  */
 package controllers;
 
+import database.ConexaoBanco;
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,9 +25,6 @@ import org.apache.commons.validator.GenericValidator;
  */
 public class ReservaController {
 
-    String url = "jdbc:postgresql://localhost:5432/restaurante";
-    String usuario = "postgres";
-    String senha = "postgres";
     private static final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // Status válidos para cadastro e atualização, conforme chave CHECK do PostgreSQL
@@ -42,7 +39,7 @@ public class ReservaController {
 
         String sql = "INSERT INTO reservas (codigo_cliente, mesa, quantidade_pessoas, observacao, data_reserva, status) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, codigoCliente);
             pstmt.setInt(2, mesa);
             pstmt.setInt(3, qtdePessoas);
@@ -62,7 +59,7 @@ public class ReservaController {
         List<Reserva> reservas = new ArrayList<>();
         String sql = "SELECT r.codigo, r.codigo_cliente, c.nome AS nome_cliente, r.mesa, r.quantidade_pessoas, r.observacao, r.data_reserva, r.status FROM reservas r JOIN clientes c ON r.codigo_cliente = c.codigo ORDER BY r.codigo";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 reservas.add(mapearReserva(rs));
             }
@@ -74,7 +71,7 @@ public class ReservaController {
         List<Reserva> reservas = new ArrayList<>();
         String sql = "SELECT r.codigo, r.codigo_cliente, c.nome AS nome_cliente, r.mesa, r.quantidade_pessoas, r.observacao, r.data_reserva, r.status FROM reservas r JOIN clientes c ON r.codigo_cliente = c.codigo WHERE c.nome ILIKE ? ORDER BY r.codigo";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, "%" + termo + "%");
 
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -93,7 +90,7 @@ public class ReservaController {
 
         String sql = "UPDATE reservas SET quantidade_pessoas = ?, observacao = ?, data_reserva = ?, status = ?  WHERE codigo = ?";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, novoQtdePessoas);
             pstmt.setString(2, novoObservacao);
             pstmt.setDate(3, Date.valueOf(data));
@@ -109,7 +106,7 @@ public class ReservaController {
     public void remover(int codigo) throws SQLException {
         String sql = "DELETE FROM reservas WHERE codigo = ?";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, codigo);
             int linhas = pstmt.executeUpdate();
             if (linhas == 0) {

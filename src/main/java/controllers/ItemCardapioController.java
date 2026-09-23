@@ -4,8 +4,8 @@
  */
 package controllers;
 
+import database.ConexaoBanco;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,10 +21,6 @@ import org.apache.commons.validator.GenericValidator;
  */
 public class ItemCardapioController {
 
-    String url = "jdbc:postgresql://localhost:5432/restaurante";
-    String usuario = "postgres";
-    String senha = "postgres";
-
     // Tipos de Prato válidos para cadastro - conforme chave CHECK do PostgreSQL
     public static final List<String> tiposPratoValidos = Arrays.asList("Entrada", "Prato Principal", "Sobremesa");
 
@@ -38,7 +34,7 @@ public class ItemCardapioController {
 
         String sql = "INSERT INTO itenscardapio (nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, nome);
             pstmt.setString(2, ingredientes);
             pstmt.setString(3, categoria);
@@ -53,7 +49,7 @@ public class ItemCardapioController {
         List<ItemCardapio> itensCardapio = new ArrayList<>();
         String sql = "SELECT codigo, nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo FROM itenscardapio ORDER BY codigo";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 itensCardapio.add(mapearItemCardapio(rs));
             }
@@ -65,7 +61,7 @@ public class ItemCardapioController {
         List<ItemCardapio> itensCardapio = new ArrayList<>();
         String sql = "SELECT codigo, nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo FROM itenscardapio WHERE nome ILIKE ? ORDER BY codigo";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, "%" + termo + "%");
 
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -86,7 +82,7 @@ public class ItemCardapioController {
 
         String sql = "UPDATE itenscardapio SET nome = ?, ingredientes = ?, categoria = ?, preco = ?, tempo_preparo = ? WHERE codigo = ?";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, novoNome);
             pstmt.setString(2, novoIngredientes);
             pstmt.setString(3, novoCategoria);
@@ -103,7 +99,7 @@ public class ItemCardapioController {
     public void remover(int codigo) throws SQLException {
         String sql = "DELETE FROM itenscardapio WHERE codigo = ?";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, codigo);
             int linhas = pstmt.executeUpdate();
             if (linhas == 0) {

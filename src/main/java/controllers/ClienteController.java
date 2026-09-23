@@ -4,8 +4,8 @@
  */
 package controllers;
 
+import database.ConexaoBanco;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,9 +23,6 @@ import org.apache.commons.validator.GenericValidator;
  */
 public class ClienteController {
 
-    private String url = "jdbc:postgresql://localhost:5432/restaurante";
-    private String usuario = "postgres";
-    private String senha = "postgres";
     private static final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public void cadastrar(String nome, String cpf, String telefone, String email, String dataNascimento) throws SQLException {
@@ -36,7 +33,7 @@ public class ClienteController {
 
         String sql = "INSERT INTO clientes (nome, cpf, telefone, email, data_nascimento) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, nome);
             pstmt.setString(2, cpf);
             pstmt.setString(3, telefone);
@@ -55,7 +52,7 @@ public class ClienteController {
         List<Cliente> clientes = new ArrayList<>();
         String sql = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes ORDER BY codigo";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 clientes.add(mapearCliente(rs));
             }
@@ -67,7 +64,7 @@ public class ClienteController {
         List<Cliente> clientes = new ArrayList<>();
         String sql = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes WHERE nome ILIKE ? ORDER BY codigo";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, "%" + termo + "%");
 
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -84,7 +81,7 @@ public class ClienteController {
 
         String sql = "UPDATE clientes SET nome = ?, telefone = ?, email = ? WHERE codigo = ?";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, novoNome);
             pstmt.setString(2, novoTelefone);
             pstmt.setString(3, novoEmail);
@@ -99,7 +96,7 @@ public class ClienteController {
     public void remover(int codigo) throws SQLException {
         String sql = "DELETE FROM clientes WHERE codigo = ?";
 
-        try (Connection conexao = DriverManager.getConnection(url, usuario, senha); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, codigo);
             int linhas = pstmt.executeUpdate();
             if (linhas == 0) {
