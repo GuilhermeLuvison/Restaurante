@@ -36,7 +36,7 @@ public class ItemCardapioController {
         validarCategoria(categoria);
         validarTipoPrato(tipoPrato);
         validarPreco(preco);
-        validarTempoPreaparo(tempoPreparo);
+        validarTempoPreparo(tempoPreparo);
 
         String sql = "INSERT INTO itenscardapio (nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -87,7 +87,7 @@ public class ItemCardapioController {
         validarIngredientes(novoIngredientes);
         validarCategoria(novoCategoria);
         validarPreco(novoPreco);
-        validarTempoPreaparo(novoTempoPreparo);
+        validarTempoPreparo(novoTempoPreparo);
 
         String sql = "UPDATE itenscardapio SET nome = ?, ingredientes = ?, categoria = ?, preco = ?, tempo_preparo = ? WHERE codigo = ?";
 
@@ -161,7 +161,7 @@ public class ItemCardapioController {
         }
     }
 
-    private void validarTempoPreaparo(String tempoPreparo) {
+    private void validarTempoPreparo(String tempoPreparo) {
         // Campo não pode estar vazio
         if (GenericValidator.isBlankOrNull(tempoPreparo)) {
             throw new IllegalArgumentException("Tempo de Preparo inválido: não pode ficar em branco!");
