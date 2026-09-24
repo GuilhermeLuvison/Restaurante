@@ -28,9 +28,10 @@
               <Component id="jLabel1" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="327" max="-2" attributes="0"/>
           </Group>
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="257" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="btnCadastrarPedido" max="32767" attributes="0"/>
                   <Component id="btnListarItensCardapio" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnListarReservas" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnCadastrarReserva" alignment="0" max="32767" attributes="0"/>
@@ -59,7 +60,9 @@
               <Component id="btnCadastrarReserva" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnListarReservas" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="344" max="32767" attributes="0"/>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="btnCadastrarPedido" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="299" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -116,6 +119,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarReservasActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCadastrarPedido">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cadastrar novo Pedido"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarPedidoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
