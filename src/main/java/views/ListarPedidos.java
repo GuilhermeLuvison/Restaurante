@@ -18,7 +18,7 @@ import models.Pedido;
  */
 public class ListarPedidos extends javax.swing.JDialog {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarReservas.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarPedidos.class.getName());
     private final PedidoController pc = new PedidoController();
     private DefaultTableModel modeloTabela;
     private final JFrame telaInicial;
@@ -203,13 +203,14 @@ public class ListarPedidos extends javax.swing.JDialog {
 
         int codigo = (int) modeloTabela.getValueAt(linha, 0);
         String nomeCliente = modeloTabela.getValueAt(linha, 1).toString();
-        int codigoReserva = (int) modeloTabela.getValueAt(linha, 2);
+        Object numeroReserva = modeloTabela.getValueAt(linha, 2);
+        Integer codigoReserva = (numeroReserva == null) ? null : (Integer) numeroReserva;
         int mesa = (int) modeloTabela.getValueAt(linha, 3);
         int qtdePessoas = (int) modeloTabela.getValueAt(linha, 4);
         String momentoPedido = modeloTabela.getValueAt(linha, 5).toString();
         String status = modeloTabela.getValueAt(linha, 6).toString();
 
-        Pedido pedidoSelecionado = new Pedido(nomeCliente, codigoReserva, mesa, qtdePessoas, momentoPedido, status);
+        Pedido pedidoSelecionado = new Pedido(0, nomeCliente, codigoReserva, mesa, qtdePessoas, momentoPedido, status);
         pedidoSelecionado.setCodigo(codigo);
 
         AtualizarPedido tela = new AtualizarPedido(telaInicial, true, pedidoSelecionado);

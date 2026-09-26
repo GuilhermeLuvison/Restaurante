@@ -37,6 +37,7 @@ public class TelaInicial extends javax.swing.JFrame {
         btnCadastrarReserva = new javax.swing.JButton();
         btnListarReservas = new javax.swing.JButton();
         btnCadastrarPedido = new javax.swing.JButton();
+        btnListarPedidos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,6 +92,13 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        btnListarPedidos.setText("Ver Lista de Pedidos");
+        btnListarPedidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarPedidosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -102,6 +110,7 @@ public class TelaInicial extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(257, 257, 257)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnListarPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnCadastrarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnListarItensCardapio, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnListarReservas, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -130,7 +139,9 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addComponent(btnListarReservas)
                 .addGap(18, 18, 18)
                 .addComponent(btnCadastrarPedido)
-                .addContainerGap(299, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnListarPedidos)
+                .addContainerGap(266, Short.MAX_VALUE))
         );
 
         pack();
@@ -171,6 +182,11 @@ public class TelaInicial extends javax.swing.JFrame {
         CadastrarPedido tela = new CadastrarPedido(this, true);
         tela.setVisible(true);
     }//GEN-LAST:event_btnCadastrarPedidoActionPerformed
+
+    private void btnListarPedidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarPedidosActionPerformed
+        ListarPedidos tela = new ListarPedidos(this, true);
+        tela.setVisible(true);
+    }//GEN-LAST:event_btnListarPedidosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,6 +230,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JButton btnCadastrarReserva;
     private javax.swing.JButton btnListarClientes;
     private javax.swing.JButton btnListarItensCardapio;
+    private javax.swing.JButton btnListarPedidos;
     private javax.swing.JButton btnListarReservas;
     private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables

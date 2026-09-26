@@ -32,6 +32,7 @@ public class CadastrarPedido extends javax.swing.JDialog {
 
         try {
             new ClienteController().listar().forEach(cbxCliente::addItem);
+            cbxReserva.addItem(null);
             new ReservaController().listar().forEach(cbxReserva::addItem);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
@@ -244,18 +245,14 @@ public class CadastrarPedido extends javax.swing.JDialog {
         }
 
         Reserva reservaSelecionada = (Reserva) cbxReserva.getSelectedItem();
-        if (reservaSelecionada == null) {
-            JOptionPane.showMessageDialog(this, "Nenhuma reserva cadastrada. Cadastre uma reserva antes de fazer um pedido.",
-                    "Nenhum cliente disponível", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+        Integer codigoReserva = (reservaSelecionada == null) ? null : reservaSelecionada.getCodigo();
 
         try {
 
             int mesa = converterInteiro(txtMesa.getText().trim(), "Mesa");
             int qtdePessoas = converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
             String status = (String) cbxStatus.getSelectedItem();
-            pc.cadastrar(clienteSelecionado.getCodigo(), reservaSelecionada.getCodigo(), mesa, qtdePessoas, status);
+            pc.cadastrar(clienteSelecionado.getCodigo(), codigoReserva, mesa, qtdePessoas, status);
             JOptionPane.showMessageDialog(this, "Pedido cadastrado com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limpar();
@@ -317,7 +314,7 @@ public class CadastrarPedido extends javax.swing.JDialog {
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnListarPedidos;
     private javax.swing.JComboBox<Cliente> cbxCliente;
-    private javax.swing.JComboBox<String> cbxReserva;
+    private javax.swing.JComboBox<Reserva> cbxReserva;
     private javax.swing.JComboBox<String> cbxStatus;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

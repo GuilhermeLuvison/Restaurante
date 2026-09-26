@@ -36,7 +36,7 @@ public class PedidoController {
         validarQtdePessoas(qtdePessoas);
         validarStatus(status);
 
-        String sql = "INSERT INTO reservas (codigo_cliente, codigo_reserva, mesa, quantidade_pessoas, status) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO pedidos (codigo_cliente, codigo_reserva, mesa, quantidade_pessoas, status) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, codigoCliente);

@@ -16,7 +16,7 @@ import models.Pedido;
  */
 public class AtualizarPedido extends javax.swing.JDialog {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtualizarReserva.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtualizarPedido.class.getName());
     private final PedidoController pc = new PedidoController();
     private final Pedido pedido;
 
@@ -33,7 +33,7 @@ public class AtualizarPedido extends javax.swing.JDialog {
     private void preencherCampos() {
         txtCodigo.setText(String.valueOf(pedido.getCodigo()));
         txtNomeCliente.setText(pedido.getNomeCliente());
-        txtReserva.setText(String.valueOf(pedido.getCodigoReserva()));
+        txtReserva.setText(pedido.getCodigoReserva() == null ? "Nenhuma" : String.valueOf(pedido.getCodigoReserva()));
         txtMesa.setText(String.valueOf(pedido.getMesa()));
         txtQtdePessoas.setText(String.valueOf(pedido.getQtdePessoas()));
         txtMomentoPedido.setText(pedido.getMomentoPedido());

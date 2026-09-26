@@ -31,6 +31,7 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="257" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="btnListarPedidos" max="32767" attributes="0"/>
                   <Component id="btnCadastrarPedido" max="32767" attributes="0"/>
                   <Component id="btnListarItensCardapio" alignment="0" max="32767" attributes="0"/>
                   <Component id="btnListarReservas" alignment="0" max="32767" attributes="0"/>
@@ -62,7 +63,9 @@
               <Component id="btnListarReservas" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnCadastrarPedido" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="299" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="btnListarPedidos" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="266" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -127,6 +130,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCadastrarPedidoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnListarPedidos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Lista de Pedidos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnListarPedidosActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
