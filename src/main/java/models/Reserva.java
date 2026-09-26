@@ -106,4 +106,10 @@ public class Reserva {
         System.out.println("Status: " + status);
         System.out.println("");
     }
+
+    // Método para mostrar código, mesa e data de reserva na ComboBox de CadastrarPedido
+    @Override
+    public String toString() {
+        return codigo + " - Mesa " + mesa + " - " + dataReserva;
+    }
 }
