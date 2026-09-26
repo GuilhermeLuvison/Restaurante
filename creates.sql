@@ -37,7 +37,6 @@ CREATE TABLE reservas (
     CONSTRAINT CHK_status CHECK (status = 'Confirmada' OR status = 'Pendente' OR status = 'Cancelada')
 );
 
--- CREATE TABLE (Será implementado)
 CREATE TABLE pedidos (
     codigo SERIAL NOT NULL,
     codigo_cliente INT NOT NULL,
@@ -52,6 +51,7 @@ CREATE TABLE pedidos (
     CONSTRAINT CHK_status CHECK (status = 'Entregue' OR status = 'Em preparo' OR status = 'Cancelado')
 );
 
+-- CREATE TABLE (Será implementado)
 CREATE TABLE itenspedido (
     codigo SERIAL NOT NULL,
     codigo_pedido INT NOT NULL,
