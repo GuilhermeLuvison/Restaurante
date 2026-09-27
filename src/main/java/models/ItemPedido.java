@@ -13,16 +13,19 @@ public class ItemPedido {
     private int codigo;
     private int codigoPedido;
     private int codigoItemCardapio;
+    private String nomeItemCardapio; // Exibição (JOIN com itenscardapio)
     private int quantidade;
     private double precoUnitario;
-    private double precoTotal = quantidade * precoUnitario;
+    private double precoTotal;
     private String observacao;
 
-    public ItemPedido(int codigoPedido, int codigoItemCardapio, int quantidade, double precoUnitario, String observacao) {
+    public ItemPedido(int codigoPedido, int codigoItemCardapio, String nomeItemCardapio, int quantidade, double precoUnitario, double precoTotal, String observacao) {
         this.codigoPedido = codigoPedido;
         this.codigoItemCardapio = codigoItemCardapio;
+        this.nomeItemCardapio = nomeItemCardapio;
         this.quantidade = quantidade;
         this.precoUnitario = precoUnitario;
+        this.precoTotal = precoTotal;
         this.observacao = observacao;
     }
 
@@ -51,6 +54,14 @@ public class ItemPedido {
 
     public void setCodigoItemCardapio(int codigoItemCardapio) {
         this.codigoItemCardapio = codigoItemCardapio;
+    }
+
+    public String getNomeItemCardapio() {
+        return nomeItemCardapio;
+    }
+
+    public void setNomeItemCardapio(String nomeItemCardapio) {
+        this.nomeItemCardapio = nomeItemCardapio;
     }
 
     public int getQuantidade() {
