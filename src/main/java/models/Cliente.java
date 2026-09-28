@@ -86,18 +86,6 @@ public class Cliente {
         this.dataCadastro = dataCadastro;
     }
 
-    public void imprimeAtributos() {
-        System.out.println("DETALHES DO CLIENTE:");
-        System.out.println("Código: " + codigo);
-        System.out.println("Nome: " + nome);
-        System.out.println("CPF: " + cpf);
-        System.out.println("Telefone: " + telefone);
-        System.out.println("Email: " + email);
-        System.out.println("Data de Nascimento: " + dataNascimento);
-        System.out.println("Data de Cadastro: " + dataCadastro);
-        System.out.println("");
-    }
-
     // Método para mostrar código e nome do cliente na ComboBox de CadastrarReserva
     @Override
     public String toString() {

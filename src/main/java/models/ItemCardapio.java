@@ -86,18 +86,6 @@ public class ItemCardapio {
         this.tempoPreparo = tempoPreparo;
     }
 
-    public void imprimeAtributos() {
-        System.out.println("DETALHES DO ITEM DO CARDÁPIO:");
-        System.out.println("Código: " + codigo);
-        System.out.println("Nome: " + nome);
-        System.out.println("Ingredientes: " + ingredientes);
-        System.out.println("Categoria: " + categoria);
-        System.out.println("Tipo de Prato: " + tipoPrato);
-        System.out.println("Preço: " + preco);
-        System.out.println("Tempo de Preparo: " + tempoPreparo);
-        System.out.println("");
-    }
-
     // Método para mostrar código e nome do item de cardápio na ComboBox de CadastrarItemPedido
     @Override
     public String toString() {

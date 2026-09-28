@@ -95,18 +95,6 @@ public class Reserva {
         this.status = status;
     }
 
-    public void imprimeAtributos() {
-        System.out.println("DETALHES DA RESERVA:");
-        System.out.println("Código: " + codigo);
-        System.out.println("Nome do Cliente: " + nomeCliente);
-        System.out.println("Mesa: " + mesa);
-        System.out.println("Quantidade de Pessoas: " + qtdePessoas);
-        System.out.println("Observação: " + observacao);
-        System.out.println("Data da Reserva: " + dataReserva);
-        System.out.println("Status: " + status);
-        System.out.println("");
-    }
-
     // Método para mostrar código, mesa e data de reserva na ComboBox de CadastrarPedido
     @Override
     public String toString() {
