@@ -1,4 +1,3 @@
--- CREATE TABLE (Em uso)
 CREATE TABLE clientes (
     codigo SERIAL NOT NULL,
     nome VARCHAR(255) NOT NULL,
@@ -51,7 +50,6 @@ CREATE TABLE pedidos (
     CONSTRAINT CHK_status CHECK (status = 'Entregue' OR status = 'Em preparo' OR status = 'Cancelado')
 );
 
--- CREATE TABLE (Será implementado)
 CREATE TABLE itenspedido (
     codigo SERIAL NOT NULL,
     codigo_pedido INT NOT NULL,
