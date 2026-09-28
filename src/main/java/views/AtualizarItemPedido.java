@@ -4,54 +4,40 @@
  */
 package views;
 
-import controllers.ItemCardapioController;
 import controllers.ItemPedidoController;
-import controllers.PedidoController;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import models.ItemCardapio;
-import models.Pedido;
+import models.ItemPedido;
 
 /**
  *
  * @author Guilherme Luvison
  */
-public class CadastrarItemPedido extends javax.swing.JDialog {
+public class AtualizarItemPedido extends javax.swing.JDialog {
 
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarItemPedido.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtualizarItemPedido.class.getName());
     private final ItemPedidoController ipc = new ItemPedidoController();
-    private final JFrame telaInicial;
+    private final ItemPedido itemPedido;
 
     /**
-     * Creates new form CadastrarItemPedido
+     * Creates new form AtualizarItemPedido
      */
-    public CadastrarItemPedido(JFrame owner, boolean modal) {
-        super(owner, "Sistema de um Restaurante - Cadastrar Item de Pedido", modal);
-        this.telaInicial = owner;
+    public AtualizarItemPedido(JFrame owner, boolean modal, ItemPedido itemPedido) {
+        super(owner, "Sistema de um Restaurante - Atualizar Item de Pedido", modal);
+        this.itemPedido = itemPedido;
         initComponents();
-
-        try {
-            new PedidoController().listar().forEach(cbxPedido::addItem);
-            new ItemCardapioController().listar().forEach(cbxItemCardapio::addItem);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
-        }
+        preencherCampos();
     }
 
-    private void limpar() {
-        txtCodigo.setText("");
-        if (cbxPedido.getItemCount() > 0) {
-            cbxPedido.setSelectedIndex(0);
-        }
-        if (cbxItemCardapio.getItemCount() > 0) {
-            cbxItemCardapio.setSelectedIndex(0);
-        }
-        txtQuantidade.setText("");
-        txtPrecoUnitario.setText("");
-        txtPrecoTotal.setText("");
-        txtObservacao.setText("");
-        txtQuantidade.requestFocus();
+    private void preencherCampos() {
+        txtCodigo.setText(String.valueOf(itemPedido.getCodigo()));
+        txtPedido.setText(String.valueOf(itemPedido.getCodigoPedido()));
+        txtItemCardapio.setText(itemPedido.getNomeItemCardapio());
+        txtQuantidade.setText(String.valueOf(itemPedido.getQuantidade()));
+        txtPrecoUnitario.setText(String.valueOf(itemPedido.getPrecoUnitario()));
+        txtPrecoTotal.setText(String.valueOf(itemPedido.getPrecoTotal()));
+        txtObservacao.setText(itemPedido.getObservacao());
     }
 
     private int converterInteiro(String texto, String nomeCampo) {
@@ -79,101 +65,99 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        txtPrecoUnitario = new javax.swing.JTextField();
+        jSeparator2 = new javax.swing.JSeparator();
+        btnAtualizar = new javax.swing.JButton();
+        txtQuantidade = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
+        txtItemCardapio = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        txtPrecoTotal = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        btnLimpar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        btnListarItensPedido = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
-        txtQuantidade = new javax.swing.JTextField();
-        cbxPedido = new javax.swing.JComboBox<>();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnCadastrar = new javax.swing.JButton();
-        txtPrecoTotal = new javax.swing.JTextField();
-        cbxItemCardapio = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        txtPrecoUnitario = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        btnCancelar = new javax.swing.JButton();
+        txtPedido = new javax.swing.JTextField();
         txtObservacao = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel7.setText("Preço Total:");
-
-        jLabel6.setText("Preço Unitário:");
+        btnAtualizar.setText("Atualizar");
+        btnAtualizar.addActionListener(this::btnAtualizarActionPerformed);
 
         txtCodigo.setEditable(false);
 
-        jLabel4.setText("Item de Cardápio:");
-
-        btnLimpar.setText("Limpar");
-        btnLimpar.addActionListener(this::btnLimparActionPerformed);
-
-        jLabel8.setText("Observação (Opcional):");
-
-        btnListarItensPedido.setText("Ver Lista de Itens de Pedido");
-        btnListarItensPedido.addActionListener(this::btnListarItensPedidoActionPerformed);
-
-        jLabel2.setText("Código do Item de Pedido:");
-
-        jLabel5.setText("Quantidade:");
+        txtItemCardapio.setEditable(false);
 
         jLabel1.setText("DADOS DO ITEM DE PEDIDO");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        txtPrecoTotal.setEditable(false);
+
+        jLabel2.setText("Código do Item de Pedido:");
+
+        jLabel4.setText("Item de Cardápio:");
+
+        jLabel8.setText("Observação (Opcional):");
+
+        jLabel6.setText("Preço Unitário:");
+
         jLabel3.setText("Pedido:");
 
-        btnCadastrar.setText("Cadastrar");
-        btnCadastrar.addActionListener(this::btnCadastrarActionPerformed);
+        jLabel7.setText("Preço Total:");
 
-        txtPrecoTotal.setEditable(false);
+        jLabel5.setText("Quantidade:");
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
+
+        txtPedido.setEditable(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(325, 325, 325)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(325, 325, 325))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtCodigo)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jSeparator1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCadastrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnListarItensPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtQuantidade)
-                    .addComponent(txtPrecoUnitario)
-                    .addComponent(txtPrecoTotal)
-                    .addComponent(jSeparator2)
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel8))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(cbxPedido, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(cbxItemCardapio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(txtObservacao)
+                            .addComponent(jSeparator2)
+                            .addComponent(txtItemCardapio, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtQuantidade)
+                            .addComponent(txtPrecoUnitario)
+                            .addComponent(txtPrecoTotal)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel8))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtCodigo)
+                            .addComponent(txtPedido)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(325, 325, 325)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(319, 319, 319))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(txtObservacao)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -190,12 +174,12 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addComponent(txtPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(cbxItemCardapio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addComponent(txtItemCardapio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -215,9 +199,8 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCadastrar)
-                    .addComponent(btnLimpar)
-                    .addComponent(btnListarItensPedido))
+                    .addComponent(btnAtualizar)
+                    .addComponent(btnCancelar))
                 .addContainerGap())
         );
 
@@ -225,44 +208,24 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
-        limpar();
-    }//GEN-LAST:event_btnLimparActionPerformed
-
-    private void btnListarItensPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarItensPedidoActionPerformed
-        dispose();
-        ListarItensPedido tela = new ListarItensPedido(telaInicial, true);
-        tela.setVisible(true);
-    }//GEN-LAST:event_btnListarItensPedidoActionPerformed
-
-    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
-        Pedido pedidoSelecionado = (Pedido) cbxPedido.getSelectedItem();
-        if (pedidoSelecionado == null) {
-            JOptionPane.showMessageDialog(this, "Nenhum pedido cadastrado. Cadastre um pedido antes de registrar um item de pedido.",
-                    "Nenhum cliente disponível", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        ItemCardapio itemCardapioSelecionado = (ItemCardapio) cbxItemCardapio.getSelectedItem();
-        if (itemCardapioSelecionado == null) {
-            JOptionPane.showMessageDialog(this, "Nenhum item de cardápio cadastrado. Cadastre um item de cardápio antes de registrar um item de pedido.",
-                    "Nenhum cliente disponível", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
             int quantidade = converterInteiro(txtQuantidade.getText().trim(), "Quantidade");
             double precoUnitario = converterPreco(txtPrecoUnitario.getText().trim());
-            ipc.cadastrar(pedidoSelecionado.getCodigo(), itemCardapioSelecionado.getCodigo(), quantidade, precoUnitario, txtObservacao.getText().trim());
-            JOptionPane.showMessageDialog(this, "Item de Pedido cadastrado com sucesso!",
+            ipc.atualizar(itemPedido.getCodigo(), quantidade, precoUnitario, txtObservacao.getText().trim());
+            JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            limpar();
+            dispose();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Dados inválidos", JOptionPane.WARNING_MESSAGE);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_btnCadastrarActionPerformed
+    }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -289,7 +252,10 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                CadastrarItemPedido dialog = new CadastrarItemPedido(new javax.swing.JFrame(), true);
+                ItemPedido itemPedidoTeste = new ItemPedido(0, 0, "Teste", 0, 0.0, 0.0, "Teste");
+                itemPedidoTeste.setCodigo(0);
+
+                AtualizarItemPedido dialog = new AtualizarItemPedido(new javax.swing.JFrame(), true, itemPedidoTeste);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -302,11 +268,8 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCadastrar;
-    private javax.swing.JButton btnLimpar;
-    private javax.swing.JButton btnListarItensPedido;
-    private javax.swing.JComboBox<ItemCardapio> cbxItemCardapio;
-    private javax.swing.JComboBox<Pedido> cbxPedido;
+    private javax.swing.JButton btnAtualizar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -318,7 +281,9 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtItemCardapio;
     private javax.swing.JTextField txtObservacao;
+    private javax.swing.JTextField txtPedido;
     private javax.swing.JTextField txtPrecoTotal;
     private javax.swing.JTextField txtPrecoUnitario;
     private javax.swing.JTextField txtQuantidade;
