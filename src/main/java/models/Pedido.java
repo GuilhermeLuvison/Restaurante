@@ -95,4 +95,10 @@ public class Pedido {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    // Método para mostrar código e nome do cliente na ComboBox de CadastrarItemPedido
+    @Override
+    public String toString() {
+        return codigo + " - " + nomeCliente;
+    }
 }

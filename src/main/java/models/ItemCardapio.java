@@ -97,4 +97,10 @@ public class ItemCardapio {
         System.out.println("Tempo de Preparo: " + tempoPreparo);
         System.out.println("");
     }
+
+    // Método para mostrar código e nome do item de cardápio na ComboBox de CadastrarItemPedido
+    @Override
+    public String toString() {
+        return codigo + " - " + nome;
+    }
 }
