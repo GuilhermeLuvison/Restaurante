@@ -128,7 +128,7 @@ public class ItemPedidoController {
         ItemPedido ip = new ItemPedido();
         ip.setCodigo(rs.getInt("codigo"));
         ip.setCodigoPedido(rs.getInt("codigo_pedido"));
-        ip.setCodigoItemCardapio(rs.getInt("codigo_itemcardapio"));
+        ip.setCodigoItemCardapio(rs.getInt("codigo_itenscardapio"));
         ip.setNomeItemCardapio(rs.getString("nome_itemcardapio"));
         ip.setQuantidade(rs.getInt("quantidade"));
         ip.setPrecoUnitario(rs.getDouble("preco_unitario"));
