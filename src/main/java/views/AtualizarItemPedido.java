@@ -252,7 +252,7 @@ public class AtualizarItemPedido extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                ItemPedido itemPedidoTeste = new ItemPedido(0, 0, "Teste", 0, 0.0, 0.0, "Teste");
+                ItemPedido itemPedidoTeste = new ItemPedido(0, "Teste", 0, 0.0, 0.0, "Teste");
                 itemPedidoTeste.setCodigo(0);
 
                 AtualizarItemPedido dialog = new AtualizarItemPedido(new javax.swing.JFrame(), true, itemPedidoTeste);

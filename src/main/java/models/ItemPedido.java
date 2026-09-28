@@ -19,9 +19,8 @@ public class ItemPedido {
     private double precoTotal;
     private String observacao;
 
-    public ItemPedido(int codigoPedido, int codigoItemCardapio, String nomeItemCardapio, int quantidade, double precoUnitario, double precoTotal, String observacao) {
+    public ItemPedido(int codigoPedido, String nomeItemCardapio, int quantidade, double precoUnitario, double precoTotal, String observacao) {
         this.codigoPedido = codigoPedido;
-        this.codigoItemCardapio = codigoItemCardapio;
         this.nomeItemCardapio = nomeItemCardapio;
         this.quantidade = quantidade;
         this.precoUnitario = precoUnitario;
