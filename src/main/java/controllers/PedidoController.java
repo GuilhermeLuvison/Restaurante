@@ -99,7 +99,7 @@ public class PedidoController {
             pstmt.setInt(4, codigo);
             int linhas = pstmt.executeUpdate();
             if (linhas == 0) {
-                throw new IllegalArgumentException("Nenhum pedido encontrada com o Código " + codigo + ".");
+                throw new IllegalArgumentException("Nenhum pedido encontrado com o Código " + codigo + ".");
             }
         }
     }
