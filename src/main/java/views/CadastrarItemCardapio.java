@@ -8,6 +8,7 @@ import controllers.ItemCardapioController;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import utils.ConversorCampos;
 
 /**
  *
@@ -37,14 +38,6 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
         txtPreco.setText("");
         txtTempoPreparo.setText("");
         txtNome.requestFocus();
-    }
-
-    private double converterPreco(String texto) {
-        try {
-            return Double.parseDouble(texto.replace(",", "."));
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Preço inválido: digite um número (formato XX.XX).");
-        }
     }
 
     /**
@@ -201,7 +194,7 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
-            double preco = converterPreco(txtPreco.getText().trim());
+            double preco = ConversorCampos.converterPreco(txtPreco.getText().trim());
             icc.cadastrar(txtNome.getText().trim(), txtIngredientes.getText().trim(), txtCategoria.getText().trim(), (String) cbxTipoPrato.getSelectedItem(), preco, txtTempoPreparo.getText().trim());
             JOptionPane.showMessageDialog(this, "Item de Cardápio cadastrado com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);

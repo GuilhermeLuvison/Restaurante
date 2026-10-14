@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import models.ItemCardapio;
 import models.Pedido;
+import utils.ConversorCampos;
 
 /**
  *
@@ -52,22 +53,6 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
         txtPrecoTotal.setText("");
         txtObservacao.setText("");
         txtQuantidade.requestFocus();
-    }
-
-    private int converterInteiro(String texto, String nomeCampo) {
-        try {
-            return Integer.parseInt(texto);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(nomeCampo + " inválida: digite um número.");
-        }
-    }
-
-    private double converterPreco(String texto) {
-        try {
-            return Double.parseDouble(texto.replace(",", "."));
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Preço inválido: digite um número (formato XX.XX).");
-        }
     }
 
     /**
@@ -251,8 +236,8 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
         }
 
         try {
-            int quantidade = converterInteiro(txtQuantidade.getText().trim(), "Quantidade");
-            double precoUnitario = converterPreco(txtPrecoUnitario.getText().trim());
+            int quantidade = ConversorCampos.converterInteiro(txtQuantidade.getText().trim(), "Quantidade");
+            double precoUnitario = ConversorCampos.converterPreco(txtPrecoUnitario.getText().trim());
             ipc.cadastrar(pedidoSelecionado.getCodigo(), itemCardapioSelecionado.getCodigo(), quantidade, precoUnitario, txtObservacao.getText().trim());
             JOptionPane.showMessageDialog(this, "Item de Pedido cadastrado com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import models.Pedido;
+import utils.ConversorCampos;
 
 /**
  *
@@ -38,14 +39,6 @@ public class AtualizarPedido extends javax.swing.JDialog {
         txtQtdePessoas.setText(String.valueOf(pedido.getQtdePessoas()));
         txtMomentoPedido.setText(pedido.getMomentoPedido());
         cbxStatus.setSelectedItem(pedido.getStatus());
-    }
-
-    private int converterInteiro(String texto, String nomeCampo) {
-        try {
-            return Integer.parseInt(texto);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(nomeCampo + " inválida: digite um número.");
-        }
     }
 
     /**
@@ -216,8 +209,8 @@ public class AtualizarPedido extends javax.swing.JDialog {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            int mesa = converterInteiro(txtMesa.getText().trim(), "Mesa");
-            int qtdePessoas = converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
+            int mesa = ConversorCampos.converterInteiro(txtMesa.getText().trim(), "Mesa");
+            int qtdePessoas = ConversorCampos.converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
             pc.atualizar(pedido.getCodigo(), mesa, qtdePessoas, (String) cbxStatus.getSelectedItem());
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);

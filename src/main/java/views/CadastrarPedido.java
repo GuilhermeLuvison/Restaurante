@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import models.Cliente;
 import models.Reserva;
+import utils.ConversorCampos;
 
 /**
  *
@@ -54,14 +55,6 @@ public class CadastrarPedido extends javax.swing.JDialog {
             cbxStatus.setSelectedIndex(0);
         }
         txtMesa.requestFocus();
-    }
-
-    private int converterInteiro(String texto, String nomeCampo) {
-        try {
-            return Integer.parseInt(texto);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(nomeCampo + " inválida: digite um número.");
-        }
     }
 
     /**
@@ -249,8 +242,8 @@ public class CadastrarPedido extends javax.swing.JDialog {
 
         try {
 
-            int mesa = converterInteiro(txtMesa.getText().trim(), "Mesa");
-            int qtdePessoas = converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
+            int mesa = ConversorCampos.converterInteiro(txtMesa.getText().trim(), "Mesa");
+            int qtdePessoas = ConversorCampos.converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
             String status = (String) cbxStatus.getSelectedItem();
             pc.cadastrar(clienteSelecionado.getCodigo(), codigoReserva, mesa, qtdePessoas, status);
             JOptionPane.showMessageDialog(this, "Pedido cadastrado com sucesso!",

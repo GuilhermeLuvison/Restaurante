@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import models.ItemCardapio;
+import utils.ConversorCampos;
 
 /**
  *
@@ -38,14 +39,6 @@ public class AtualizarItemCardapio extends javax.swing.JDialog {
         txtTipoPrato.setText(itemCardapio.getTipoPrato());
         txtPreco.setText(String.valueOf(itemCardapio.getPreco()));
         txtTempoPreparo.setText(itemCardapio.getTempoPreparo());
-    }
-
-    private double converterPreco(String texto) {
-        try {
-            return Double.parseDouble(texto.replace(",", "."));
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Preço inválido: digite um número (formato XX.XX).");
-        }
     }
 
     /**
@@ -199,7 +192,7 @@ public class AtualizarItemCardapio extends javax.swing.JDialog {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            double preco = converterPreco(txtPreco.getText().trim());
+            double preco = ConversorCampos.converterPreco(txtPreco.getText().trim());
             icc.atualizar(itemCardapio.getCodigo(), txtNome.getText().trim(), txtIngredientes.getText().trim(), txtCategoria.getText().trim(), preco, txtTempoPreparo.getText().trim());
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);

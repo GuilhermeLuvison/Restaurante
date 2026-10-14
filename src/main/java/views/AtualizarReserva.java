@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import models.Reserva;
+import utils.ConversorCampos;
 
 /**
  *
@@ -38,14 +39,6 @@ public class AtualizarReserva extends javax.swing.JDialog {
         txtObservacao.setText(reserva.getObservacao());
         txtDataReserva.setText(reserva.getDataReserva());
         cbxStatus.setSelectedItem(reserva.getStatus());
-    }
-
-    private int converterInteiro(String texto, String nomeCampo) {
-        try {
-            return Integer.parseInt(texto);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(nomeCampo + " inválida: digite um número.");
-        }
     }
 
     /**
@@ -206,7 +199,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            int qtdePessoas = converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
+            int qtdePessoas = ConversorCampos.converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
             rc.atualizar(reserva.getCodigo(), qtdePessoas, txtObservacao.getText().trim(), txtDataReserva.getText().trim(), (String) cbxStatus.getSelectedItem());
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
