@@ -224,14 +224,14 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
         Pedido pedidoSelecionado = (Pedido) cbxPedido.getSelectedItem();
         if (pedidoSelecionado == null) {
             JOptionPane.showMessageDialog(this, "Nenhum pedido cadastrado. Cadastre um pedido antes de registrar um item de pedido.",
-                    "Nenhum cliente disponível", JOptionPane.WARNING_MESSAGE);
+                    "Nenhum pedido disponível", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         ItemCardapio itemCardapioSelecionado = (ItemCardapio) cbxItemCardapio.getSelectedItem();
         if (itemCardapioSelecionado == null) {
             JOptionPane.showMessageDialog(this, "Nenhum item de cardápio cadastrado. Cadastre um item de cardápio antes de registrar um item de pedido.",
-                    "Nenhum cliente disponível", JOptionPane.WARNING_MESSAGE);
+                    "Nenhum item de cardápio disponível", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
