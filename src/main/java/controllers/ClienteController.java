@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import models.Cliente;
 import org.apache.commons.validator.GenericValidator;
+import utils.Validador;
 
 /**
  *
@@ -26,7 +27,7 @@ public class ClienteController {
     private static final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public void cadastrar(String nome, String cpf, String telefone, String email, String dataNascimento) throws SQLException {
-        validarNome(nome);
+        Validador.validarNome(nome);
         cpf = formatarCpf(cpf);
         validarCpf(cpf);
         LocalDate dataNasc = validarDataNascimento(dataNascimento);
@@ -77,7 +78,7 @@ public class ClienteController {
     }
 
     public void atualizar(int codigo, String novoNome, String novoTelefone, String novoEmail) throws SQLException {
-        validarNome(novoNome);
+        Validador.validarNome(novoNome);
 
         String sql = "UPDATE clientes SET nome = ?, telefone = ?, email = ? WHERE codigo = ?";
 
@@ -102,12 +103,6 @@ public class ClienteController {
             if (linhas == 0) {
                 throw new IllegalArgumentException("Nenhum cliente encontrado com o Código " + codigo + ".");
             }
-        }
-    }
-
-    private void validarNome(String nome) {
-        if (GenericValidator.isBlankOrNull(nome)) {
-            throw new IllegalArgumentException("Nome inválido: não pode ficar em branco!");
         }
     }
 

@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import models.Pedido;
 import org.apache.commons.validator.GenericValidator;
+import utils.Validador;
 
 /**
  *
@@ -30,10 +31,10 @@ public class PedidoController {
     public static final List<String> STATUS_VALIDOS = Arrays.asList("Entregue", "Em preparo", "Cancelado");
 
     public void cadastrar(int codigoCliente, Integer codigoReserva, int mesa, int qtdePessoas, String status) throws SQLException {
-        validarCodigoCliente(codigoCliente);
+        Validador.validarCodigoCliente(codigoCliente);
         validarCodigoReserva(codigoReserva);
-        validarMesa(mesa);
-        validarQtdePessoas(qtdePessoas);
+        Validador.validarMesa(mesa);
+        Validador.validarQtdePessoas(qtdePessoas);
         validarStatus(status);
 
         String sql = "INSERT INTO pedidos (codigo_cliente, codigo_reserva, mesa, quantidade_pessoas, status) VALUES (?, ?, ?, ?, ?)";
@@ -86,8 +87,8 @@ public class PedidoController {
     }
 
     public void atualizar(int codigo, int novoMesa, int novoQtdePessoas, String novoStatus) throws SQLException {
-        validarMesa(novoMesa);
-        validarQtdePessoas(novoQtdePessoas);
+        Validador.validarMesa(novoMesa);
+        Validador.validarQtdePessoas(novoQtdePessoas);
         validarStatus(novoStatus);
 
         String sql = "UPDATE pedidos SET mesa = ?, quantidade_pessoas = ?, status = ?  WHERE codigo = ?";
@@ -116,27 +117,9 @@ public class PedidoController {
         }
     }
 
-    private void validarCodigoCliente(int codigoCliente) {
-        if (codigoCliente <= 0) {
-            throw new IllegalArgumentException("Selecione um cliente válido.");
-        }
-    }
-
     private void validarCodigoReserva(Integer codigoReserva) {
         if (codigoReserva != null && codigoReserva <= 0) {
             throw new IllegalArgumentException("Reserva inválida.");
-        }
-    }
-
-    private void validarMesa(int mesa) {
-        if (mesa <= 0) {
-            throw new IllegalArgumentException("Número da mesa inválido: não pode ser negativo ou igual a 0!");
-        }
-    }
-
-    private void validarQtdePessoas(int qtdePessoas) {
-        if (qtdePessoas <= 0) {
-            throw new IllegalArgumentException("Quantidade de pessoas inválida: não pode ser negativo ou igual a 0!");
         }
     }
 

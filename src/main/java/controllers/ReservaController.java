@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import models.Reserva;
 import org.apache.commons.validator.GenericValidator;
+import utils.Validador;
 
 /**
  *
@@ -31,9 +32,9 @@ public class ReservaController {
     public static final List<String> statusValidos = Arrays.asList("Confirmada", "Pendente", "Cancelada");
 
     public void cadastrar(int codigoCliente, int mesa, int qtdePessoas, String observacao, String dataReserva, String status) throws SQLException {
-        validarCodigoCliente(codigoCliente);
-        validarMesa(mesa);
-        validarQtdePessoas(qtdePessoas);
+        Validador.validarCodigoCliente(codigoCliente);
+        Validador.validarMesa(mesa);
+        Validador.validarQtdePessoas(qtdePessoas);
         LocalDate data = validarDataReserva(dataReserva);
         validarStatus(status);
 
@@ -84,7 +85,7 @@ public class ReservaController {
     }
 
     public void atualizar(int codigo, int novoQtdePessoas, String novoObservacao, String novoDataReserva, String novoStatus) throws SQLException {
-        validarQtdePessoas(novoQtdePessoas);
+        Validador.validarQtdePessoas(novoQtdePessoas);
         LocalDate data = validarDataReserva(novoDataReserva);
         validarStatus(novoStatus);
 
@@ -112,24 +113,6 @@ public class ReservaController {
             if (linhas == 0) {
                 throw new IllegalArgumentException("Nenhuma reserva encontrada com o Código " + codigo + ".");
             }
-        }
-    }
-
-    private void validarCodigoCliente(int codigoCliente) {
-        if (codigoCliente <= 0) {
-            throw new IllegalArgumentException("Selecione um cliente válido.");
-        }
-    }
-
-    private void validarMesa(int mesa) {
-        if (mesa <= 0) {
-            throw new IllegalArgumentException("Número da mesa inválido: não pode ser negativo ou igual a 0!");
-        }
-    }
-
-    private void validarQtdePessoas(int qtdePessoas) {
-        if (qtdePessoas <= 0) {
-            throw new IllegalArgumentException("Quantidade de pessoas inválida: não pode ser negativo ou igual a 0!");
         }
     }
 

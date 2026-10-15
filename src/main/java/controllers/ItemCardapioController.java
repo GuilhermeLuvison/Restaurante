@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.List;
 import models.ItemCardapio;
 import org.apache.commons.validator.GenericValidator;
+import utils.Validador;
 
 /**
  *
@@ -25,7 +26,7 @@ public class ItemCardapioController {
     public static final List<String> tiposPratoValidos = Arrays.asList("Entrada", "Prato Principal", "Sobremesa");
 
     public void cadastrar(String nome, String ingredientes, String categoria, String tipoPrato, double preco, String tempoPreparo) throws SQLException {
-        validarNome(nome);
+        Validador.validarNome(nome);
         validarIngredientes(ingredientes);
         validarCategoria(categoria);
         validarTipoPrato(tipoPrato);
@@ -74,7 +75,7 @@ public class ItemCardapioController {
     }
 
     public void atualizar(int codigo, String novoNome, String novoIngredientes, String novoCategoria, double novoPreco, String novoTempoPreparo) throws SQLException {
-        validarNome(novoNome);
+        Validador.validarNome(novoNome);
         validarIngredientes(novoIngredientes);
         validarCategoria(novoCategoria);
         validarPreco(novoPreco);
@@ -105,12 +106,6 @@ public class ItemCardapioController {
             if (linhas == 0) {
                 throw new IllegalArgumentException("Nenhum item de cardápio encontrado com o Código " + codigo + ".");
             }
-        }
-    }
-
-    private void validarNome(String nome) {
-        if (GenericValidator.isBlankOrNull(nome)) {
-            throw new IllegalArgumentException("Nome inválido: não pode ficar em branco!");
         }
     }
 
