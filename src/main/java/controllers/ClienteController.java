@@ -5,6 +5,7 @@
 package controllers;
 
 import database.ConexaoBanco;
+import database.SqlState;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,8 +42,8 @@ public class ClienteController {
             pstmt.setString(4, email);
             pstmt.setDate(5, java.sql.Date.valueOf(dataNasc));
             pstmt.executeUpdate();
-        } catch (SQLException e) { // Violação de Chave Única do PostgreSQL
-            if ("23505".equals(e.getSQLState())) {
+        } catch (SQLException e) {
+            if (SqlState.UNIQUE_VIOLATION.equals(e.getSQLState())) {
                 throw new IllegalArgumentException("Já existe um cliente cadastrado com este CPF.");
             }
             throw e;

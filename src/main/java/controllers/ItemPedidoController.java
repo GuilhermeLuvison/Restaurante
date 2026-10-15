@@ -5,6 +5,7 @@
 package controllers;
 
 import database.ConexaoBanco;
+import database.SqlState;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,8 +35,8 @@ public class ItemPedidoController {
             pstmt.setDouble(4, precoUnitario);
             pstmt.setString(5, observacao);
             pstmt.executeUpdate();
-        } catch (SQLException e) { // Violação de Chave Estrangeira do PostgreSQL (caso não tenha pedido ou itemCardapio cadastrados)
-            if ("23503".equals(e.getSQLState())) {
+        } catch (SQLException e) {
+            if (SqlState.FK_VIOLATION.equals(e.getSQLState())) {
                 throw new IllegalArgumentException("Pedido ou Item de Cardápio não encontrados. Verifique os dados selecionados.");
             }
             throw e;

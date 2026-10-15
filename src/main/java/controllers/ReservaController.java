@@ -5,6 +5,7 @@
 package controllers;
 
 import database.ConexaoBanco;
+import database.SqlState;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -48,8 +49,8 @@ public class ReservaController {
             pstmt.setDate(5, Date.valueOf(data));
             pstmt.setString(6, status);
             pstmt.executeUpdate();
-        } catch (SQLException e) { // Violação de Chave Estrangeira do PostgreSQL
-            if ("23503".equals(e.getSQLState())) {
+        } catch (SQLException e) {
+            if (SqlState.FK_VIOLATION.equals(e.getSQLState())) {
                 throw new IllegalArgumentException("Cliente não encontrado. Selecione um cliente válido.");
             }
             throw e;

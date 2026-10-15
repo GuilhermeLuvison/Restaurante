@@ -5,6 +5,7 @@
 package controllers;
 
 import database.ConexaoBanco;
+import database.SqlState;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -50,8 +51,8 @@ public class PedidoController {
             pstmt.setInt(4, qtdePessoas);
             pstmt.setString(5, status);
             pstmt.executeUpdate();
-        } catch (SQLException e) { // Violação de Chave Estrangeira do PostgreSQL (caso não tenha cliente ou reserva cadastrados)
-            if ("23503".equals(e.getSQLState())) {
+        } catch (SQLException e) {
+            if (SqlState.FK_VIOLATION.equals(e.getSQLState())) {
                 throw new IllegalArgumentException("Cliente ou Reservas não encontrados. Verifique os dados selecionados.");
             }
             throw e;
