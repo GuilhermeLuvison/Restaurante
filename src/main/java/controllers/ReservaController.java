@@ -26,10 +26,10 @@ import utils.Validador;
  */
 public class ReservaController {
 
-    private static final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // Status válidos para cadastro e atualização, conforme chave CHECK do PostgreSQL
-    public static final List<String> statusValidos = Arrays.asList("Confirmada", "Pendente", "Cancelada");
+    public static final List<String> STATUS_VALIDOS = Arrays.asList("Confirmada", "Pendente", "Cancelada");
 
     public void cadastrar(int codigoCliente, int mesa, int qtdePessoas, String observacao, String dataReserva, String status) throws SQLException {
         Validador.validarCodigoCliente(codigoCliente);
@@ -123,7 +123,7 @@ public class ReservaController {
 
         LocalDate data;
         try {
-            data = LocalDate.parse(dataReserva, formatoData);
+            data = LocalDate.parse(dataReserva, FORMATO_DATA);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Data de Reserva inválida: use o formato DD/MM/YYYY!");
         }
@@ -137,7 +137,7 @@ public class ReservaController {
         }
 
         // Somente status válidos registrados na chave CHECK do banco de dados
-        if (!statusValidos.contains(status)) {
+        if (!STATUS_VALIDOS.contains(status)) {
             throw new IllegalArgumentException("Status inválido: deve ser Confirmada, Presente ou Cancelada.");
         }
     }
@@ -156,6 +156,6 @@ public class ReservaController {
     }
 
     private String formatarData(java.sql.Date data) {
-        return data == null ? "" : data.toLocalDate().format(formatoData);
+        return data == null ? "" : data.toLocalDate().format(FORMATO_DATA);
     }
 }

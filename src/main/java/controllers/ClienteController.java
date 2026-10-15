@@ -24,7 +24,7 @@ import utils.Validador;
  */
 public class ClienteController {
 
-    private static final DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     public void cadastrar(String nome, String cpf, String telefone, String email, String dataNascimento) throws SQLException {
         Validador.validarNome(nome);
@@ -125,7 +125,7 @@ public class ClienteController {
         // A data deve estar em formato DD/MM/YYYY
         LocalDate data;
         try {
-            data = LocalDate.parse(dataNascimento, formatoData);
+            data = LocalDate.parse(dataNascimento, FORMATO_DATA);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Data de Nascimento inválida: use o formato DD/MM/YYYY!");
         }
@@ -155,6 +155,6 @@ public class ClienteController {
     }
 
     private String formatarData(java.sql.Date data) {
-        return data == null ? "" : data.toLocalDate().format(formatoData);
+        return data == null ? "" : data.toLocalDate().format(FORMATO_DATA);
     }
 }

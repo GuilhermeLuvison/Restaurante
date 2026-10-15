@@ -23,7 +23,7 @@ import utils.Validador;
 public class ItemCardapioController {
 
     // Tipos de Prato válidos para cadastro - conforme chave CHECK do PostgreSQL
-    public static final List<String> tiposPratoValidos = Arrays.asList("Entrada", "Prato Principal", "Sobremesa");
+    public static final List<String> TIPOS_PRATO_VALIDOS = Arrays.asList("Entrada", "Prato Principal", "Sobremesa");
 
     public void cadastrar(String nome, String ingredientes, String categoria, String tipoPrato, double preco, String tempoPreparo) throws SQLException {
         Validador.validarNome(nome);
@@ -132,7 +132,7 @@ public class ItemCardapioController {
         }
 
         // Somente pratos válidos registrados na chave CHECK do banco de dados
-        if (!tiposPratoValidos.contains(tipoPrato)) {
+        if (!TIPOS_PRATO_VALIDOS.contains(tipoPrato)) {
             throw new IllegalArgumentException("Tipo de Prato inválido: deve ser Entrada, Prato Principal ou Sobremesa.");
         }
     }
