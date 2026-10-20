@@ -4,16 +4,13 @@
  */
 package controllers;
 
-import database.ConexaoBanco;
+import dao.ClienteDao;
+import dao.ClienteDaoJdbc;
 import database.SqlState;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.util.List;
 import models.Cliente;
 import org.apache.commons.validator.GenericValidator;
@@ -26,22 +23,26 @@ import utils.Validador;
 public class ClienteController {
 
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final ClienteDao clienteDao;
+
+    public ClienteController() {
+        this(new ClienteDaoJdbc());
+    }
+
+    public ClienteController(ClienteDao clienteDao) {
+        this.clienteDao = clienteDao;
+    }
 
     public void cadastrar(String nome, String cpf, String telefone, String email, String dataNascimento) throws SQLException {
         Validador.validarNome(nome);
         cpf = formatarCpf(cpf);
         validarCpf(cpf);
-        LocalDate dataNasc = validarDataNascimento(dataNascimento);
+        validarDataNascimento(dataNascimento);
 
-        String sql = "INSERT INTO clientes (nome, cpf, telefone, email, data_nascimento) VALUES (?, ?, ?, ?, ?)";
+        Cliente cliente = new Cliente(nome, cpf, telefone, email, dataNascimento, null);
 
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setString(1, nome);
-            pstmt.setString(2, cpf);
-            pstmt.setString(3, telefone);
-            pstmt.setString(4, email);
-            pstmt.setDate(5, java.sql.Date.valueOf(dataNasc));
-            pstmt.executeUpdate();
+        try {
+            clienteDao.cadastrar(cliente);
         } catch (SQLException e) {
             if (SqlState.UNIQUE_VIOLATION.equals(e.getSQLState())) {
                 throw new IllegalArgumentException("Já existe um cliente cadastrado com este CPF.");
@@ -51,59 +52,31 @@ public class ClienteController {
     }
 
     public List<Cliente> listar() throws SQLException {
-        List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes ORDER BY codigo";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                clientes.add(mapearCliente(rs));
-            }
-        }
-        return clientes;
+        return clienteDao.listar();
     }
 
     public List<Cliente> buscarPorNome(String termo) throws SQLException {
-        List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes WHERE nome ILIKE ? ORDER BY codigo";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setString(1, "%" + termo + "%");
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    clientes.add(mapearCliente(rs));
-                }
-            }
-        }
-        return clientes;
+        return clienteDao.buscarPorNome(termo);
     }
 
     public void atualizar(int codigo, String novoNome, String novoTelefone, String novoEmail) throws SQLException {
         Validador.validarNome(novoNome);
 
-        String sql = "UPDATE clientes SET nome = ?, telefone = ?, email = ? WHERE codigo = ?";
+        Cliente cliente = new Cliente();
+        cliente.setCodigo(codigo);
+        cliente.setNome(novoNome);
+        cliente.setTelefone(novoTelefone);
+        cliente.setEmail(novoEmail);
 
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setString(1, novoNome);
-            pstmt.setString(2, novoTelefone);
-            pstmt.setString(3, novoEmail);
-            pstmt.setInt(4, codigo);
-            int linhas = pstmt.executeUpdate();
-            if (linhas == 0) {
-                throw new IllegalArgumentException("Nenhum cliente encontrado com o Código " + codigo + ".");
-            }
+        if (!clienteDao.atualizar(cliente)) {
+            throw new IllegalArgumentException("Nenhum cliente encontrado com o Código " + codigo + ".");
         }
+
     }
 
     public void remover(int codigo) throws SQLException {
-        String sql = "DELETE FROM clientes WHERE codigo = ?";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setInt(1, codigo);
-            int linhas = pstmt.executeUpdate();
-            if (linhas == 0) {
-                throw new IllegalArgumentException("Nenhum cliente encontrado com o Código " + codigo + ".");
-            }
+        if (!clienteDao.remover(codigo)) {
+            throw new IllegalArgumentException("Nenhum cliente encontrado com o Código " + codigo + ".");
         }
     }
 
@@ -139,23 +112,7 @@ public class ClienteController {
         return data;
     }
 
-    private Cliente mapearCliente(ResultSet rs) throws SQLException {
-        Cliente c = new Cliente();
-        c.setCodigo(rs.getInt("codigo"));
-        c.setNome(rs.getString("nome"));
-        c.setCpf(rs.getString("cpf"));
-        c.setTelefone(rs.getString("telefone"));
-        c.setEmail(rs.getString("email"));
-        c.setDataNascimento(formatarData(rs.getDate("data_nascimento")));
-        c.setDataCadastro(formatarData(rs.getDate("data_cadastro")));
-        return c;
-    }
-
     private String formatarCpf(String cpf) {
         return cpf == null ? null : cpf.replaceAll("[^0-9]", "");
-    }
-
-    private String formatarData(java.sql.Date data) {
-        return data == null ? "" : data.toLocalDate().format(FORMATO_DATA);
     }
 }
