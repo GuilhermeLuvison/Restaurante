@@ -4,12 +4,9 @@
  */
 package controllers;
 
-import database.ConexaoBanco;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import dao.ItemCardapioDao;
+import dao.ItemCardapioDaoJdbc;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import models.ItemCardapio;
@@ -25,6 +22,16 @@ public class ItemCardapioController {
     // Tipos de Prato válidos para cadastro - conforme chave CHECK do PostgreSQL
     public static final List<String> TIPOS_PRATO_VALIDOS = Arrays.asList("Entrada", "Prato Principal", "Sobremesa");
 
+    private final ItemCardapioDao itemCardapioDao;
+
+    public ItemCardapioController() {
+        this(new ItemCardapioDaoJdbc());
+    }
+
+    public ItemCardapioController(ItemCardapioDao itemCardapioDao) {
+        this.itemCardapioDao = itemCardapioDao;
+    }
+
     public void cadastrar(String nome, String ingredientes, String categoria, String tipoPrato, double preco, String tempoPreparo) throws SQLException {
         Validador.validarNome(nome);
         validarIngredientes(ingredientes);
@@ -33,45 +40,16 @@ public class ItemCardapioController {
         validarPreco(preco);
         validarTempoPreparo(tempoPreparo);
 
-        String sql = "INSERT INTO itenscardapio (nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo) VALUES (?, ?, ?, ?, ?, ?)";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setString(1, nome);
-            pstmt.setString(2, ingredientes);
-            pstmt.setString(3, categoria);
-            pstmt.setString(4, tipoPrato);
-            pstmt.setDouble(5, preco);
-            pstmt.setString(6, tempoPreparo);
-            pstmt.executeUpdate();
-        }
+        ItemCardapio itemCardapio = new ItemCardapio(nome, ingredientes, categoria, tipoPrato, preco, tempoPreparo);
+        itemCardapioDao.cadastrar(itemCardapio);
     }
 
     public List<ItemCardapio> listar() throws SQLException {
-        List<ItemCardapio> itensCardapio = new ArrayList<>();
-        String sql = "SELECT codigo, nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo FROM itenscardapio ORDER BY codigo";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                itensCardapio.add(mapearItemCardapio(rs));
-            }
-        }
-        return itensCardapio;
+        return itemCardapioDao.listar();
     }
 
     public List<ItemCardapio> buscarPorNome(String termo) throws SQLException {
-        List<ItemCardapio> itensCardapio = new ArrayList<>();
-        String sql = "SELECT codigo, nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo FROM itenscardapio WHERE nome ILIKE ? ORDER BY codigo";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setString(1, "%" + termo + "%");
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    itensCardapio.add(mapearItemCardapio(rs));
-                }
-            }
-        }
-        return itensCardapio;
+        return itemCardapioDao.buscarPorNome(termo);
     }
 
     public void atualizar(int codigo, String novoNome, String novoIngredientes, String novoCategoria, double novoPreco, String novoTempoPreparo) throws SQLException {
@@ -81,31 +59,22 @@ public class ItemCardapioController {
         validarPreco(novoPreco);
         validarTempoPreparo(novoTempoPreparo);
 
-        String sql = "UPDATE itenscardapio SET nome = ?, ingredientes = ?, categoria = ?, preco = ?, tempo_preparo = ? WHERE codigo = ?";
+        ItemCardapio itemCardapio = new ItemCardapio();
+        itemCardapio.setCodigo(codigo);
+        itemCardapio.setNome(novoNome);
+        itemCardapio.setIngredientes(novoIngredientes);
+        itemCardapio.setCategoria(novoCategoria);
+        itemCardapio.setPreco(novoPreco);
+        itemCardapio.setTempoPreparo(novoTempoPreparo);
 
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setString(1, novoNome);
-            pstmt.setString(2, novoIngredientes);
-            pstmt.setString(3, novoCategoria);
-            pstmt.setDouble(4, novoPreco);
-            pstmt.setString(5, novoTempoPreparo);
-            pstmt.setInt(6, codigo);
-            int linhas = pstmt.executeUpdate();
-            if (linhas == 0) {
-                throw new IllegalArgumentException("Nenhum item de cardápio encontrado com o Código " + codigo + ".");
-            }
+        if (!itemCardapioDao.atualizar(itemCardapio)) {
+            throw new IllegalArgumentException("Nenhum item de cardápio encontrado com o Código " + codigo + ".");
         }
     }
 
     public void remover(int codigo) throws SQLException {
-        String sql = "DELETE FROM itenscardapio WHERE codigo = ?";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setInt(1, codigo);
-            int linhas = pstmt.executeUpdate();
-            if (linhas == 0) {
-                throw new IllegalArgumentException("Nenhum item de cardápio encontrado com o Código " + codigo + ".");
-            }
+        if (!itemCardapioDao.remover(codigo)) {
+            throw new IllegalArgumentException("Nenhum item de cardápio encontrado com o Código " + codigo + ".");
         }
     }
 
@@ -152,17 +121,5 @@ public class ItemCardapioController {
         if (tempoPreparo.length() > 100) {
             throw new IllegalArgumentException("Tempo de Preparo inválido: máximo de 100 caracteres.");
         }
-    }
-
-    private ItemCardapio mapearItemCardapio(ResultSet rs) throws SQLException {
-        ItemCardapio ic = new ItemCardapio();
-        ic.setCodigo(rs.getInt("codigo"));
-        ic.setNome(rs.getString("nome"));
-        ic.setIngredientes(rs.getString("ingredientes"));
-        ic.setCategoria(rs.getString("categoria"));
-        ic.setTipoPrato(rs.getString("tipo_prato"));
-        ic.setPreco(rs.getDouble("preco"));
-        ic.setTempoPreparo(rs.getString("tempo_preparo"));
-        return ic;
     }
 }
