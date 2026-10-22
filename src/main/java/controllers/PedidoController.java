@@ -6,16 +6,9 @@ package controllers;
 
 import dao.PedidoDao;
 import dao.PedidoDaoJdbc;
-import database.ConexaoBanco;
 import database.SqlState;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.sql.Types;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import models.Pedido;

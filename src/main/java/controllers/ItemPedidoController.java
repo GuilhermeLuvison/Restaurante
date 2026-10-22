@@ -6,13 +6,8 @@ package controllers;
 
 import dao.ItemPedidoDao;
 import dao.ItemPedidoDaoJdbc;
-import database.ConexaoBanco;
 import database.SqlState;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import models.ItemPedido;
 
