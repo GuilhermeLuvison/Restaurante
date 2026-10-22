@@ -4,6 +4,8 @@
  */
 package controllers;
 
+import dao.PedidoDao;
+import dao.PedidoDaoJdbc;
 import database.ConexaoBanco;
 import database.SqlState;
 import java.sql.Connection;
@@ -30,6 +32,15 @@ public class PedidoController {
 
     // Status válidos para cadastro e atualização, conforme chave CHECK do PostgreSQL
     public static final List<String> STATUS_VALIDOS = Arrays.asList("Entregue", "Em preparo", "Cancelado");
+    private final PedidoDao pedidoDao;
+
+    public PedidoController() {
+        this(new PedidoDaoJdbc());
+    }
+
+    public PedidoController(PedidoDao pedidoDao) {
+        this.pedidoDao = pedidoDao;
+    }
 
     public void cadastrar(int codigoCliente, Integer codigoReserva, int mesa, int qtdePessoas, String status) throws SQLException {
         Validador.validarCodigoCliente(codigoCliente);
@@ -38,19 +49,15 @@ public class PedidoController {
         Validador.validarQtdePessoas(qtdePessoas);
         validarStatus(status);
 
-        String sql = "INSERT INTO pedidos (codigo_cliente, codigo_reserva, mesa, quantidade_pessoas, status) VALUES (?, ?, ?, ?, ?)";
+        Pedido pedido = new Pedido();
+        pedido.setCodigoCliente(codigoCliente);
+        pedido.setCodigoReserva(codigoReserva);
+        pedido.setMesa(mesa);
+        pedido.setQtdePessoas(qtdePessoas);
+        pedido.setStatus(status);
 
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setInt(1, codigoCliente);
-            if (codigoReserva == null) { // Código de reserva é opcional. If envia NULL quando não há reserva vinculada
-                pstmt.setNull(2, Types.INTEGER);
-            } else {
-                pstmt.setInt(2, codigoReserva);
-            }
-            pstmt.setInt(3, mesa);
-            pstmt.setInt(4, qtdePessoas);
-            pstmt.setString(5, status);
-            pstmt.executeUpdate();
+        try {
+            pedidoDao.cadastrar(pedido);
         } catch (SQLException e) {
             if (SqlState.FK_VIOLATION.equals(e.getSQLState())) {
                 throw new IllegalArgumentException("Cliente ou Reservas não encontrados. Verifique os dados selecionados.");
@@ -60,31 +67,11 @@ public class PedidoController {
     }
 
     public List<Pedido> listar() throws SQLException {
-        List<Pedido> pedidos = new ArrayList<>();
-        String sql = "SELECT p.codigo, p.codigo_cliente, c.nome AS nome_cliente, p.codigo_reserva, p.mesa, p.quantidade_pessoas, p.momento_pedido, p.status FROM pedidos p JOIN clientes c ON p.codigo_cliente = c.codigo ORDER BY p.codigo";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
-            while (rs.next()) {
-                pedidos.add(mapearPedido(rs));
-            }
-        }
-        return pedidos;
+        return pedidoDao.listar();
     }
 
     public List<Pedido> buscarPorNome(String termo) throws SQLException {
-        List<Pedido> pedidos = new ArrayList<>();
-        String sql = "SELECT p.codigo, p.codigo_cliente, c.nome AS nome_cliente, p.codigo_reserva, p.mesa, p.quantidade_pessoas, p.momento_pedido, p.status FROM pedidos p JOIN clientes c ON p.codigo_cliente = c.codigo WHERE c.nome ILIKE ? ORDER BY p.codigo";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setString(1, "%" + termo + "%");
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    pedidos.add(mapearPedido(rs));
-                }
-            }
-        }
-        return pedidos;
+        return pedidoDao.buscarPorNome(termo);
     }
 
     public void atualizar(int codigo, int novoMesa, int novoQtdePessoas, String novoStatus) throws SQLException {
@@ -92,29 +79,21 @@ public class PedidoController {
         Validador.validarQtdePessoas(novoQtdePessoas);
         validarStatus(novoStatus);
 
-        String sql = "UPDATE pedidos SET mesa = ?, quantidade_pessoas = ?, status = ?  WHERE codigo = ?";
+        Pedido pedido = new Pedido();
+        pedido.setCodigo(codigo);
+        pedido.setMesa(novoMesa);
+        pedido.setQtdePessoas(novoQtdePessoas);
+        pedido.setStatus(novoStatus);
 
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setInt(1, novoMesa);
-            pstmt.setInt(2, novoQtdePessoas);
-            pstmt.setString(3, novoStatus);
-            pstmt.setInt(4, codigo);
-            int linhas = pstmt.executeUpdate();
-            if (linhas == 0) {
-                throw new IllegalArgumentException("Nenhum pedido encontrado com o Código " + codigo + ".");
-            }
+        if (!pedidoDao.atualizar(pedido)) {
+            throw new IllegalArgumentException("Nenhum pedido encontrado com o Código " + codigo + ".");
         }
+
     }
 
     public void remover(int codigo) throws SQLException {
-        String sql = "DELETE FROM pedidos WHERE codigo = ?";
-
-        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setInt(1, codigo);
-            int linhas = pstmt.executeUpdate();
-            if (linhas == 0) {
-                throw new IllegalArgumentException("Nenhum pedido encontrado com o Código " + codigo + ".");
-            }
+        if (!pedidoDao.remover(codigo)) {
+            throw new IllegalArgumentException("Nenhum pedido encontrado com o Código " + codigo + ".");
         }
     }
 
@@ -133,22 +112,5 @@ public class PedidoController {
         if (!STATUS_VALIDOS.contains(status)) {
             throw new IllegalArgumentException("Status inválido: deve ser Entregue, Em preparo ou Cancelado.");
         }
-    }
-
-    private Pedido mapearPedido(ResultSet rs) throws SQLException {
-        Pedido p = new Pedido();
-        p.setCodigo(rs.getInt("codigo"));
-        p.setCodigoCliente(rs.getInt("codigo_cliente"));
-        p.setNomeCliente(rs.getString("nome_cliente"));
-        p.setCodigoReserva(rs.getObject("codigo_reserva", Integer.class)); // getObject com o tipo Integer.class retorna NULL quando a coluna está vazia, getInt devolveria 0.
-        p.setMesa(rs.getInt("mesa"));
-        p.setQtdePessoas(rs.getInt("quantidade_pessoas"));
-        p.setMomentoPedido(formatarDataHora(rs.getTimestamp("momento_pedido")));
-        p.setStatus(rs.getString("status"));
-        return p;
-    }
-
-    private String formatarDataHora(Timestamp dataHora) {
-        return dataHora == null ? "" : dataHora.toLocalDateTime().format(FORMATO_DATA_HORA);
     }
 }
