@@ -14,6 +14,7 @@ import java.time.format.DateTimeParseException;
 import java.util.List;
 import models.Cliente;
 import org.apache.commons.validator.GenericValidator;
+import utils.Formatador;
 import utils.Validador;
 
 /**
@@ -22,7 +23,6 @@ import utils.Validador;
  */
 public class ClienteController {
 
-    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final ClienteDao clienteDao;
 
     public ClienteController() {
@@ -99,7 +99,7 @@ public class ClienteController {
         // A data deve estar em formato DD/MM/YYYY
         LocalDate data;
         try {
-            data = LocalDate.parse(dataNascimento, FORMATO_DATA);
+            data = LocalDate.parse(dataNascimento, Formatador.FORMATO_DATA);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Data de Nascimento inválida: use o formato DD/MM/YYYY!");
         }

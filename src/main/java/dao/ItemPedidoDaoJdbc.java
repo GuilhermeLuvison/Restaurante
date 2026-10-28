@@ -19,6 +19,8 @@ import models.ItemPedido;
  */
 public class ItemPedidoDaoJdbc implements ItemPedidoDao {
 
+    private static final String SELECT_ITENSPEDIDO = "SELECT ip.codigo, ip.codigo_pedido, ip.codigo_itenscardapio, ic.nome AS nome_itemcardapio, ip.quantidade, ip.preco_unitario, ip.preco_total, ip.observacao FROM itenspedido ip JOIN itenscardapio ic ON ip.codigo_itenscardapio = ic.codigo";
+
     @Override
     public void cadastrar(ItemPedido itemPedido) throws SQLException {
         String sql = "INSERT INTO itenspedido (codigo_pedido, codigo_itenscardapio, quantidade, preco_unitario, observacao) VALUES (?, ?, ?, ?, ?)";
@@ -36,7 +38,7 @@ public class ItemPedidoDaoJdbc implements ItemPedidoDao {
     @Override
     public List<ItemPedido> listar() throws SQLException {
         List<ItemPedido> itensPedido = new ArrayList<>();
-        String sql = "SELECT ip.codigo, ip.codigo_pedido, ip.codigo_itenscardapio, ic.nome AS nome_itemcardapio, ip.quantidade, ip.preco_unitario, ip.preco_total, ip.observacao FROM itenspedido ip JOIN itenscardapio ic ON ip.codigo_itenscardapio = ic.codigo ORDER BY ip.codigo";
+        String sql = SELECT_ITENSPEDIDO + " ORDER BY ip.codigo";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
@@ -49,7 +51,7 @@ public class ItemPedidoDaoJdbc implements ItemPedidoDao {
     @Override
     public List<ItemPedido> buscarPorNome(String termo) throws SQLException {
         List<ItemPedido> itensPedido = new ArrayList<>();
-        String sql = "SELECT ip.codigo, ip.codigo_pedido, ip.codigo_itenscardapio, ic.nome AS nome_itemcardapio, ip.quantidade, ip.preco_unitario, ip.preco_total, ip.observacao FROM itenspedido ip JOIN itenscardapio ic ON ip.codigo_itenscardapio = ic.codigo WHERE ic.nome ILIKE ? ORDER BY ip.codigo";
+        String sql = SELECT_ITENSPEDIDO + " WHERE ic.nome ILIKE ? ORDER BY ip.codigo";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, "%" + termo + "%");

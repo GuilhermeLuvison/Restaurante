@@ -19,6 +19,8 @@ import models.ItemCardapio;
  */
 public class ItemCardapioDaoJdbc implements ItemCardapioDao {
 
+    private static final String SELECT_ITENSCARDAPIO = "SELECT codigo, nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo FROM itenscardapio";
+
     @Override
     public void cadastrar(ItemCardapio itemCardapio) throws SQLException {
         String sql = "INSERT INTO itenscardapio (nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo) VALUES (?, ?, ?, ?, ?, ?)";
@@ -37,7 +39,7 @@ public class ItemCardapioDaoJdbc implements ItemCardapioDao {
     @Override
     public List<ItemCardapio> listar() throws SQLException {
         List<ItemCardapio> itensCardapio = new ArrayList<>();
-        String sql = "SELECT codigo, nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo FROM itenscardapio ORDER BY codigo";
+        String sql = SELECT_ITENSCARDAPIO + " ORDER BY codigo";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
@@ -50,7 +52,7 @@ public class ItemCardapioDaoJdbc implements ItemCardapioDao {
     @Override
     public List<ItemCardapio> buscarPorNome(String termo) throws SQLException {
         List<ItemCardapio> itensCardapio = new ArrayList<>();
-        String sql = "SELECT codigo, nome, ingredientes, categoria, tipo_prato, preco, tempo_preparo FROM itenscardapio WHERE nome ILIKE ? ORDER BY codigo";
+        String sql = SELECT_ITENSCARDAPIO + " WHERE nome ILIKE ? ORDER BY codigo";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, "%" + termo + "%");

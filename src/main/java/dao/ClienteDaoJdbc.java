@@ -10,10 +10,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import models.Cliente;
+import utils.Formatador;
 
 /**
  *
@@ -21,7 +21,7 @@ import models.Cliente;
  */
 public class ClienteDaoJdbc implements ClienteDao {
 
-    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final String SELECT_CLIENTES = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes";
 
     @Override
     public void cadastrar(Cliente cliente) throws SQLException {
@@ -32,7 +32,7 @@ public class ClienteDaoJdbc implements ClienteDao {
             pstmt.setString(2, cliente.getCpf());
             pstmt.setString(3, cliente.getTelefone());
             pstmt.setString(4, cliente.getEmail());
-            pstmt.setDate(5, java.sql.Date.valueOf(LocalDate.parse(cliente.getDataNascimento(), FORMATO_DATA)));
+            pstmt.setDate(5, java.sql.Date.valueOf(LocalDate.parse(cliente.getDataNascimento(), Formatador.FORMATO_DATA)));
             pstmt.executeUpdate();
         }
     }
@@ -40,7 +40,7 @@ public class ClienteDaoJdbc implements ClienteDao {
     @Override
     public List<Cliente> listar() throws SQLException {
         List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes ORDER BY codigo";
+        String sql = SELECT_CLIENTES + " ORDER BY codigo";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
@@ -53,7 +53,7 @@ public class ClienteDaoJdbc implements ClienteDao {
     @Override
     public List<Cliente> buscarPorNome(String termo) throws SQLException {
         List<Cliente> clientes = new ArrayList<>();
-        String sql = "SELECT codigo, nome, cpf, telefone, email, data_nascimento, data_cadastro FROM clientes WHERE nome ILIKE ? ORDER BY codigo";
+        String sql = SELECT_CLIENTES + " WHERE nome ILIKE ? ORDER BY codigo";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, "%" + termo + "%");
@@ -97,12 +97,8 @@ public class ClienteDaoJdbc implements ClienteDao {
         c.setCpf(rs.getString("cpf"));
         c.setTelefone(rs.getString("telefone"));
         c.setEmail(rs.getString("email"));
-        c.setDataNascimento(formatarData(rs.getDate("data_nascimento")));
-        c.setDataCadastro(formatarData(rs.getDate("data_cadastro")));
+        c.setDataNascimento(Formatador.formatarData(rs.getDate("data_nascimento")));
+        c.setDataCadastro(Formatador.formatarData(rs.getDate("data_cadastro")));
         return c;
-    }
-
-    private String formatarData(java.sql.Date data) {
-        return data == null ? "" : data.toLocalDate().format(FORMATO_DATA);
     }
 }

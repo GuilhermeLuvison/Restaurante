@@ -9,12 +9,12 @@ import dao.ReservaDaoJdbc;
 import database.SqlState;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
 import models.Reserva;
 import org.apache.commons.validator.GenericValidator;
+import utils.Formatador;
 import utils.Validador;
 
 /**
@@ -22,8 +22,6 @@ import utils.Validador;
  * @author Guilherme Luvison
  */
 public class ReservaController {
-
-    private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     // Status válidos para cadastro e atualização, conforme chave CHECK do PostgreSQL
     public static final List<String> STATUS_VALIDOS = Arrays.asList("Confirmada", "Pendente", "Cancelada");
@@ -102,7 +100,7 @@ public class ReservaController {
 
         LocalDate data;
         try {
-            data = LocalDate.parse(dataReserva, FORMATO_DATA);
+            data = LocalDate.parse(dataReserva, Formatador.FORMATO_DATA);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Data de Reserva inválida: use o formato DD/MM/YYYY!");
         }

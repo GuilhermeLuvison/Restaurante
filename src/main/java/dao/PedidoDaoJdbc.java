@@ -9,12 +9,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.sql.Types;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import models.Pedido;
+import utils.Formatador;
 
 /**
  *
@@ -22,7 +21,7 @@ import models.Pedido;
  */
 public class PedidoDaoJdbc implements PedidoDao {
 
-    private static final DateTimeFormatter FORMATO_DATA_HORA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static final String SELECT_PEDIDOS = "SELECT p.codigo, p.codigo_cliente, c.nome AS nome_cliente, p.codigo_reserva, p.mesa, p.quantidade_pessoas, p.momento_pedido, p.status FROM pedidos p JOIN clientes c ON p.codigo_cliente = c.codigo";
 
     @Override
     public void cadastrar(Pedido pedido) throws SQLException {
@@ -45,7 +44,7 @@ public class PedidoDaoJdbc implements PedidoDao {
     @Override
     public List<Pedido> listar() throws SQLException {
         List<Pedido> pedidos = new ArrayList<>();
-        String sql = "SELECT p.codigo, p.codigo_cliente, c.nome AS nome_cliente, p.codigo_reserva, p.mesa, p.quantidade_pessoas, p.momento_pedido, p.status FROM pedidos p JOIN clientes c ON p.codigo_cliente = c.codigo ORDER BY p.codigo";
+        String sql = SELECT_PEDIDOS + " ORDER BY p.codigo";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql); ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
@@ -58,7 +57,7 @@ public class PedidoDaoJdbc implements PedidoDao {
     @Override
     public List<Pedido> buscarPorNome(String termo) throws SQLException {
         List<Pedido> pedidos = new ArrayList<>();
-        String sql = "SELECT p.codigo, p.codigo_cliente, c.nome AS nome_cliente, p.codigo_reserva, p.mesa, p.quantidade_pessoas, p.momento_pedido, p.status FROM pedidos p JOIN clientes c ON p.codigo_cliente = c.codigo WHERE c.nome ILIKE ? ORDER BY p.codigo";
+        String sql = SELECT_PEDIDOS + " WHERE c.nome ILIKE ? ORDER BY p.codigo";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setString(1, "%" + termo + "%");
@@ -103,12 +102,8 @@ public class PedidoDaoJdbc implements PedidoDao {
         p.setCodigoReserva(rs.getObject("codigo_reserva", Integer.class)); // getObject com o tipo Integer.class retorna NULL quando a coluna está vazia, getInt devolveria 0.
         p.setMesa(rs.getInt("mesa"));
         p.setQtdePessoas(rs.getInt("quantidade_pessoas"));
-        p.setMomentoPedido(formatarDataHora(rs.getTimestamp("momento_pedido")));
+        p.setMomentoPedido(Formatador.formatarDataHora(rs.getTimestamp("momento_pedido")));
         p.setStatus(rs.getString("status"));
         return p;
-    }
-
-    private String formatarDataHora(Timestamp dataHora) {
-        return dataHora == null ? "" : dataHora.toLocalDateTime().format(FORMATO_DATA_HORA);
     }
 }
