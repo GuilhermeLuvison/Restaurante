@@ -73,7 +73,7 @@ public class ReservaController {
 
     public void atualizar(int codigo, int novoQtdePessoas, String novoObservacao, String novoDataReserva, String novoStatus) throws SQLException {
         Validador.validarQtdePessoas(novoQtdePessoas);
-        LocalDate data = validarDataReserva(novoDataReserva);
+        validarDataReserva(novoDataReserva);
         validarStatus(novoStatus);
 
         Reserva reserva = new Reserva();
@@ -95,7 +95,7 @@ public class ReservaController {
         }
     }
 
-    private LocalDate validarDataReserva(String dataReserva) {
+    private void validarDataReserva(String dataReserva) {
         if (GenericValidator.isBlankOrNull(dataReserva)) {
             throw new IllegalArgumentException("Data de Reserva inválida: não pode ficar em branco!");
         }
@@ -106,8 +106,6 @@ public class ReservaController {
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Data de Reserva inválida: use o formato DD/MM/YYYY!");
         }
-
-        return data;
     }
 
     private void validarStatus(String status) {

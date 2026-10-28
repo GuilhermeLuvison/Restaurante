@@ -91,7 +91,7 @@ public class ClienteController {
         }
     }
 
-    private LocalDate validarDataNascimento(String dataNascimento) {
+    private void validarDataNascimento(String dataNascimento) {
         if (GenericValidator.isBlankOrNull(dataNascimento)) {
             throw new IllegalArgumentException("Data de Nascimento inválida: não pode ficar em branco!");
         }
@@ -108,8 +108,6 @@ public class ClienteController {
         if (data.isAfter(LocalDate.now().minusYears(18))) {
             throw new IllegalArgumentException("Data de Nascimento inválida: cliente deve ter pelo menos 18 anos!");
         }
-
-        return data;
     }
 
     private String formatarCpf(String cpf) {

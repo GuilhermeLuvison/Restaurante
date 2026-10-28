@@ -8,7 +8,6 @@ import dao.PedidoDao;
 import dao.PedidoDaoJdbc;
 import database.SqlState;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.List;
 import models.Pedido;
@@ -20,8 +19,6 @@ import utils.Validador;
  * @author Guilherme Luvison
  */
 public class PedidoController {
-
-    private static final DateTimeFormatter FORMATO_DATA_HORA = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     // Status válidos para cadastro e atualização, conforme chave CHECK do PostgreSQL
     public static final List<String> STATUS_VALIDOS = Arrays.asList("Entregue", "Em preparo", "Cancelado");
