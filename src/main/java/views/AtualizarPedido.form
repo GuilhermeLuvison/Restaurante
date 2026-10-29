@@ -39,7 +39,7 @@
                           <Component id="jSeparator2" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtReserva" alignment="1" max="32767" attributes="0"/>
                           <Component id="txtMesa" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtQtdePessoas" alignment="0" max="32767" attributes="0"/>
+                          <Component id="txtQuantidadePessoas" alignment="0" max="32767" attributes="0"/>
                           <Component id="txtMomentoPedido" alignment="0" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="btnAtualizar" max="32767" attributes="0"/>
@@ -98,7 +98,7 @@
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="txtQtdePessoas" min="-2" max="-2" attributes="0"/>
+              <Component id="txtQuantidadePessoas" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -217,7 +217,7 @@
         <Property name="text" type="java.lang.String" value="Status (Entregue | Em preparo | Cancelado):"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="txtQtdePessoas">
+    <Component class="javax.swing.JTextField" name="txtQuantidadePessoas">
     </Component>
   </SubComponents>
 </Form>

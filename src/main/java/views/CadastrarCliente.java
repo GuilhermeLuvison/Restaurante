@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 public class CadastrarCliente extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarCliente.class.getName());
-    private final ClienteController cc = new ClienteController();
+    private final ClienteController clienteController = new ClienteController();
     private final JFrame telaInicial;
 
     /**
@@ -225,7 +225,7 @@ public class CadastrarCliente extends javax.swing.JDialog {
 
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
-            cc.cadastrar(txtNome.getText().trim(), txtCpf.getText().trim(), txtTelefone.getText().trim(), txtEmail.getText().trim(), txtDataNascimento.getText().trim());
+            clienteController.cadastrar(txtNome.getText().trim(), txtCpf.getText().trim(), txtTelefone.getText().trim(), txtEmail.getText().trim(), txtDataNascimento.getText().trim());
             JOptionPane.showMessageDialog(this, "Cliente cadastrado com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limpar();

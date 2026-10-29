@@ -20,7 +20,7 @@ import utils.ConversorCampos;
  */
 public class CadastrarPedido extends javax.swing.JDialog {
 
-    private final PedidoController pc = new PedidoController();
+    private final PedidoController pedidoController = new PedidoController();
     private final JFrame telaInicial;
 
     /**
@@ -49,7 +49,7 @@ public class CadastrarPedido extends javax.swing.JDialog {
             cbxReserva.setSelectedIndex(0);
         }
         txtMesa.setText("");
-        txtQtdePessoas.setText("");
+        txtQuantidadePessoas.setText("");
         txtMomentoPedido.setText("");
         if (cbxStatus.getItemCount() > 0) {
             cbxStatus.setSelectedIndex(0);
@@ -69,7 +69,7 @@ public class CadastrarPedido extends javax.swing.JDialog {
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        txtQtdePessoas = new javax.swing.JTextField();
+        txtQuantidadePessoas = new javax.swing.JTextField();
         btnListarPedidos = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -153,7 +153,7 @@ public class CadastrarPedido extends javax.swing.JDialog {
                         .addComponent(btnListarPedidos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtMesa)
-                    .addComponent(txtQtdePessoas)
+                    .addComponent(txtQuantidadePessoas)
                     .addComponent(txtMomentoPedido)
                     .addComponent(jSeparator2)
                     .addGroup(layout.createSequentialGroup()
@@ -200,7 +200,7 @@ public class CadastrarPedido extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtQtdePessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtQuantidadePessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -243,9 +243,9 @@ public class CadastrarPedido extends javax.swing.JDialog {
         try {
 
             int mesa = ConversorCampos.converterInteiro(txtMesa.getText().trim(), "Mesa");
-            int qtdePessoas = ConversorCampos.converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
+            int quantidadePessoas = ConversorCampos.converterInteiro(txtQuantidadePessoas.getText().trim(), "Quantidade de Pessoas");
             String status = (String) cbxStatus.getSelectedItem();
-            pc.cadastrar(clienteSelecionado.getCodigo(), codigoReserva, mesa, qtdePessoas, status);
+            pedidoController.cadastrar(clienteSelecionado.getCodigo(), codigoReserva, mesa, quantidadePessoas, status);
             JOptionPane.showMessageDialog(this, "Pedido cadastrado com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limpar();
@@ -322,6 +322,6 @@ public class CadastrarPedido extends javax.swing.JDialog {
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtMesa;
     private javax.swing.JTextField txtMomentoPedido;
-    private javax.swing.JTextField txtQtdePessoas;
+    private javax.swing.JTextField txtQuantidadePessoas;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,7 +17,7 @@ import utils.ConversorCampos;
 public class CadastrarItemCardapio extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarItemCardapio.class.getName());
-    private final ItemCardapioController icc = new ItemCardapioController();
+    private final ItemCardapioController itemCardapioController = new ItemCardapioController();
     private final JFrame telaInicial;
 
     /**
@@ -195,7 +195,7 @@ public class CadastrarItemCardapio extends javax.swing.JDialog {
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         try {
             double preco = ConversorCampos.converterPreco(txtPreco.getText().trim());
-            icc.cadastrar(txtNome.getText().trim(), txtIngredientes.getText().trim(), txtCategoria.getText().trim(), (String) cbxTipoPrato.getSelectedItem(), preco, txtTempoPreparo.getText().trim());
+            itemCardapioController.cadastrar(txtNome.getText().trim(), txtIngredientes.getText().trim(), txtCategoria.getText().trim(), (String) cbxTipoPrato.getSelectedItem(), preco, txtTempoPreparo.getText().trim());
             JOptionPane.showMessageDialog(this, "Item de Cardápio cadastrado com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limpar();

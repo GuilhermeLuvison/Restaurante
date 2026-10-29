@@ -36,17 +36,17 @@ public class ReservaController {
         this.reservaDao = reservaDao;
     }
 
-    public void cadastrar(int codigoCliente, int mesa, int qtdePessoas, String observacao, String dataReserva, String status) throws SQLException {
+    public void cadastrar(int codigoCliente, int mesa, int quantidadePessoas, String observacao, String dataReserva, String status) throws SQLException {
         Validador.validarCodigoCliente(codigoCliente);
         Validador.validarMesa(mesa);
-        Validador.validarQtdePessoas(qtdePessoas);
+        Validador.validarQuantidadePessoas(quantidadePessoas);
         validarDataReserva(dataReserva);
         validarStatus(status);
 
         Reserva reserva = new Reserva();
         reserva.setCodigoCliente(codigoCliente);
         reserva.setMesa(mesa);
-        reserva.setQtdePessoas(qtdePessoas);
+        reserva.setQuantidadePessoas(quantidadePessoas);
         reserva.setObservacao(observacao);
         reserva.setDataReserva(dataReserva);
         reserva.setStatus(status);
@@ -65,20 +65,20 @@ public class ReservaController {
         return reservaDao.listar();
     }
 
-    public List<Reserva> buscarPorNome(String termo) throws SQLException {
-        return reservaDao.buscarPorNome(termo);
+    public List<Reserva> buscarPorNomeCliente(String termo) throws SQLException {
+        return reservaDao.buscarPorNomeCliente(termo);
     }
 
-    public void atualizar(int codigo, int novoQtdePessoas, String novoObservacao, String novoDataReserva, String novoStatus) throws SQLException {
-        Validador.validarQtdePessoas(novoQtdePessoas);
-        validarDataReserva(novoDataReserva);
+    public void atualizar(int codigo, int novaQuantidadePessoas, String novaObservacao, String novaDataReserva, String novoStatus) throws SQLException {
+        Validador.validarQuantidadePessoas(novaQuantidadePessoas);
+        validarDataReserva(novaDataReserva);
         validarStatus(novoStatus);
 
         Reserva reserva = new Reserva();
         reserva.setCodigo(codigo);
-        reserva.setQtdePessoas(novoQtdePessoas);
-        reserva.setObservacao(novoObservacao);
-        reserva.setDataReserva(novoDataReserva);
+        reserva.setQuantidadePessoas(novaQuantidadePessoas);
+        reserva.setObservacao(novaObservacao);
+        reserva.setDataReserva(novaDataReserva);
         reserva.setStatus(novoStatus);
 
         if (!reservaDao.atualizar(reserva)) {

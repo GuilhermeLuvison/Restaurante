@@ -35,7 +35,7 @@ public class PedidoDaoJdbc implements PedidoDao {
                 pstmt.setInt(2, pedido.getCodigoReserva());
             }
             pstmt.setInt(3, pedido.getMesa());
-            pstmt.setInt(4, pedido.getQtdePessoas());
+            pstmt.setInt(4, pedido.getQuantidadePessoas());
             pstmt.setString(5, pedido.getStatus());
             pstmt.executeUpdate();
         }
@@ -55,7 +55,7 @@ public class PedidoDaoJdbc implements PedidoDao {
     }
 
     @Override
-    public List<Pedido> buscarPorNome(String termo) throws SQLException {
+    public List<Pedido> buscarPorNomeCliente(String termo) throws SQLException {
         List<Pedido> pedidos = new ArrayList<>();
         String sql = SELECT_PEDIDOS + " WHERE c.nome ILIKE ? ORDER BY p.codigo";
 
@@ -77,7 +77,7 @@ public class PedidoDaoJdbc implements PedidoDao {
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, pedido.getMesa());
-            pstmt.setInt(2, pedido.getQtdePessoas());
+            pstmt.setInt(2, pedido.getQuantidadePessoas());
             pstmt.setString(3, pedido.getStatus());
             pstmt.setInt(4, pedido.getCodigo());
             return pstmt.executeUpdate() > 0;
@@ -95,15 +95,15 @@ public class PedidoDaoJdbc implements PedidoDao {
     }
 
     private Pedido mapearPedido(ResultSet rs) throws SQLException {
-        Pedido p = new Pedido();
-        p.setCodigo(rs.getInt("codigo"));
-        p.setCodigoCliente(rs.getInt("codigo_cliente"));
-        p.setNomeCliente(rs.getString("nome_cliente"));
-        p.setCodigoReserva(rs.getObject("codigo_reserva", Integer.class)); // getObject com o tipo Integer.class retorna NULL quando a coluna está vazia, getInt devolveria 0.
-        p.setMesa(rs.getInt("mesa"));
-        p.setQtdePessoas(rs.getInt("quantidade_pessoas"));
-        p.setMomentoPedido(Formatador.formatarDataHora(rs.getTimestamp("momento_pedido")));
-        p.setStatus(rs.getString("status"));
-        return p;
+        Pedido pedido = new Pedido();
+        pedido.setCodigo(rs.getInt("codigo"));
+        pedido.setCodigoCliente(rs.getInt("codigo_cliente"));
+        pedido.setNomeCliente(rs.getString("nome_cliente"));
+        pedido.setCodigoReserva(rs.getObject("codigo_reserva", Integer.class)); // getObject com o tipo Integer.class retorna NULL quando a coluna está vazia, getInt devolveria 0.
+        pedido.setMesa(rs.getInt("mesa"));
+        pedido.setQuantidadePessoas(rs.getInt("quantidade_pessoas"));
+        pedido.setMomentoPedido(Formatador.formatarDataHora(rs.getTimestamp("momento_pedido")));
+        pedido.setStatus(rs.getString("status"));
+        return pedido;
     }
 }

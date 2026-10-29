@@ -18,7 +18,7 @@ import utils.ConversorCampos;
 public class AtualizarReserva extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtualizarReserva.class.getName());
-    private final ReservaController rc = new ReservaController();
+    private final ReservaController reservaController = new ReservaController();
     private final Reserva reserva;
 
     /**
@@ -35,7 +35,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
         txtCodigo.setText(String.valueOf(reserva.getCodigo()));
         txtNomeCliente.setText(reserva.getNomeCliente());
         txtMesa.setText(String.valueOf(reserva.getMesa()));
-        txtQtdePessoas.setText(String.valueOf(reserva.getQtdePessoas()));
+        txtQuantidadePessoas.setText(String.valueOf(reserva.getQuantidadePessoas()));
         txtObservacao.setText(reserva.getObservacao());
         txtDataReserva.setText(reserva.getDataReserva());
         cbxStatus.setSelectedItem(reserva.getStatus());
@@ -50,7 +50,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtQtdePessoas = new javax.swing.JTextField();
+        txtQuantidadePessoas = new javax.swing.JTextField();
         txtDataReserva = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
@@ -120,7 +120,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator2)
                             .addComponent(txtMesa, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtQtdePessoas)
+                            .addComponent(txtQuantidadePessoas)
                             .addComponent(txtObservacao)
                             .addComponent(txtDataReserva)
                             .addGroup(layout.createSequentialGroup()
@@ -167,7 +167,7 @@ public class AtualizarReserva extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtQtdePessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtQuantidadePessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -199,8 +199,8 @@ public class AtualizarReserva extends javax.swing.JDialog {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            int qtdePessoas = ConversorCampos.converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
-            rc.atualizar(reserva.getCodigo(), qtdePessoas, txtObservacao.getText().trim(), txtDataReserva.getText().trim(), (String) cbxStatus.getSelectedItem());
+            int quantidadePessoas = ConversorCampos.converterInteiro(txtQuantidadePessoas.getText().trim(), "Quantidade de Pessoas");
+            reservaController.atualizar(reserva.getCodigo(), quantidadePessoas, txtObservacao.getText().trim(), txtDataReserva.getText().trim(), (String) cbxStatus.getSelectedItem());
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
@@ -270,6 +270,6 @@ public class AtualizarReserva extends javax.swing.JDialog {
     private javax.swing.JTextField txtMesa;
     private javax.swing.JTextField txtNomeCliente;
     private javax.swing.JTextField txtObservacao;
-    private javax.swing.JTextField txtQtdePessoas;
+    private javax.swing.JTextField txtQuantidadePessoas;
     // End of variables declaration//GEN-END:variables
 }

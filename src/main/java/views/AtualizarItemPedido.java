@@ -18,7 +18,7 @@ import utils.ConversorCampos;
 public class AtualizarItemPedido extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtualizarItemPedido.class.getName());
-    private final ItemPedidoController ipc = new ItemPedidoController();
+    private final ItemPedidoController itemPedidoController = new ItemPedidoController();
     private final ItemPedido itemPedido;
 
     /**
@@ -197,7 +197,7 @@ public class AtualizarItemPedido extends javax.swing.JDialog {
         try {
             int quantidade = ConversorCampos.converterInteiro(txtQuantidade.getText().trim(), "Quantidade");
             double precoUnitario = ConversorCampos.converterPreco(txtPrecoUnitario.getText().trim());
-            ipc.atualizar(itemPedido.getCodigo(), quantidade, precoUnitario, txtObservacao.getText().trim());
+            itemPedidoController.atualizar(itemPedido.getCodigo(), quantidade, precoUnitario, txtObservacao.getText().trim());
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();

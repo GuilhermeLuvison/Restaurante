@@ -19,7 +19,7 @@ import models.Pedido;
 public class ListarPedidos extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarPedidos.class.getName());
-    private final PedidoController pc = new PedidoController();
+    private final PedidoController pedidoController = new PedidoController();
     private DefaultTableModel modeloTabela;
     private final JFrame telaInicial;
 
@@ -47,7 +47,7 @@ public class ListarPedidos extends javax.swing.JDialog {
 
     private void carregarTabela() {
         try {
-            List<Pedido> pedidos = pc.listar();
+            List<Pedido> pedidos = pedidoController.listar();
             preencherTabela(pedidos);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
@@ -57,7 +57,7 @@ public class ListarPedidos extends javax.swing.JDialog {
     private void preencherTabela(List<Pedido> pedidos) {
         modeloTabela.setRowCount(0);
         for (Pedido p : pedidos) {
-            modeloTabela.addRow(new Object[]{p.getCodigo(), p.getNomeCliente(), p.getCodigoReserva(), p.getMesa(), p.getQtdePessoas(), p.getMomentoPedido(), p.getStatus()});
+            modeloTabela.addRow(new Object[]{p.getCodigo(), p.getNomeCliente(), p.getCodigoReserva(), p.getMesa(), p.getQuantidadePessoas(), p.getMomentoPedido(), p.getStatus()});
         }
     }
 
@@ -206,11 +206,11 @@ public class ListarPedidos extends javax.swing.JDialog {
         Object numeroReserva = modeloTabela.getValueAt(linha, 2);
         Integer codigoReserva = (numeroReserva == null) ? null : (Integer) numeroReserva;
         int mesa = (int) modeloTabela.getValueAt(linha, 3);
-        int qtdePessoas = (int) modeloTabela.getValueAt(linha, 4);
+        int quantidadePessoas = (int) modeloTabela.getValueAt(linha, 4);
         String momentoPedido = modeloTabela.getValueAt(linha, 5).toString();
         String status = modeloTabela.getValueAt(linha, 6).toString();
 
-        Pedido pedidoSelecionado = new Pedido(0, nomeCliente, codigoReserva, mesa, qtdePessoas, momentoPedido, status);
+        Pedido pedidoSelecionado = new Pedido(0, nomeCliente, codigoReserva, mesa, quantidadePessoas, momentoPedido, status);
         pedidoSelecionado.setCodigo(codigo);
 
         AtualizarPedido tela = new AtualizarPedido(telaInicial, true, pedidoSelecionado);
@@ -238,7 +238,7 @@ public class ListarPedidos extends javax.swing.JDialog {
         }
 
         try {
-            pc.remover(codigo);
+            pedidoController.remover(codigo);
             carregarTabela();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -254,7 +254,7 @@ public class ListarPedidos extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String termo = txtBusca.getText().trim();
         try {
-            List<Pedido> pedidos = pc.buscarPorNome(termo);
+            List<Pedido> pedidos = pedidoController.buscarPorNomeCliente(termo);
             preencherTabela(pedidos);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);

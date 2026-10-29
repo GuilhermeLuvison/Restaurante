@@ -49,7 +49,7 @@ public class ItemPedidoDaoJdbc implements ItemPedidoDao {
     }
 
     @Override
-    public List<ItemPedido> buscarPorNome(String termo) throws SQLException {
+    public List<ItemPedido> buscarPorNomeItemCardapio(String termo) throws SQLException {
         List<ItemPedido> itensPedido = new ArrayList<>();
         String sql = SELECT_ITENSPEDIDO + " WHERE ic.nome ILIKE ? ORDER BY ip.codigo";
 
@@ -89,15 +89,15 @@ public class ItemPedidoDaoJdbc implements ItemPedidoDao {
     }
 
     private ItemPedido mapearItemPedido(ResultSet rs) throws SQLException {
-        ItemPedido ip = new ItemPedido();
-        ip.setCodigo(rs.getInt("codigo"));
-        ip.setCodigoPedido(rs.getInt("codigo_pedido"));
-        ip.setCodigoItemCardapio(rs.getInt("codigo_itenscardapio"));
-        ip.setNomeItemCardapio(rs.getString("nome_itemcardapio"));
-        ip.setQuantidade(rs.getInt("quantidade"));
-        ip.setPrecoUnitario(rs.getDouble("preco_unitario"));
-        ip.setPrecoTotal(rs.getDouble("preco_total"));
-        ip.setObservacao(rs.getString("observacao"));
-        return ip;
+        ItemPedido itemPedido = new ItemPedido();
+        itemPedido.setCodigo(rs.getInt("codigo"));
+        itemPedido.setCodigoPedido(rs.getInt("codigo_pedido"));
+        itemPedido.setCodigoItemCardapio(rs.getInt("codigo_itenscardapio"));
+        itemPedido.setNomeItemCardapio(rs.getString("nome_itemcardapio"));
+        itemPedido.setQuantidade(rs.getInt("quantidade"));
+        itemPedido.setPrecoUnitario(rs.getDouble("preco_unitario"));
+        itemPedido.setPrecoTotal(rs.getDouble("preco_total"));
+        itemPedido.setObservacao(rs.getString("observacao"));
+        return itemPedido;
     }
 }

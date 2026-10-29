@@ -19,7 +19,7 @@ import models.Cliente;
 public class ListarClientes extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarClientes.class.getName());
-    private final ClienteController cc = new ClienteController();
+    private final ClienteController clienteController = new ClienteController();
     private DefaultTableModel modeloTabela;
     private final JFrame telaInicial;
 
@@ -47,7 +47,7 @@ public class ListarClientes extends javax.swing.JDialog {
 
     private void carregarTabela() {
         try {
-            List<Cliente> clientes = cc.listar();
+            List<Cliente> clientes = clienteController.listar();
             preencherTabela(clientes);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Erro ao carregar clientes: " + e.getMessage(),
@@ -171,7 +171,7 @@ public class ListarClientes extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String termo = txtBusca.getText().trim();
         try {
-            List<Cliente> clientes = cc.buscarPorNome(termo);
+            List<Cliente> clientes = clienteController.buscarPorNome(termo);
             preencherTabela(clientes);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
@@ -232,7 +232,7 @@ public class ListarClientes extends javax.swing.JDialog {
         }
 
         try {
-            cc.remover(codigo);
+            clienteController.remover(codigo);
             carregarTabela();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);

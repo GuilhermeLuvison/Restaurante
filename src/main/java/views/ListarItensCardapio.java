@@ -19,7 +19,7 @@ import models.ItemCardapio;
 public class ListarItensCardapio extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarItensCardapio.class.getName());
-    private final ItemCardapioController icc = new ItemCardapioController();
+    private final ItemCardapioController itemCardapioController = new ItemCardapioController();
     private DefaultTableModel modeloTabela;
     private final JFrame telaInicial;
 
@@ -47,7 +47,7 @@ public class ListarItensCardapio extends javax.swing.JDialog {
 
     private void carregarTabela() {
         try {
-            List<ItemCardapio> itensCardapio = icc.listar();
+            List<ItemCardapio> itensCardapio = itemCardapioController.listar();
             preencherTabela(itensCardapio);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
@@ -221,7 +221,7 @@ public class ListarItensCardapio extends javax.swing.JDialog {
         }
 
         try {
-            icc.remover(codigo);
+            itemCardapioController.remover(codigo);
             carregarTabela();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -233,7 +233,7 @@ public class ListarItensCardapio extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String termo = txtBusca.getText().trim();
         try {
-            List<ItemCardapio> itensCardapio = icc.buscarPorNome(termo);
+            List<ItemCardapio> itensCardapio = itemCardapioController.buscarPorNome(termo);
             preencherTabela(itensCardapio);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);

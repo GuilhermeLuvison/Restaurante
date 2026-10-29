@@ -18,7 +18,7 @@ public interface ItemPedidoDao {
 
     List<ItemPedido> listar() throws SQLException;
 
-    List<ItemPedido> buscarPorNome(String termo) throws SQLException;
+    List<ItemPedido> buscarPorNomeItemCardapio(String termo) throws SQLException;
 
     boolean atualizar(ItemPedido itemPedido) throws SQLException;
 

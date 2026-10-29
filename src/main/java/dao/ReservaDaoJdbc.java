@@ -30,7 +30,7 @@ public class ReservaDaoJdbc implements ReservaDao {
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
             pstmt.setInt(1, reserva.getCodigoCliente());
             pstmt.setInt(2, reserva.getMesa());
-            pstmt.setInt(3, reserva.getQtdePessoas());
+            pstmt.setInt(3, reserva.getQuantidadePessoas());
             pstmt.setString(4, reserva.getObservacao());
             pstmt.setDate(5, java.sql.Date.valueOf(LocalDate.parse(reserva.getDataReserva(), Formatador.FORMATO_DATA)));
             pstmt.setString(6, reserva.getStatus());
@@ -52,7 +52,7 @@ public class ReservaDaoJdbc implements ReservaDao {
     }
 
     @Override
-    public List<Reserva> buscarPorNome(String termo) throws SQLException {
+    public List<Reserva> buscarPorNomeCliente(String termo) throws SQLException {
         List<Reserva> reservas = new ArrayList<>();
         String sql = SELECT_RESERVAS + " WHERE c.nome ILIKE ? ORDER BY r.codigo";
 
@@ -73,7 +73,7 @@ public class ReservaDaoJdbc implements ReservaDao {
         String sql = "UPDATE reservas SET quantidade_pessoas = ?, observacao = ?, data_reserva = ?, status = ?  WHERE codigo = ?";
 
         try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
-            pstmt.setInt(1, reserva.getQtdePessoas());
+            pstmt.setInt(1, reserva.getQuantidadePessoas());
             pstmt.setString(2, reserva.getObservacao());
             pstmt.setDate(3, java.sql.Date.valueOf(LocalDate.parse(reserva.getDataReserva(), Formatador.FORMATO_DATA)));
             pstmt.setString(4, reserva.getStatus());
@@ -93,15 +93,15 @@ public class ReservaDaoJdbc implements ReservaDao {
     }
 
     private Reserva mapearReserva(ResultSet rs) throws SQLException {
-        Reserva r = new Reserva();
-        r.setCodigo(rs.getInt("codigo"));
-        r.setCodigoCliente(rs.getInt("codigo_cliente"));
-        r.setNomeCliente(rs.getString("nome_cliente"));
-        r.setMesa(rs.getInt("mesa"));
-        r.setQtdePessoas(rs.getInt("quantidade_pessoas"));
-        r.setObservacao(rs.getString("observacao"));
-        r.setDataReserva(Formatador.formatarData(rs.getDate("data_reserva")));
-        r.setStatus(rs.getString("status"));
-        return r;
+        Reserva reserva = new Reserva();
+        reserva.setCodigo(rs.getInt("codigo"));
+        reserva.setCodigoCliente(rs.getInt("codigo_cliente"));
+        reserva.setNomeCliente(rs.getString("nome_cliente"));
+        reserva.setMesa(rs.getInt("mesa"));
+        reserva.setQuantidadePessoas(rs.getInt("quantidade_pessoas"));
+        reserva.setObservacao(rs.getString("observacao"));
+        reserva.setDataReserva(Formatador.formatarData(rs.getDate("data_reserva")));
+        reserva.setStatus(rs.getString("status"));
+        return reserva;
     }
 }

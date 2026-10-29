@@ -92,14 +92,14 @@ public class ItemCardapioDaoJdbc implements ItemCardapioDao {
     }
 
     private ItemCardapio mapearItemCardapio(ResultSet rs) throws SQLException {
-        ItemCardapio ic = new ItemCardapio();
-        ic.setCodigo(rs.getInt("codigo"));
-        ic.setNome(rs.getString("nome"));
-        ic.setIngredientes(rs.getString("ingredientes"));
-        ic.setCategoria(rs.getString("categoria"));
-        ic.setTipoPrato(rs.getString("tipo_prato"));
-        ic.setPreco(rs.getDouble("preco"));
-        ic.setTempoPreparo(rs.getString("tempo_preparo"));
-        return ic;
+        ItemCardapio itemCardapio = new ItemCardapio();
+        itemCardapio.setCodigo(rs.getInt("codigo"));
+        itemCardapio.setNome(rs.getString("nome"));
+        itemCardapio.setIngredientes(rs.getString("ingredientes"));
+        itemCardapio.setCategoria(rs.getString("categoria"));
+        itemCardapio.setTipoPrato(rs.getString("tipo_prato"));
+        itemCardapio.setPreco(rs.getDouble("preco"));
+        itemCardapio.setTempoPreparo(rs.getString("tempo_preparo"));
+        return itemCardapio;
     }
 }

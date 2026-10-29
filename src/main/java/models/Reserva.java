@@ -14,15 +14,15 @@ public class Reserva {
     private int codigoCliente; // Chave estrangeira para clientes.codigo - usado no INSERT/UPDATE
     private String nomeCliente; // Exibição (JOIN com clientes)
     private int mesa;
-    private int qtdePessoas;
+    private int quantidadePessoas;
     private String observacao;
     private String dataReserva;
     private String status;
 
-    public Reserva(String nomeCliente, int mesa, int qtdePessoas, String observacao, String dataReserva, String status) {
+    public Reserva(String nomeCliente, int mesa, int quantidadePessoas, String observacao, String dataReserva, String status) {
         this.nomeCliente = nomeCliente;
         this.mesa = mesa;
-        this.qtdePessoas = qtdePessoas;
+        this.quantidadePessoas = quantidadePessoas;
         this.observacao = observacao;
         this.dataReserva = dataReserva;
         this.status = status;
@@ -63,12 +63,12 @@ public class Reserva {
         this.mesa = mesa;
     }
 
-    public int getQtdePessoas() {
-        return qtdePessoas;
+    public int getQuantidadePessoas() {
+        return quantidadePessoas;
     }
 
-    public void setQtdePessoas(int qtdePessoas) {
-        this.qtdePessoas = qtdePessoas;
+    public void setQuantidadePessoas(int quantidadePessoas) {
+        this.quantidadePessoas = quantidadePessoas;
     }
 
     public String getObservacao() {

@@ -15,16 +15,16 @@ public class Pedido {
     private String nomeCliente; // Exibição (JOIN com clientes)
     private Integer codigoReserva; // Chave estrangeira opcional para reserva.codigo - usado no INSERT caso o campo não esteja vazio
     private int mesa;
-    private int qtdePessoas;
+    private int quantidadePessoas;
     private String momentoPedido;
     private String status;
 
-    public Pedido(int codigoCliente, String nomeCliente, Integer codigoReserva, int mesa, int qtdePessoas, String momentoPedido, String status) {
+    public Pedido(int codigoCliente, String nomeCliente, Integer codigoReserva, int mesa, int quantidadePessoas, String momentoPedido, String status) {
         this.codigoCliente = codigoCliente;
         this.nomeCliente = nomeCliente;
         this.codigoReserva = codigoReserva;
         this.mesa = mesa;
-        this.qtdePessoas = qtdePessoas;
+        this.quantidadePessoas = quantidadePessoas;
         this.momentoPedido = momentoPedido;
         this.status = status;
     }
@@ -72,12 +72,12 @@ public class Pedido {
         this.mesa = mesa;
     }
 
-    public int getQtdePessoas() {
-        return qtdePessoas;
+    public int getQuantidadePessoas() {
+        return quantidadePessoas;
     }
 
-    public void setQtdePessoas(int qtdePessoas) {
-        this.qtdePessoas = qtdePessoas;
+    public void setQuantidadePessoas(int quantidadePessoas) {
+        this.quantidadePessoas = quantidadePessoas;
     }
 
     public String getMomentoPedido() {

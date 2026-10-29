@@ -18,7 +18,7 @@ import utils.ConversorCampos;
 public class AtualizarPedido extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtualizarPedido.class.getName());
-    private final PedidoController pc = new PedidoController();
+    private final PedidoController pedidoController = new PedidoController();
     private final Pedido pedido;
 
     /**
@@ -36,7 +36,7 @@ public class AtualizarPedido extends javax.swing.JDialog {
         txtNomeCliente.setText(pedido.getNomeCliente());
         txtReserva.setText(pedido.getCodigoReserva() == null ? "Nenhuma" : String.valueOf(pedido.getCodigoReserva()));
         txtMesa.setText(String.valueOf(pedido.getMesa()));
-        txtQtdePessoas.setText(String.valueOf(pedido.getQtdePessoas()));
+        txtQuantidadePessoas.setText(String.valueOf(pedido.getQuantidadePessoas()));
         txtMomentoPedido.setText(pedido.getMomentoPedido());
         cbxStatus.setSelectedItem(pedido.getStatus());
     }
@@ -68,7 +68,7 @@ public class AtualizarPedido extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         btnAtualizar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        txtQtdePessoas = new javax.swing.JTextField();
+        txtQuantidadePessoas = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -131,7 +131,7 @@ public class AtualizarPedido extends javax.swing.JDialog {
                             .addComponent(jSeparator2)
                             .addComponent(txtReserva, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtMesa)
-                            .addComponent(txtQtdePessoas)
+                            .addComponent(txtQuantidadePessoas)
                             .addComponent(txtMomentoPedido)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnAtualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -181,7 +181,7 @@ public class AtualizarPedido extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtQtdePessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtQuantidadePessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -210,8 +210,8 @@ public class AtualizarPedido extends javax.swing.JDialog {
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
             int mesa = ConversorCampos.converterInteiro(txtMesa.getText().trim(), "Mesa");
-            int qtdePessoas = ConversorCampos.converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
-            pc.atualizar(pedido.getCodigo(), mesa, qtdePessoas, (String) cbxStatus.getSelectedItem());
+            int quantidadePessoas = ConversorCampos.converterInteiro(txtQuantidadePessoas.getText().trim(), "Quantidade de Pessoas");
+            pedidoController.atualizar(pedido.getCodigo(), mesa, quantidadePessoas, (String) cbxStatus.getSelectedItem());
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
@@ -285,7 +285,7 @@ public class AtualizarPedido extends javax.swing.JDialog {
     private javax.swing.JTextField txtMesa;
     private javax.swing.JTextField txtMomentoPedido;
     private javax.swing.JTextField txtNomeCliente;
-    private javax.swing.JTextField txtQtdePessoas;
+    private javax.swing.JTextField txtQuantidadePessoas;
     private javax.swing.JTextField txtReserva;
     // End of variables declaration//GEN-END:variables
 }

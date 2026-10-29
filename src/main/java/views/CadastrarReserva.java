@@ -19,7 +19,7 @@ import utils.ConversorCampos;
 public class CadastrarReserva extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarReserva.class.getName());
-    private final ReservaController rc = new ReservaController();
+    private final ReservaController reservaController = new ReservaController();
     private final JFrame telaInicial;
 
     /**
@@ -43,7 +43,7 @@ public class CadastrarReserva extends javax.swing.JDialog {
             cbxCliente.setSelectedIndex(0);
         }
         txtMesa.setText("");
-        txtQtdePessoas.setText("");
+        txtQuantidadePessoas.setText("");
         txtObservacao.setText("");
         txtDataReserva.setText("");
         if (cbxStatus.getItemCount() > 0) {
@@ -73,7 +73,7 @@ public class CadastrarReserva extends javax.swing.JDialog {
         jLabel6 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         txtMesa = new javax.swing.JTextField();
-        txtQtdePessoas = new javax.swing.JTextField();
+        txtQuantidadePessoas = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtObservacao = new javax.swing.JTextField();
@@ -134,7 +134,7 @@ public class CadastrarReserva extends javax.swing.JDialog {
                         .addComponent(btnListarReservas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtMesa, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtQtdePessoas)
+                    .addComponent(txtQuantidadePessoas)
                     .addComponent(txtObservacao)
                     .addComponent(txtDataReserva)
                     .addComponent(jSeparator2)
@@ -180,7 +180,7 @@ public class CadastrarReserva extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtQtdePessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtQuantidadePessoas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -217,9 +217,9 @@ public class CadastrarReserva extends javax.swing.JDialog {
 
         try {
             int mesa = ConversorCampos.converterInteiro(txtMesa.getText().trim(), "Mesa");
-            int qtdePessoas = ConversorCampos.converterInteiro(txtQtdePessoas.getText().trim(), "Quantidade de Pessoas");
+            int quantidadePessoas = ConversorCampos.converterInteiro(txtQuantidadePessoas.getText().trim(), "Quantidade de Pessoas");
             String status = (String) cbxStatus.getSelectedItem();
-            rc.cadastrar(clienteSelecionado.getCodigo(), mesa, qtdePessoas, txtObservacao.getText().trim(), txtDataReserva.getText().trim(), status);
+            reservaController.cadastrar(clienteSelecionado.getCodigo(), mesa, quantidadePessoas, txtObservacao.getText().trim(), txtDataReserva.getText().trim(), status);
             JOptionPane.showMessageDialog(this, "Reserva cadastrada com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limpar();
@@ -297,6 +297,6 @@ public class CadastrarReserva extends javax.swing.JDialog {
     private javax.swing.JTextField txtDataReserva;
     private javax.swing.JTextField txtMesa;
     private javax.swing.JTextField txtObservacao;
-    private javax.swing.JTextField txtQtdePessoas;
+    private javax.swing.JTextField txtQuantidadePessoas;
     // End of variables declaration//GEN-END:variables
 }

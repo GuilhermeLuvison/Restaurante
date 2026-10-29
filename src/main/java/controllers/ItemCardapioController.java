@@ -52,18 +52,18 @@ public class ItemCardapioController {
         return itemCardapioDao.buscarPorNome(termo);
     }
 
-    public void atualizar(int codigo, String novoNome, String novoIngredientes, String novoCategoria, double novoPreco, String novoTempoPreparo) throws SQLException {
+    public void atualizar(int codigo, String novoNome, String novosIngredientes, String novaCategoria, double novoPreco, String novoTempoPreparo) throws SQLException {
         Validador.validarNome(novoNome);
-        validarIngredientes(novoIngredientes);
-        validarCategoria(novoCategoria);
+        validarIngredientes(novosIngredientes);
+        validarCategoria(novaCategoria);
         validarPreco(novoPreco);
         validarTempoPreparo(novoTempoPreparo);
 
         ItemCardapio itemCardapio = new ItemCardapio();
         itemCardapio.setCodigo(codigo);
         itemCardapio.setNome(novoNome);
-        itemCardapio.setIngredientes(novoIngredientes);
-        itemCardapio.setCategoria(novoCategoria);
+        itemCardapio.setIngredientes(novosIngredientes);
+        itemCardapio.setCategoria(novaCategoria);
         itemCardapio.setPreco(novoPreco);
         itemCardapio.setTempoPreparo(novoTempoPreparo);
 

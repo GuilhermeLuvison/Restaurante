@@ -18,7 +18,7 @@ public interface ReservaDao {
 
     List<Reserva> listar() throws SQLException;
 
-    List<Reserva> buscarPorNome(String termo) throws SQLException;
+    List<Reserva> buscarPorNomeCliente(String termo) throws SQLException;
 
     boolean atualizar(Reserva reserva) throws SQLException;
 

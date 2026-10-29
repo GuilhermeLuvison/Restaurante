@@ -19,7 +19,7 @@ import models.Reserva;
 public class ListarReservas extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarReservas.class.getName());
-    private final ReservaController rc = new ReservaController();
+    private final ReservaController reservaController = new ReservaController();
     private DefaultTableModel modeloTabela;
     private final JFrame telaInicial;
 
@@ -47,7 +47,7 @@ public class ListarReservas extends javax.swing.JDialog {
 
     private void carregarTabela() {
         try {
-            List<Reserva> reservas = rc.listar();
+            List<Reserva> reservas = reservaController.listar();
             preencherTabela(reservas);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
@@ -57,7 +57,7 @@ public class ListarReservas extends javax.swing.JDialog {
     private void preencherTabela(List<Reserva> reservas) {
         modeloTabela.setRowCount(0);
         for (Reserva r : reservas) {
-            modeloTabela.addRow(new Object[]{r.getCodigo(), r.getNomeCliente(), r.getMesa(), r.getQtdePessoas(), r.getObservacao(), r.getDataReserva(), r.getStatus()});
+            modeloTabela.addRow(new Object[]{r.getCodigo(), r.getNomeCliente(), r.getMesa(), r.getQuantidadePessoas(), r.getObservacao(), r.getDataReserva(), r.getStatus()});
         }
     }
 
@@ -186,7 +186,7 @@ public class ListarReservas extends javax.swing.JDialog {
         }
 
         try {
-            rc.remover(codigo);
+            reservaController.remover(codigo);
             carregarTabela();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -208,7 +208,7 @@ public class ListarReservas extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String termo = txtBusca.getText().trim();
         try {
-            List<Reserva> reservas = rc.buscarPorNome(termo);
+            List<Reserva> reservas = reservaController.buscarPorNomeCliente(termo);
             preencherTabela(reservas);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
@@ -226,12 +226,12 @@ public class ListarReservas extends javax.swing.JDialog {
         int codigo = (int) modeloTabela.getValueAt(linha, 0);
         String nomeCliente = modeloTabela.getValueAt(linha, 1).toString();
         int mesa = (int) modeloTabela.getValueAt(linha, 2);
-        int qtdePessoas = (int) modeloTabela.getValueAt(linha, 3);
+        int quantidadePessoas = (int) modeloTabela.getValueAt(linha, 3);
         String observacao = modeloTabela.getValueAt(linha, 4).toString();
         String dataReserva = modeloTabela.getValueAt(linha, 5).toString();
         String status = modeloTabela.getValueAt(linha, 6).toString();
 
-        Reserva reservaSelecionada = new Reserva(nomeCliente, mesa, qtdePessoas, observacao, dataReserva, status);
+        Reserva reservaSelecionada = new Reserva(nomeCliente, mesa, quantidadePessoas, observacao, dataReserva, status);
         reservaSelecionada.setCodigo(codigo);
 
         AtualizarReserva tela = new AtualizarReserva(telaInicial, true, reservaSelecionada);

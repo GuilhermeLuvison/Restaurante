@@ -32,18 +32,18 @@ public class PedidoController {
         this.pedidoDao = pedidoDao;
     }
 
-    public void cadastrar(int codigoCliente, Integer codigoReserva, int mesa, int qtdePessoas, String status) throws SQLException {
+    public void cadastrar(int codigoCliente, Integer codigoReserva, int mesa, int quantidadePessoas, String status) throws SQLException {
         Validador.validarCodigoCliente(codigoCliente);
         validarCodigoReserva(codigoReserva);
         Validador.validarMesa(mesa);
-        Validador.validarQtdePessoas(qtdePessoas);
+        Validador.validarQuantidadePessoas(quantidadePessoas);
         validarStatus(status);
 
         Pedido pedido = new Pedido();
         pedido.setCodigoCliente(codigoCliente);
         pedido.setCodigoReserva(codigoReserva);
         pedido.setMesa(mesa);
-        pedido.setQtdePessoas(qtdePessoas);
+        pedido.setQuantidadePessoas(quantidadePessoas);
         pedido.setStatus(status);
 
         try {
@@ -60,19 +60,19 @@ public class PedidoController {
         return pedidoDao.listar();
     }
 
-    public List<Pedido> buscarPorNome(String termo) throws SQLException {
-        return pedidoDao.buscarPorNome(termo);
+    public List<Pedido> buscarPorNomeCliente(String termo) throws SQLException {
+        return pedidoDao.buscarPorNomeCliente(termo);
     }
 
-    public void atualizar(int codigo, int novoMesa, int novoQtdePessoas, String novoStatus) throws SQLException {
-        Validador.validarMesa(novoMesa);
-        Validador.validarQtdePessoas(novoQtdePessoas);
+    public void atualizar(int codigo, int novaMesa, int novaQuantidadePessoas, String novoStatus) throws SQLException {
+        Validador.validarMesa(novaMesa);
+        Validador.validarQuantidadePessoas(novaQuantidadePessoas);
         validarStatus(novoStatus);
 
         Pedido pedido = new Pedido();
         pedido.setCodigo(codigo);
-        pedido.setMesa(novoMesa);
-        pedido.setQtdePessoas(novoQtdePessoas);
+        pedido.setMesa(novaMesa);
+        pedido.setQuantidadePessoas(novaQuantidadePessoas);
         pedido.setStatus(novoStatus);
 
         if (!pedidoDao.atualizar(pedido)) {

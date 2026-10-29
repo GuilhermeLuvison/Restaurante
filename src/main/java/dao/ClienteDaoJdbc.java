@@ -91,14 +91,14 @@ public class ClienteDaoJdbc implements ClienteDao {
     }
 
     private Cliente mapearCliente(ResultSet rs) throws SQLException {
-        Cliente c = new Cliente();
-        c.setCodigo(rs.getInt("codigo"));
-        c.setNome(rs.getString("nome"));
-        c.setCpf(rs.getString("cpf"));
-        c.setTelefone(rs.getString("telefone"));
-        c.setEmail(rs.getString("email"));
-        c.setDataNascimento(Formatador.formatarData(rs.getDate("data_nascimento")));
-        c.setDataCadastro(Formatador.formatarData(rs.getDate("data_cadastro")));
-        return c;
+        Cliente cliente = new Cliente();
+        cliente.setCodigo(rs.getInt("codigo"));
+        cliente.setNome(rs.getString("nome"));
+        cliente.setCpf(rs.getString("cpf"));
+        cliente.setTelefone(rs.getString("telefone"));
+        cliente.setEmail(rs.getString("email"));
+        cliente.setDataNascimento(Formatador.formatarData(rs.getDate("data_nascimento")));
+        cliente.setDataCadastro(Formatador.formatarData(rs.getDate("data_cadastro")));
+        return cliente;
     }
 }

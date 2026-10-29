@@ -21,7 +21,7 @@ import utils.ConversorCampos;
 public class CadastrarItemPedido extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CadastrarItemPedido.class.getName());
-    private final ItemPedidoController ipc = new ItemPedidoController();
+    private final ItemPedidoController itemPedidoController = new ItemPedidoController();
     private final JFrame telaInicial;
 
     /**
@@ -238,7 +238,7 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
         try {
             int quantidade = ConversorCampos.converterInteiro(txtQuantidade.getText().trim(), "Quantidade");
             double precoUnitario = ConversorCampos.converterPreco(txtPrecoUnitario.getText().trim());
-            ipc.cadastrar(pedidoSelecionado.getCodigo(), itemCardapioSelecionado.getCodigo(), quantidade, precoUnitario, txtObservacao.getText().trim());
+            itemPedidoController.cadastrar(pedidoSelecionado.getCodigo(), itemCardapioSelecionado.getCodigo(), quantidade, precoUnitario, txtObservacao.getText().trim());
             JOptionPane.showMessageDialog(this, "Item de Pedido cadastrado com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             limpar();

@@ -18,7 +18,7 @@ import utils.ConversorCampos;
 public class AtualizarItemCardapio extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtualizarItemCardapio.class.getName());
-    private final ItemCardapioController icc = new ItemCardapioController();
+    private final ItemCardapioController itemCardapioController = new ItemCardapioController();
     private final ItemCardapio itemCardapio;
 
     /**
@@ -193,7 +193,7 @@ public class AtualizarItemCardapio extends javax.swing.JDialog {
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
             double preco = ConversorCampos.converterPreco(txtPreco.getText().trim());
-            icc.atualizar(itemCardapio.getCodigo(), txtNome.getText().trim(), txtIngredientes.getText().trim(), txtCategoria.getText().trim(), preco, txtTempoPreparo.getText().trim());
+            itemCardapioController.atualizar(itemCardapio.getCodigo(), txtNome.getText().trim(), txtIngredientes.getText().trim(), txtCategoria.getText().trim(), preco, txtTempoPreparo.getText().trim());
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();

@@ -54,8 +54,8 @@ public class ItemPedidoController {
         return itemPedidoDao.listar();
     }
 
-    public List<ItemPedido> buscarPorNome(String termo) throws SQLException {
-        return itemPedidoDao.buscarPorNome(termo);
+    public List<ItemPedido> buscarPorNomeItemCardapio(String termo) throws SQLException {
+        return itemPedidoDao.buscarPorNomeItemCardapio(termo);
     }
 
     public void atualizar(int codigo, int novaQuantidade, double novoPrecoUnitario, String novaObservacao) throws SQLException {

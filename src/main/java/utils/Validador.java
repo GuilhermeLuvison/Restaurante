@@ -33,8 +33,8 @@ public class Validador {
         }
     }
 
-    public static void validarQtdePessoas(int qtdePessoas) {
-        if (qtdePessoas <= 0) {
+    public static void validarQuantidadePessoas(int quantidadePessoas) {
+        if (quantidadePessoas <= 0) {
             throw new IllegalArgumentException("Quantidade de pessoas inválida: não pode ser negativo ou igual a 0!");
         }
     }

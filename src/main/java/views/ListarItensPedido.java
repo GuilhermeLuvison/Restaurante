@@ -19,7 +19,7 @@ import models.ItemPedido;
 public class ListarItensPedido extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarItensPedido.class.getName());
-    private final ItemPedidoController ipc = new ItemPedidoController();
+    private final ItemPedidoController itemPedidoController = new ItemPedidoController();
     private DefaultTableModel modeloTabela;
     private final JFrame telaInicial;
 
@@ -47,7 +47,7 @@ public class ListarItensPedido extends javax.swing.JDialog {
 
     private void carregarTabela() {
         try {
-            List<ItemPedido> itensPedido = ipc.listar();
+            List<ItemPedido> itensPedido = itemPedidoController.listar();
             preencherTabela(itensPedido);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
@@ -221,7 +221,7 @@ public class ListarItensPedido extends javax.swing.JDialog {
         }
 
         try {
-            ipc.remover(codigo);
+            itemPedidoController.remover(codigo);
             carregarTabela();
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Aviso", JOptionPane.WARNING_MESSAGE);
@@ -233,7 +233,7 @@ public class ListarItensPedido extends javax.swing.JDialog {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         String termo = txtBusca.getText().trim();
         try {
-            List<ItemPedido> itensPedido = ipc.buscarPorNome(termo);
+            List<ItemPedido> itensPedido = itemPedidoController.buscarPorNomeItemCardapio(termo);
             preencherTabela(itensPedido);
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);

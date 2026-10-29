@@ -17,7 +17,7 @@ import models.Cliente;
 public class AtualizarCliente extends javax.swing.JDialog {
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AtualizarCliente.class.getName());
-    private final ClienteController cc = new ClienteController();
+    private final ClienteController clienteController = new ClienteController();
     private final Cliente cliente;
 
     /**
@@ -188,7 +188,7 @@ public class AtualizarCliente extends javax.swing.JDialog {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         try {
-            cc.atualizar(cliente.getCodigo(), txtNome.getText().trim(), txtTelefone.getText().trim(), txtEmail.getText().trim());
+            clienteController.atualizar(cliente.getCodigo(), txtNome.getText().trim(), txtTelefone.getText().trim(), txtEmail.getText().trim());
             JOptionPane.showMessageDialog(this, "Dados atualizados com sucesso!",
                     "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             dispose();
