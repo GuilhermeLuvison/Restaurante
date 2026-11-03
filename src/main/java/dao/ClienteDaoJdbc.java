@@ -9,7 +9,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,11 +53,15 @@ public class ClienteDaoJdbc implements ClienteDao {
     @Override
     public List<Cliente> buscarPorNome(String termo) throws SQLException {
         List<Cliente> clientes = new ArrayList<>();
-        String sql = SELECT_CLIENTES + " WHERE nome = '" + termo + "' ORDER BY codigo";
+        String sql = SELECT_CLIENTES + " WHERE nome ILIKE ? ORDER BY codigo";
 
-        try (Connection conexao = ConexaoBanco.obter(); Statement stmt = conexao.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
-            while (rs.next()) {
-                clientes.add(mapearCliente(rs));
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + termo + "%");
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    clientes.add(mapearCliente(rs));
+                }
             }
         }
         return clientes;
