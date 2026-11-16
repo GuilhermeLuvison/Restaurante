@@ -21,6 +21,7 @@ public class ListarItensPedido extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarItensPedido.class.getName());
     private final ItemPedidoController itemPedidoController = new ItemPedidoController();
     private DefaultTableModel modeloTabela;
+    private List<ItemPedido> itensPedidoExibidos = List.of();
     private final JFrame telaInicial;
 
     /**
@@ -35,7 +36,7 @@ public class ListarItensPedido extends javax.swing.JDialog {
     }
 
     private void configurarTabela() {
-        String[] colunas = {"Código", "Pedido", "Item de Cardápio", "Quantidade", "Preço Unitário", "Preço Total", "Observação"};
+        String[] colunas = {"Código", "Pedido", "Item de Cardápio", "Preço Total"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -56,8 +57,9 @@ public class ListarItensPedido extends javax.swing.JDialog {
 
     private void preencherTabela(List<ItemPedido> itensPedido) {
         modeloTabela.setRowCount(0);
+        itensPedidoExibidos = itensPedido;
         for (ItemPedido ip : itensPedido) {
-            modeloTabela.addRow(new Object[]{ip.getCodigo(), ip.getCodigoPedido(), ip.getNomeItemCardapio(), ip.getQuantidade(), ip.getPrecoUnitario(), ip.getPrecoTotal(), ip.getObservacao()});
+            modeloTabela.addRow(new Object[]{ip.getCodigo(), ip.getCodigoPedido(), ip.getNomeItemCardapio(), ip.getPrecoTotal()});
         }
     }
 
@@ -70,7 +72,7 @@ public class ListarItensPedido extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnAtualizarItemPedido = new javax.swing.JButton();
+        btnVisualizarItemPedido = new javax.swing.JButton();
         btnCadastrarItemPedido = new javax.swing.JButton();
         btnListar = new javax.swing.JButton();
         btnRemoverItemPedido = new javax.swing.JButton();
@@ -84,8 +86,8 @@ public class ListarItensPedido extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        btnAtualizarItemPedido.setText("Atualizar Item de Pedido");
-        btnAtualizarItemPedido.addActionListener(this::btnAtualizarItemPedidoActionPerformed);
+        btnVisualizarItemPedido.setText("Visualizar Item de Pedido");
+        btnVisualizarItemPedido.addActionListener(this::btnVisualizarItemPedidoActionPerformed);
 
         btnCadastrarItemPedido.setText("Cadastrar novo Item de Pedido");
         btnCadastrarItemPedido.addActionListener(this::btnCadastrarItemPedidoActionPerformed);
@@ -98,13 +100,13 @@ public class ListarItensPedido extends javax.swing.JDialog {
 
         tblDadosItensPedido.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Código", "Pedido", "Item de Cardápio", "Quantidade", "Preço Unitário", "Preço Total", "Observação"
+                "Código", "Pedido", "Item de Cardápio", "Preço Total"
             }
         ));
         jScrollPane1.setViewportView(tblDadosItensPedido);
@@ -132,12 +134,12 @@ public class ListarItensPedido extends javax.swing.JDialog {
                         .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCadastrarItemPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+                        .addComponent(btnCadastrarItemPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAtualizarItemPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVisualizarItemPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRemoverItemPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 394, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
+                        .addComponent(btnRemoverItemPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -152,14 +154,14 @@ public class ListarItensPedido extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrarItemPedido)
                     .addComponent(btnRemoverItemPedido)
-                    .addComponent(btnAtualizarItemPedido))
+                    .addComponent(btnVisualizarItemPedido))
                 .addContainerGap())
         );
 
@@ -167,7 +169,7 @@ public class ListarItensPedido extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAtualizarItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarItemPedidoActionPerformed
+    private void btnVisualizarItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarItemPedidoActionPerformed
         int linha = tblDadosItensPedido.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um item de pedido na tabela primeiro.",
@@ -175,22 +177,13 @@ public class ListarItensPedido extends javax.swing.JDialog {
             return;
         }
 
-        int codigo = (int) modeloTabela.getValueAt(linha, 0);
-        int codigoPedido = (int) modeloTabela.getValueAt(linha, 1);
-        String nomeItemCardapio = modeloTabela.getValueAt(linha, 2).toString();
-        int quantidade = (int) modeloTabela.getValueAt(linha, 3);
-        double precoUnitario = (double) modeloTabela.getValueAt(linha, 4);
-        double precoTotal = (double) modeloTabela.getValueAt(linha, 5);
-        String observacao = modeloTabela.getValueAt(linha, 6).toString();
-
-        ItemPedido itemPedidoSelecionado = new ItemPedido(codigoPedido, nomeItemCardapio, quantidade, precoUnitario, precoTotal, observacao);
-        itemPedidoSelecionado.setCodigo(codigo);
+        ItemPedido itemPedidoSelecionado = itensPedidoExibidos.get(tblDadosItensPedido.convertRowIndexToModel(linha));
 
         AtualizarItemPedido tela = new AtualizarItemPedido(telaInicial, true, itemPedidoSelecionado);
         tela.setVisible(true);
 
         carregarTabela();
-    }//GEN-LAST:event_btnAtualizarItemPedidoActionPerformed
+    }//GEN-LAST:event_btnVisualizarItemPedidoActionPerformed
 
     private void btnCadastrarItemPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarItemPedidoActionPerformed
         dispose();
@@ -278,11 +271,11 @@ public class ListarItensPedido extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizarItemPedido;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrarItemPedido;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnRemoverItemPedido;
+    private javax.swing.JButton btnVisualizarItemPedido;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

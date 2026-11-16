@@ -21,6 +21,7 @@ public class ListarPedidos extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarPedidos.class.getName());
     private final PedidoController pedidoController = new PedidoController();
     private DefaultTableModel modeloTabela;
+    private List<Pedido> pedidosExibidos = List.of();
     private final JFrame telaInicial;
 
     /**
@@ -35,7 +36,7 @@ public class ListarPedidos extends javax.swing.JDialog {
     }
 
     private void configurarTabela() {
-        String[] colunas = {"Código do Pedido", "Cliente", "Reserva", "Mesa", "Quantidade de Pessoas", "Momento do Pedido", "Status"};
+        String[] colunas = {"Código do Pedido", "Cliente", "Reserva", "Status"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -56,8 +57,9 @@ public class ListarPedidos extends javax.swing.JDialog {
 
     private void preencherTabela(List<Pedido> pedidos) {
         modeloTabela.setRowCount(0);
+        pedidosExibidos = pedidos;
         for (Pedido p : pedidos) {
-            modeloTabela.addRow(new Object[]{p.getCodigo(), p.getNomeCliente(), p.getCodigoReserva(), p.getMesa(), p.getQuantidadePessoas(), p.getMomentoPedido(), p.getStatus()});
+            modeloTabela.addRow(new Object[]{p.getCodigo(), p.getNomeCliente(), p.getCodigoReserva(), p.getStatus()});
         }
     }
 
@@ -73,7 +75,7 @@ public class ListarPedidos extends javax.swing.JDialog {
         btnCadastrarPedido = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         txtBusca = new javax.swing.JTextField();
-        btnAtualizarPedido = new javax.swing.JButton();
+        btnVisualizarPedido = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDadosPedidos = new javax.swing.JTable();
@@ -91,22 +93,22 @@ public class ListarPedidos extends javax.swing.JDialog {
             }
         });
 
-        btnAtualizarPedido.setText("Atualizar Pedido");
-        btnAtualizarPedido.addActionListener(new java.awt.event.ActionListener() {
+        btnVisualizarPedido.setText("Visualizar Pedido");
+        btnVisualizarPedido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtualizarPedidoActionPerformed(evt);
+                btnVisualizarPedidoActionPerformed(evt);
             }
         });
 
         tblDadosPedidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Código do Pedido", "Cliente", "Reserva", "Mesa", "Quantidade de Pessoas", "Momento do Pedido", "Status"
+                "Código do Pedido", "Cliente", "Reserva", "Status"
             }
         ));
         jScrollPane1.setViewportView(tblDadosPedidos);
@@ -152,12 +154,12 @@ public class ListarPedidos extends javax.swing.JDialog {
                         .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCadastrarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 416, Short.MAX_VALUE)
+                        .addComponent(btnCadastrarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAtualizarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVisualizarPedido, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRemoverPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
+                        .addComponent(btnRemoverPedido, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -172,14 +174,14 @@ public class ListarPedidos extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrarPedido)
                     .addComponent(btnRemoverPedido)
-                    .addComponent(btnAtualizarPedido))
+                    .addComponent(btnVisualizarPedido))
                 .addContainerGap())
         );
 
@@ -193,7 +195,7 @@ public class ListarPedidos extends javax.swing.JDialog {
         tela.setVisible(true);
     }//GEN-LAST:event_btnCadastrarPedidoActionPerformed
 
-    private void btnAtualizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarPedidoActionPerformed
+    private void btnVisualizarPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarPedidoActionPerformed
         int linha = tblDadosPedidos.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um pedido na tabela primeiro.",
@@ -201,23 +203,13 @@ public class ListarPedidos extends javax.swing.JDialog {
             return;
         }
 
-        int codigo = (int) modeloTabela.getValueAt(linha, 0);
-        String nomeCliente = modeloTabela.getValueAt(linha, 1).toString();
-        Object numeroReserva = modeloTabela.getValueAt(linha, 2);
-        Integer codigoReserva = (numeroReserva == null) ? null : (Integer) numeroReserva;
-        int mesa = (int) modeloTabela.getValueAt(linha, 3);
-        int quantidadePessoas = (int) modeloTabela.getValueAt(linha, 4);
-        String momentoPedido = modeloTabela.getValueAt(linha, 5).toString();
-        String status = modeloTabela.getValueAt(linha, 6).toString();
-
-        Pedido pedidoSelecionado = new Pedido(0, nomeCliente, codigoReserva, mesa, quantidadePessoas, momentoPedido, status);
-        pedidoSelecionado.setCodigo(codigo);
+        Pedido pedidoSelecionado = pedidosExibidos.get(tblDadosPedidos.convertRowIndexToModel(linha));
 
         AtualizarPedido tela = new AtualizarPedido(telaInicial, true, pedidoSelecionado);
         tela.setVisible(true);
 
         carregarTabela();
-    }//GEN-LAST:event_btnAtualizarPedidoActionPerformed
+    }//GEN-LAST:event_btnVisualizarPedidoActionPerformed
 
     private void btnRemoverPedidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverPedidoActionPerformed
         int linha = tblDadosPedidos.getSelectedRow();
@@ -304,11 +296,11 @@ public class ListarPedidos extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizarPedido;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrarPedido;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnRemoverPedido;
+    private javax.swing.JButton btnVisualizarPedido;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

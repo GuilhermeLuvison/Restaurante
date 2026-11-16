@@ -38,13 +38,13 @@
                   </Group>
                   <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="btnCadastrarItemCardapio" pref="389" max="32767" attributes="0"/>
+                      <Component id="btnCadastrarItemCardapio" pref="288" max="32767" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnAtualizarItemCardapio" max="32767" attributes="0"/>
+                      <Component id="btnVisualizarItemCardapio" max="32767" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnRemoverItemCardapio" pref="389" max="32767" attributes="0"/>
+                      <Component id="btnRemoverItemCardapio" pref="287" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" alignment="0" pref="988" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="788" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -63,14 +63,14 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="540" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="490" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCadastrarItemCardapio" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnRemoverItemCardapio" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnAtualizarItemCardapio" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnVisualizarItemCardapio" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -106,38 +106,14 @@
         <Component class="javax.swing.JTable" name="tblDadosItensCardapio">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="4">
+              <Table columnCount="3" rowCount="4">
                 <Column editable="true" title="C&#xf3;digo" type="java.lang.Object"/>
                 <Column editable="true" title="Nome" type="java.lang.Object"/>
-                <Column editable="true" title="Ingredientes" type="java.lang.Object"/>
-                <Column editable="true" title="Categoria" type="java.lang.Object"/>
                 <Column editable="true" title="Tipo de Prato" type="java.lang.Object"/>
-                <Column editable="true" title="Pre&#xe7;o" type="java.lang.Object"/>
-                <Column editable="true" title="Tempo de Preparo" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -164,12 +140,12 @@
     </Container>
     <Component class="javax.swing.JSeparator" name="jSeparator1">
     </Component>
-    <Component class="javax.swing.JButton" name="btnAtualizarItemCardapio">
+    <Component class="javax.swing.JButton" name="btnVisualizarItemCardapio">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Atualizar Item de Card&#xe1;pio"/>
+        <Property name="text" type="java.lang.String" value="Visualizar Item de Card&#xe1;pio"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtualizarItemCardapioActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarItemCardapioActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnRemoverItemCardapio">

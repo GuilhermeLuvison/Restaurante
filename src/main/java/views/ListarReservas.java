@@ -21,6 +21,7 @@ public class ListarReservas extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarReservas.class.getName());
     private final ReservaController reservaController = new ReservaController();
     private DefaultTableModel modeloTabela;
+    private List<Reserva> reservasExibidas = List.of();
     private final JFrame telaInicial;
 
     /**
@@ -35,7 +36,7 @@ public class ListarReservas extends javax.swing.JDialog {
     }
 
     private void configurarTabela() {
-        String[] colunas = {"Código da Reserva", "Cliente", "Mesa", "Quantidade de Pessoas", "Observação", "Data da Reserva", "Status"};
+        String[] colunas = {"Código da Reserva", "Cliente", "Data da Reserva", "Status"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -56,8 +57,9 @@ public class ListarReservas extends javax.swing.JDialog {
 
     private void preencherTabela(List<Reserva> reservas) {
         modeloTabela.setRowCount(0);
+        reservasExibidas = reservas;
         for (Reserva r : reservas) {
-            modeloTabela.addRow(new Object[]{r.getCodigo(), r.getNomeCliente(), r.getMesa(), r.getQuantidadePessoas(), r.getObservacao(), r.getDataReserva(), r.getStatus()});
+            modeloTabela.addRow(new Object[]{r.getCodigo(), r.getNomeCliente(), r.getDataReserva(), r.getStatus()});
         }
     }
 
@@ -80,19 +82,19 @@ public class ListarReservas extends javax.swing.JDialog {
         btnBuscar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel5 = new javax.swing.JLabel();
-        btnAtualizarReserva = new javax.swing.JButton();
+        btnVisualizarReserva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         tblDadosReservas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Código da Reserva", "Cliente", "Mesa", "Quantidade de Pessoas", "Observação", "Data da Reserva", "Status"
+                "Código da Reserva", "Cliente", "Data da Reserva", "Status"
             }
         ));
         jScrollPane1.setViewportView(tblDadosReservas);
@@ -111,8 +113,8 @@ public class ListarReservas extends javax.swing.JDialog {
 
         jLabel5.setText("Buscar:");
 
-        btnAtualizarReserva.setText("Atualizar Reserva");
-        btnAtualizarReserva.addActionListener(this::btnAtualizarReservaActionPerformed);
+        btnVisualizarReserva.setText("Visualizar Reserva");
+        btnVisualizarReserva.addActionListener(this::btnVisualizarReservaActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -132,12 +134,12 @@ public class ListarReservas extends javax.swing.JDialog {
                         .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCadastrarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                        .addComponent(btnCadastrarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAtualizarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVisualizarReserva, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRemoverReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
+                        .addComponent(btnRemoverReserva, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -152,14 +154,14 @@ public class ListarReservas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrarReserva)
                     .addComponent(btnRemoverReserva)
-                    .addComponent(btnAtualizarReserva))
+                    .addComponent(btnVisualizarReserva))
                 .addContainerGap())
         );
 
@@ -215,7 +217,7 @@ public class ListarReservas extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
-    private void btnAtualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarReservaActionPerformed
+    private void btnVisualizarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarReservaActionPerformed
         int linha = tblDadosReservas.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(this, "Selecione uma reserva na tabela primeiro.",
@@ -223,22 +225,13 @@ public class ListarReservas extends javax.swing.JDialog {
             return;
         }
 
-        int codigo = (int) modeloTabela.getValueAt(linha, 0);
-        String nomeCliente = modeloTabela.getValueAt(linha, 1).toString();
-        int mesa = (int) modeloTabela.getValueAt(linha, 2);
-        int quantidadePessoas = (int) modeloTabela.getValueAt(linha, 3);
-        String observacao = modeloTabela.getValueAt(linha, 4).toString();
-        String dataReserva = modeloTabela.getValueAt(linha, 5).toString();
-        String status = modeloTabela.getValueAt(linha, 6).toString();
-
-        Reserva reservaSelecionada = new Reserva(nomeCliente, mesa, quantidadePessoas, observacao, dataReserva, status);
-        reservaSelecionada.setCodigo(codigo);
+        Reserva reservaSelecionada = reservasExibidas.get(tblDadosReservas.convertRowIndexToModel(linha));
 
         AtualizarReserva tela = new AtualizarReserva(telaInicial, true, reservaSelecionada);
         tela.setVisible(true);
 
         carregarTabela();
-    }//GEN-LAST:event_btnAtualizarReservaActionPerformed
+    }//GEN-LAST:event_btnVisualizarReservaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,11 +271,11 @@ public class ListarReservas extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizarReserva;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrarReserva;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnRemoverReserva;
+    private javax.swing.JButton btnVisualizarReserva;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

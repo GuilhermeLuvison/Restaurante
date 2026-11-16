@@ -21,6 +21,7 @@ public class ListarClientes extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarClientes.class.getName());
     private final ClienteController clienteController = new ClienteController();
     private DefaultTableModel modeloTabela;
+    private List<Cliente> clientesExibidos = List.of();
     private final JFrame telaInicial;
 
     /**
@@ -35,7 +36,7 @@ public class ListarClientes extends javax.swing.JDialog {
     }
 
     private void configurarTabela() {
-        String[] colunas = {"Código", "Nome", "CPF", "Telefone", "Email", "Data de Nascimento", "Data de Cadastro"};
+        String[] colunas = {"Código", "Nome", "Data de Cadastro"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -57,8 +58,9 @@ public class ListarClientes extends javax.swing.JDialog {
 
     private void preencherTabela(List<Cliente> clientes) {
         modeloTabela.setRowCount(0);
+        clientesExibidos = clientes;
         for (Cliente c : clientes) {
-            modeloTabela.addRow(new Object[]{c.getCodigo(), c.getNome(), c.getCpf(), c.getTelefone(), c.getEmail(), c.getDataNascimento(), c.getDataCadastro()});
+            modeloTabela.addRow(new Object[]{c.getCodigo(), c.getNome(), c.getDataCadastro()});
         }
     }
 
@@ -77,7 +79,7 @@ public class ListarClientes extends javax.swing.JDialog {
         btnListar = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
         btnCadastrarCliente = new javax.swing.JButton();
-        btnAtualizarCliente = new javax.swing.JButton();
+        btnVisualizarCliente = new javax.swing.JButton();
         btnRemoverCliente = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -96,21 +98,21 @@ public class ListarClientes extends javax.swing.JDialog {
         btnCadastrarCliente.setText("Cadastrar Novo Cliente");
         btnCadastrarCliente.addActionListener(this::btnCadastrarClienteActionPerformed);
 
-        btnAtualizarCliente.setText("Atualizar Cliente");
-        btnAtualizarCliente.addActionListener(this::btnAtualizarClienteActionPerformed);
+        btnVisualizarCliente.setText("Visualizar Cliente");
+        btnVisualizarCliente.addActionListener(this::btnVisualizarClienteActionPerformed);
 
         btnRemoverCliente.setText("Remover Cliente");
         btnRemoverCliente.addActionListener(this::btnRemoverClienteActionPerformed);
 
         tblDadosClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Código", "Nome", "CPF", "Telefone", "Email", "Data de Nascimento", "Data de Cadastro"
+                "Código", "Nome", "Data de Cadastro"
             }
         ));
         jScrollPane1.setViewportView(tblDadosClientes);
@@ -133,12 +135,12 @@ public class ListarClientes extends javax.swing.JDialog {
                         .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE)
+                        .addComponent(btnCadastrarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAtualizarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVisualizarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRemoverCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
+                        .addComponent(btnRemoverCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -153,14 +155,14 @@ public class ListarClientes extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrarCliente)
                     .addComponent(btnRemoverCliente)
-                    .addComponent(btnAtualizarCliente))
+                    .addComponent(btnVisualizarCliente))
                 .addContainerGap())
         );
 
@@ -188,7 +190,7 @@ public class ListarClientes extends javax.swing.JDialog {
         tela.setVisible(true);
     }//GEN-LAST:event_btnCadastrarClienteActionPerformed
 
-    private void btnAtualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarClienteActionPerformed
+    private void btnVisualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarClienteActionPerformed
         int linha = tblDadosClientes.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um cliente na tabela primeiro.",
@@ -196,22 +198,13 @@ public class ListarClientes extends javax.swing.JDialog {
             return;
         }
 
-        int codigo = (int) modeloTabela.getValueAt(linha, 0);
-        String nome = modeloTabela.getValueAt(linha, 1).toString();
-        String cpf = modeloTabela.getValueAt(linha, 2).toString();
-        String telefone = modeloTabela.getValueAt(linha, 3).toString();
-        String email = modeloTabela.getValueAt(linha, 4).toString();
-        String dataNascimento = modeloTabela.getValueAt(linha, 5).toString();
-        String dataCadastro = modeloTabela.getValueAt(linha, 6).toString();
-
-        Cliente clienteSelecionado = new Cliente(nome, cpf, telefone, email, dataNascimento, dataCadastro);
-        clienteSelecionado.setCodigo(codigo);
+        Cliente clienteSelecionado = clientesExibidos.get(tblDadosClientes.convertRowIndexToModel(linha));
 
         AtualizarCliente tela = new AtualizarCliente(telaInicial, true, clienteSelecionado);
         tela.setVisible(true);
 
         carregarTabela();
-    }//GEN-LAST:event_btnAtualizarClienteActionPerformed
+    }//GEN-LAST:event_btnVisualizarClienteActionPerformed
 
     private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
         int linha = tblDadosClientes.getSelectedRow();
@@ -279,11 +272,11 @@ public class ListarClientes extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizarCliente;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrarCliente;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnRemoverCliente;
+    private javax.swing.JButton btnVisualizarCliente;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

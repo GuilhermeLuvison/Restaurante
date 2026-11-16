@@ -21,6 +21,7 @@ public class ListarItensCardapio extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ListarItensCardapio.class.getName());
     private final ItemCardapioController itemCardapioController = new ItemCardapioController();
     private DefaultTableModel modeloTabela;
+    private List<ItemCardapio> itensCardapioExibidos = List.of();
     private final JFrame telaInicial;
 
     /**
@@ -35,7 +36,7 @@ public class ListarItensCardapio extends javax.swing.JDialog {
     }
 
     private void configurarTabela() {
-        String[] colunas = {"Código", "Nome", "Ingredientes", "Categoria", "Tipo de Prato", "Preço", "Tempo de Preparo"};
+        String[] colunas = {"Código", "Nome", "Tipo de Prato"};
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -56,8 +57,9 @@ public class ListarItensCardapio extends javax.swing.JDialog {
 
     private void preencherTabela(List<ItemCardapio> itensCardapio) {
         modeloTabela.setRowCount(0);
+        itensCardapioExibidos = itensCardapio;
         for (ItemCardapio ic : itensCardapio) {
-            modeloTabela.addRow(new Object[]{ic.getCodigo(), ic.getNome(), ic.getIngredientes(), ic.getCategoria(), ic.getTipoPrato(), ic.getPreco(), ic.getTempoPreparo()});
+            modeloTabela.addRow(new Object[]{ic.getCodigo(), ic.getNome(), ic.getTipoPrato()});
         }
     }
 
@@ -76,7 +78,7 @@ public class ListarItensCardapio extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDadosItensCardapio = new javax.swing.JTable();
         jSeparator1 = new javax.swing.JSeparator();
-        btnAtualizarItemCardapio = new javax.swing.JButton();
+        btnVisualizarItemCardapio = new javax.swing.JButton();
         btnRemoverItemCardapio = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtBusca = new javax.swing.JTextField();
@@ -92,19 +94,19 @@ public class ListarItensCardapio extends javax.swing.JDialog {
 
         tblDadosItensCardapio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Código", "Nome", "Ingredientes", "Categoria", "Tipo de Prato", "Preço", "Tempo de Preparo"
+                "Código", "Nome", "Tipo de Prato"
             }
         ));
         jScrollPane1.setViewportView(tblDadosItensCardapio);
 
-        btnAtualizarItemCardapio.setText("Atualizar Item de Cardápio");
-        btnAtualizarItemCardapio.addActionListener(this::btnAtualizarItemCardapioActionPerformed);
+        btnVisualizarItemCardapio.setText("Visualizar Item de Cardápio");
+        btnVisualizarItemCardapio.addActionListener(this::btnVisualizarItemCardapioActionPerformed);
 
         btnRemoverItemCardapio.setText("Remover Item de Cardápio");
         btnRemoverItemCardapio.addActionListener(this::btnRemoverItemCardapioActionPerformed);
@@ -132,12 +134,12 @@ public class ListarItensCardapio extends javax.swing.JDialog {
                         .addComponent(btnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator3)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnCadastrarItemCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                        .addComponent(btnCadastrarItemCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAtualizarItemCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnVisualizarItemCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnRemoverItemCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
+                        .addComponent(btnRemoverItemCardapio, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 788, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -152,14 +154,14 @@ public class ListarItensCardapio extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrarItemCardapio)
                     .addComponent(btnRemoverItemCardapio)
-                    .addComponent(btnAtualizarItemCardapio))
+                    .addComponent(btnVisualizarItemCardapio))
                 .addContainerGap())
         );
 
@@ -177,7 +179,7 @@ public class ListarItensCardapio extends javax.swing.JDialog {
         carregarTabela();
     }//GEN-LAST:event_btnListarActionPerformed
 
-    private void btnAtualizarItemCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarItemCardapioActionPerformed
+    private void btnVisualizarItemCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarItemCardapioActionPerformed
         int linha = tblDadosItensCardapio.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(this, "Selecione um item de cardápio na tabela primeiro.",
@@ -185,22 +187,13 @@ public class ListarItensCardapio extends javax.swing.JDialog {
             return;
         }
 
-        int codigo = (int) modeloTabela.getValueAt(linha, 0);
-        String nome = modeloTabela.getValueAt(linha, 1).toString();
-        String ingredientes = modeloTabela.getValueAt(linha, 2).toString();
-        String categoria = modeloTabela.getValueAt(linha, 3).toString();
-        String tipoPrato = modeloTabela.getValueAt(linha, 4).toString();
-        double preco = (double) modeloTabela.getValueAt(linha, 5);
-        String tempoPreparo = modeloTabela.getValueAt(linha, 6).toString();
-
-        ItemCardapio itemCardapioSelecionado = new ItemCardapio(nome, ingredientes, categoria, tipoPrato, preco, tempoPreparo);
-        itemCardapioSelecionado.setCodigo(codigo);
+        ItemCardapio itemCardapioSelecionado = itensCardapioExibidos.get(tblDadosItensCardapio.convertRowIndexToModel(linha));
 
         AtualizarItemCardapio tela = new AtualizarItemCardapio(telaInicial, true, itemCardapioSelecionado);
         tela.setVisible(true);
 
         carregarTabela();
-    }//GEN-LAST:event_btnAtualizarItemCardapioActionPerformed
+    }//GEN-LAST:event_btnVisualizarItemCardapioActionPerformed
 
     private void btnRemoverItemCardapioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverItemCardapioActionPerformed
         int linha = tblDadosItensCardapio.getSelectedRow();
@@ -278,11 +271,11 @@ public class ListarItensCardapio extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAtualizarItemCardapio;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCadastrarItemCardapio;
     private javax.swing.JButton btnListar;
     private javax.swing.JButton btnRemoverItemCardapio;
+    private javax.swing.JButton btnVisualizarItemCardapio;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

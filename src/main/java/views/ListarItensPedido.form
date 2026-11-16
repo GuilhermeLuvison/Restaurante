@@ -38,13 +38,13 @@
                   </Group>
                   <Component id="jSeparator3" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="btnCadastrarItemPedido" pref="395" max="32767" attributes="0"/>
+                      <Component id="btnCadastrarItemPedido" pref="294" max="32767" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnAtualizarItemPedido" max="32767" attributes="0"/>
+                      <Component id="btnVisualizarItemPedido" max="32767" attributes="0"/>
                       <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnRemoverItemPedido" pref="394" max="32767" attributes="0"/>
+                      <Component id="btnRemoverItemPedido" pref="292" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="jScrollPane1" alignment="0" pref="988" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="788" max="32767" attributes="0"/>
               </Group>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
@@ -63,14 +63,14 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator3" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="540" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="490" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jSeparator1" min="-2" pref="10" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnCadastrarItemPedido" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnRemoverItemPedido" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnAtualizarItemPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnVisualizarItemPedido" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -78,12 +78,12 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="btnAtualizarItemPedido">
+    <Component class="javax.swing.JButton" name="btnVisualizarItemPedido">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Atualizar Item de Pedido"/>
+        <Property name="text" type="java.lang.String" value="Visualizar Item de Pedido"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAtualizarItemPedidoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarItemPedidoActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCadastrarItemPedido">
@@ -120,33 +120,15 @@
         <Component class="javax.swing.JTable" name="tblDadosItensPedido">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="4">
+              <Table columnCount="4" rowCount="4">
                 <Column editable="true" title="C&#xf3;digo" type="java.lang.Object"/>
                 <Column editable="true" title="Pedido" type="java.lang.Object"/>
                 <Column editable="true" title="Item de Card&#xe1;pio" type="java.lang.Object"/>
-                <Column editable="true" title="Quantidade" type="java.lang.Object"/>
-                <Column editable="true" title="Pre&#xe7;o Unit&#xe1;rio" type="java.lang.Object"/>
                 <Column editable="true" title="Pre&#xe7;o Total" type="java.lang.Object"/>
-                <Column editable="true" title="Observa&#xe7;&#xe3;o" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title/>
-                  <Editor/>
-                  <Renderer/>
-                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
