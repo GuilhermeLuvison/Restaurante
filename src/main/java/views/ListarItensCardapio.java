@@ -189,7 +189,7 @@ public class ListarItensCardapio extends javax.swing.JDialog {
 
         ItemCardapio itemCardapioSelecionado = itensCardapioExibidos.get(tblDadosItensCardapio.convertRowIndexToModel(linha));
 
-        AtualizarItemCardapio tela = new AtualizarItemCardapio(telaInicial, true, itemCardapioSelecionado);
+        VisualizarItemCardapio tela = new VisualizarItemCardapio(telaInicial, true, itemCardapioSelecionado);
         tela.setVisible(true);
 
         carregarTabela();

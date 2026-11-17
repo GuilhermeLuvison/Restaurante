@@ -200,7 +200,7 @@ public class ListarClientes extends javax.swing.JDialog {
 
         Cliente clienteSelecionado = clientesExibidos.get(tblDadosClientes.convertRowIndexToModel(linha));
 
-        AtualizarCliente tela = new AtualizarCliente(telaInicial, true, clienteSelecionado);
+        VisualizarCliente tela = new VisualizarCliente(telaInicial, true, clienteSelecionado);
         tela.setVisible(true);
 
         carregarTabela();

@@ -227,7 +227,7 @@ public class ListarReservas extends javax.swing.JDialog {
 
         Reserva reservaSelecionada = reservasExibidas.get(tblDadosReservas.convertRowIndexToModel(linha));
 
-        AtualizarReserva tela = new AtualizarReserva(telaInicial, true, reservaSelecionada);
+        VisualizarReserva tela = new VisualizarReserva(telaInicial, true, reservaSelecionada);
         tela.setVisible(true);
 
         carregarTabela();

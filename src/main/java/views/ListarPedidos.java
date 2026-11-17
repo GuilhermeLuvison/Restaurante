@@ -205,7 +205,7 @@ public class ListarPedidos extends javax.swing.JDialog {
 
         Pedido pedidoSelecionado = pedidosExibidos.get(tblDadosPedidos.convertRowIndexToModel(linha));
 
-        AtualizarPedido tela = new AtualizarPedido(telaInicial, true, pedidoSelecionado);
+        VisualizarPedido tela = new VisualizarPedido(telaInicial, true, pedidoSelecionado);
         tela.setVisible(true);
 
         carregarTabela();
