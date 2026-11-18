@@ -38,6 +38,31 @@ public class CadastrarPedido extends javax.swing.JDialog {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
         }
+        
+        cbxReserva.addActionListener(evt -> preencherPelaReserva());
+    }
+
+    private void preencherPelaReserva() {
+        Reserva reserva = (Reserva) cbxReserva.getSelectedItem();
+        boolean temReserva = reserva != null;
+        
+        if (temReserva) {
+            for (int i = 0; i < cbxCliente.getItemCount(); i++) {
+                if (cbxCliente.getItemAt(i).getCodigo() == reserva.getCodigoCliente()) {
+                    cbxCliente.setSelectedIndex(i);
+                    break;
+                }
+            }
+            txtMesa.setText(String.valueOf(reserva.getMesa()));
+            txtQuantidadePessoas.setText(String.valueOf(reserva.getQuantidadePessoas()));
+        } else {
+            txtMesa.setText("");
+            txtQuantidadePessoas.setText("");
+        }
+        
+        cbxCliente.setEnabled(!temReserva);
+        txtMesa.setEditable(!temReserva);
+        txtQuantidadePessoas.setEditable(!temReserva);
     }
 
     private void limpar() {

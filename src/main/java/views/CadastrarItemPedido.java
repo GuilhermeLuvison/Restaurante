@@ -38,6 +38,14 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
         }
+
+        cbxItemCardapio.addActionListener(evt -> preencherPrecoUnitario());
+        preencherPrecoUnitario();
+    }
+
+    private void preencherPrecoUnitario() {
+        ItemCardapio itemCardapio = (ItemCardapio) cbxItemCardapio.getSelectedItem();
+        txtPrecoUnitario.setText(itemCardapio == null ? "" : String.format(java.util.Locale.US, "%.2f", itemCardapio.getPreco()));
     }
 
     private void limpar() {
@@ -90,6 +98,8 @@ public class CadastrarItemPedido extends javax.swing.JDialog {
         jLabel7.setText("Preço Total:");
 
         jLabel6.setText("Preço Unitário:");
+
+        txtPrecoUnitario.setEditable(false);
 
         txtCodigo.setEditable(false);
 
