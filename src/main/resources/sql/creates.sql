@@ -1,3 +1,12 @@
+CREATE TABLE usuarios (
+    codigo SERIAL NOT NULL,
+    nome VARCHAR(255) NOT NULL,
+    login VARCHAR(50) NOT NULL,
+    senha VARCHAR(50) NOT NULL,
+    CONSTRAINT PK_usuarios PRIMARY KEY (codigo),
+    CONSTRAINT UN_loginusuarios UNIQUE (login)
+);
+
 CREATE TABLE clientes (
     codigo SERIAL NOT NULL,
     nome VARCHAR(255) NOT NULL,

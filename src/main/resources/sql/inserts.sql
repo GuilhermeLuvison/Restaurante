@@ -1,3 +1,8 @@
+-- Usuários (1 registro)
+INSERT INTO usuarios (nome, login, senha)
+VALUES
+    ('Administrador', 'admin', encode(sha256('admin'::bytea), 'hex'));
+
 -- Clientes (7 registros)
 INSERT INTO clientes (nome, cpf, telefone, email, data_nascimento)
 VALUES
