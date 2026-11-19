@@ -4,7 +4,7 @@
 package main;
 
 import java.awt.EventQueue;
-import views.TelaInicial;
+import views.TelaLogin;
 
 /**
  *
@@ -14,7 +14,7 @@ public class Restaurante {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
-            TelaInicial view = new TelaInicial();
+            TelaLogin view = new TelaLogin();
             view.setVisible(true);
         });
     }
