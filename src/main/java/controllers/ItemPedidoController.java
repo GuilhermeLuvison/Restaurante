@@ -54,6 +54,14 @@ public class ItemPedidoController {
         return itemPedidoDao.listar();
     }
 
+    public List<ItemPedido> buscarPorCodigoPedido(int codigoPedido) throws SQLException {
+        return itemPedidoDao.buscarPorCodigoPedido(codigoPedido);
+    }
+
+    public List<ItemPedido> buscarPorCodigoItemCardapio(int codigoItemCardapio) throws SQLException {
+        return itemPedidoDao.buscarPorCodigoItemCardapio(codigoItemCardapio);
+    }
+
     public List<ItemPedido> buscarPorNomeItemCardapio(String termo) throws SQLException {
         return itemPedidoDao.buscarPorNomeItemCardapio(termo);
     }

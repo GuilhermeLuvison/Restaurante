@@ -66,6 +66,37 @@ public class ItemPedidoDaoJdbc implements ItemPedidoDao {
     }
 
     @Override
+    public List<ItemPedido> buscarPorCodigoPedido(int codigoPedido) throws SQLException {
+        List<ItemPedido> itensPedido = new ArrayList<>();
+        String sql = SELECT_ITENSPEDIDO + " WHERE ip.codigo_pedido = ? ORDER BY ip.codigo";
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+            pstmt.setInt(1, codigoPedido);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    itensPedido.add(mapearItemPedido(rs));
+                }
+            }
+        }
+        return itensPedido;
+    }
+
+    @Override
+    public List<ItemPedido> buscarPorCodigoItemCardapio(int codigoItemCardapio) throws SQLException {
+        List<ItemPedido> itensPedido = new ArrayList<>();
+        String sql = SELECT_ITENSPEDIDO + " WHERE ip.codigo_itenscardapio = ? ORDER BY ip.codigo";
+
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+            pstmt.setInt(1, codigoItemCardapio);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    itensPedido.add(mapearItemPedido(rs));
+                }
+            }
+        }
+        return itensPedido;
+    }
+
+    @Override
     public boolean atualizar(ItemPedido itemPedido) throws SQLException {
         String sql = "UPDATE itenspedido SET quantidade = ?, preco_unitario = ?, observacao = ?  WHERE codigo = ?";
 
