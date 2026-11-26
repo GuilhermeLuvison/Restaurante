@@ -20,6 +20,8 @@ public interface ReservaDao {
 
     List<Reserva> buscarPorNomeCliente(String termo) throws SQLException;
 
+    List<Reserva> buscarPorCodigoCliente(int codigoCliente) throws SQLException;
+
     boolean atualizar(Reserva reserva) throws SQLException;
 
     boolean remover(int codigo) throws SQLException;

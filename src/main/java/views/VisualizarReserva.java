@@ -4,10 +4,13 @@
  */
 package views;
 
+import controllers.PedidoController;
 import controllers.ReservaController;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.Pedido;
 import models.Reserva;
 import utils.ConversorCampos;
 
@@ -20,6 +23,8 @@ public class VisualizarReserva extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarReserva.class.getName());
     private final ReservaController reservaController = new ReservaController();
     private final Reserva reserva;
+    private final PedidoController pedidoController = new PedidoController();
+    private DefaultTableModel modeloPedidos;
 
     /**
      * Creates new form VisualizarReserva
@@ -29,6 +34,8 @@ public class VisualizarReserva extends javax.swing.JDialog {
         this.reserva = reserva;
         initComponents();
         preencherCampos();
+        configurarTabelas();
+        carregarTabelas();
     }
 
     private void preencherCampos() {
@@ -39,6 +46,30 @@ public class VisualizarReserva extends javax.swing.JDialog {
         txtObservacao.setText(reserva.getObservacao());
         txtDataReserva.setText(reserva.getDataReserva());
         cbxStatus.setSelectedItem(reserva.getStatus());
+    }
+
+    private void configurarTabelas() {
+        modeloPedidos = criarModelo("Código do Pedido", "Cliente", "Reserva", "Status");
+        tblDadosPedidos.setModel(modeloPedidos);
+    }
+
+    private DefaultTableModel criarModelo(String... colunas) {
+        return new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+    }
+
+    private void carregarTabelas() {
+        try {
+            for (Pedido p : pedidoController.buscarPorCodigoReserva(reserva.getCodigo())) {
+                modeloPedidos.addRow(new Object[]{p.getCodigo(), p.getNomeCliente(), p.getCodigoReserva(), p.getStatus()});
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -70,6 +101,9 @@ public class VisualizarReserva extends javax.swing.JDialog {
         txtNomeCliente = new javax.swing.JTextField();
         cbxStatus = new javax.swing.JComboBox<>();
         jSeparator3 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDadosPedidos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -104,10 +138,29 @@ public class VisualizarReserva extends javax.swing.JDialog {
 
         cbxStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Confirmada", "Pendente", "Cancelada" }));
 
+        jLabel9.setText("RESERVA EM PEDIDOS");
+
+        tblDadosPedidos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Código do Pedido", "Cliente", "Reserva", "Status"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDadosPedidos);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(342, 342, 342)
+                .addComponent(jLabel9)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -157,7 +210,10 @@ public class VisualizarReserva extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jSeparator3)))
+                        .addComponent(jSeparator3))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -193,7 +249,11 @@ public class VisualizarReserva extends javax.swing.JDialog {
                 .addComponent(txtObservacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 323, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -276,9 +336,12 @@ public class VisualizarReserva extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTable tblDadosPedidos;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDataReserva;
     private javax.swing.JTextField txtMesa;

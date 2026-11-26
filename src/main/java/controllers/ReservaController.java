@@ -69,6 +69,10 @@ public class ReservaController {
         return reservaDao.buscarPorNomeCliente(termo);
     }
 
+    public List<Reserva> buscarPorCodigoCliente(int codigoCliente) throws SQLException {
+        return reservaDao.buscarPorCodigoCliente(codigoCliente);
+    }
+
     public void atualizar(int codigo, int novaQuantidadePessoas, String novaObservacao, String novaDataReserva, String novoStatus) throws SQLException {
         Validador.validarQuantidadePessoas(novaQuantidadePessoas);
         validarDataReserva(novaDataReserva);

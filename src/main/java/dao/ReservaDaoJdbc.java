@@ -69,6 +69,22 @@ public class ReservaDaoJdbc implements ReservaDao {
     }
 
     @Override
+    public List<Reserva> buscarPorCodigoCliente(int codigoCliente) throws SQLException {
+        List<Reserva> reservas = new ArrayList<>();
+        String sql = SELECT_RESERVAS + " WHERE r.codigo_cliente = ? ORDER BY r.codigo";
+
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+            pstmt.setInt(1, codigoCliente);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    reservas.add(mapearReserva(rs));
+                }
+            }
+        }
+        return reservas;
+    }
+
+    @Override
     public boolean atualizar(Reserva reserva) throws SQLException {
         String sql = "UPDATE reservas SET quantidade_pessoas = ?, observacao = ?, data_reserva = ?, status = ?  WHERE codigo = ?";
 
