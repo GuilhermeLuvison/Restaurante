@@ -5,10 +5,13 @@
 package views;
 
 import controllers.ItemCardapioController;
+import controllers.ItemPedidoController;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import models.ItemCardapio;
+import models.ItemPedido;
 import utils.ConversorCampos;
 
 /**
@@ -20,6 +23,8 @@ public class VisualizarItemCardapio extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarItemCardapio.class.getName());
     private final ItemCardapioController itemCardapioController = new ItemCardapioController();
     private final ItemCardapio itemCardapio;
+    private final ItemPedidoController itemPedidoController = new ItemPedidoController();
+    private DefaultTableModel modeloItensPedido;
 
     /**
      * Creates new form VisualizarItemCardapio
@@ -29,6 +34,8 @@ public class VisualizarItemCardapio extends javax.swing.JDialog {
         this.itemCardapio = itemCardapio;
         initComponents();
         preencherCampos();
+        configurarTabelas();
+        carregarTabelas();
     }
 
     private void preencherCampos() {
@@ -39,6 +46,30 @@ public class VisualizarItemCardapio extends javax.swing.JDialog {
         txtTipoPrato.setText(itemCardapio.getTipoPrato());
         txtPreco.setText(String.valueOf(itemCardapio.getPreco()));
         txtTempoPreparo.setText(itemCardapio.getTempoPreparo());
+    }
+
+    private void configurarTabelas() {
+        modeloItensPedido = criarModelo("Código", "Pedido", "Item de Cardápio", "Preço Total");
+        tblDadosItensPedido.setModel(modeloItensPedido);
+    }
+
+    private DefaultTableModel criarModelo(String... colunas) {
+        return new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+    }
+
+    private void carregarTabelas() {
+        try {
+            for (ItemPedido ip : itemPedidoController.buscarPorCodigoItemCardapio(itemCardapio.getCodigo())) {
+                modeloItensPedido.addRow(new Object[]{ip.getCodigo(), ip.getCodigoPedido(), ip.getNomeItemCardapio(), ip.getPrecoTotal()});
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -70,6 +101,9 @@ public class VisualizarItemCardapio extends javax.swing.JDialog {
         txtCategoria = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
         jSeparator4 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDadosItensPedido = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -99,6 +133,21 @@ public class VisualizarItemCardapio extends javax.swing.JDialog {
         jLabel3.setText("Nome:");
 
         txtCodigo.setEditable(false);
+
+        jLabel9.setText("ITEM DE CARDÁPIO EM ITENS DE PEDIDO");
+
+        tblDadosItensPedido.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Código", "Pedido", "Item de Cardápio", "Preço Total"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDadosItensPedido);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -156,6 +205,14 @@ public class VisualizarItemCardapio extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jSeparator4)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(290, 290, 290)
+                .addComponent(jLabel9)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,7 +249,11 @@ public class VisualizarItemCardapio extends javax.swing.JDialog {
                     .addComponent(txtTempoPreparo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 323, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -274,9 +335,12 @@ public class VisualizarItemCardapio extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JTable tblDadosItensPedido;
     private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtIngredientes;
