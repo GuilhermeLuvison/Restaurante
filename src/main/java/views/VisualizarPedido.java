@@ -4,10 +4,13 @@
  */
 package views;
 
+import controllers.ItemPedidoController;
 import controllers.PedidoController;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import models.ItemPedido;
 import models.Pedido;
 import utils.ConversorCampos;
 
@@ -20,6 +23,8 @@ public class VisualizarPedido extends javax.swing.JDialog {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VisualizarPedido.class.getName());
     private final PedidoController pedidoController = new PedidoController();
     private final Pedido pedido;
+    private final ItemPedidoController itemPedidoController = new ItemPedidoController();
+    private DefaultTableModel modeloItensPedido;
 
     /**
      * Creates new form VisualizarPedido
@@ -29,6 +34,8 @@ public class VisualizarPedido extends javax.swing.JDialog {
         this.pedido = pedido;
         initComponents();
         preencherCampos();
+        configurarTabelas();
+        carregarTabelas();
     }
 
     private void preencherCampos() {
@@ -39,6 +46,30 @@ public class VisualizarPedido extends javax.swing.JDialog {
         txtQuantidadePessoas.setText(String.valueOf(pedido.getQuantidadePessoas()));
         txtMomentoPedido.setText(pedido.getMomentoPedido());
         cbxStatus.setSelectedItem(pedido.getStatus());
+    }
+
+    private void configurarTabelas() {
+        modeloItensPedido = criarModelo("Código", "Pedido", "Item de Cardápio", "Preço Total");
+        tblDadosItensPedido.setModel(modeloItensPedido);
+    }
+
+    private DefaultTableModel criarModelo(String... colunas) {
+        return new DefaultTableModel(colunas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+    }
+
+    private void carregarTabelas() {
+        try {
+            for (ItemPedido ip : itemPedidoController.buscarPorCodigoPedido(pedido.getCodigo())) {
+                modeloItensPedido.addRow(new Object[]{ip.getCodigo(), ip.getCodigoPedido(), ip.getNomeItemCardapio(), ip.getPrecoTotal()});
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Erro de banco de dados", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -70,6 +101,9 @@ public class VisualizarPedido extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         txtQuantidadePessoas = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblDadosItensPedido = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -113,6 +147,21 @@ public class VisualizarPedido extends javax.swing.JDialog {
         });
 
         jLabel8.setText("Status:");
+
+        jLabel9.setText("PEDIDO EM ITENS DE PEDIDO");
+
+        tblDadosItensPedido.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Código", "Pedido", "Item de Cardápio", "Preço Total"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDadosItensPedido);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -168,6 +217,14 @@ public class VisualizarPedido extends javax.swing.JDialog {
                         .addContainerGap()
                         .addComponent(jSeparator3)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel9)
+                .addGap(322, 322, 322))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +257,11 @@ public class VisualizarPedido extends javax.swing.JDialog {
                     .addComponent(txtMomentoPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 383, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -290,9 +351,12 @@ public class VisualizarPedido extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTable tblDadosItensPedido;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtMesa;
     private javax.swing.JTextField txtMomentoPedido;

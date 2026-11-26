@@ -64,6 +64,14 @@ public class PedidoController {
         return pedidoDao.buscarPorNomeCliente(termo);
     }
 
+    public List<Pedido> buscarPorCodigoCliente(int codigoCliente) throws SQLException {
+        return pedidoDao.buscarPorCodigoCliente(codigoCliente);
+    }
+
+    public List<Pedido> buscarPorCodigoReserva(int codigoReserva) throws SQLException {
+        return pedidoDao.buscarPorCodigoReserva(codigoReserva);
+    }
+
     public void atualizar(int codigo, int novaMesa, int novaQuantidadePessoas, String novoStatus) throws SQLException {
         Validador.validarMesa(novaMesa);
         Validador.validarQuantidadePessoas(novaQuantidadePessoas);

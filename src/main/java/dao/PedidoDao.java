@@ -20,6 +20,10 @@ public interface PedidoDao {
 
     List<Pedido> buscarPorNomeCliente(String termo) throws SQLException;
 
+    List<Pedido> buscarPorCodigoCliente(int codigoCliente) throws SQLException;
+
+    List<Pedido> buscarPorCodigoReserva(int codigoReserva) throws SQLException;
+
     boolean atualizar(Pedido pedido) throws SQLException;
 
     boolean remover(int codigo) throws SQLException;

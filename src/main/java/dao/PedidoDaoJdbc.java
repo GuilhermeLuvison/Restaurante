@@ -72,6 +72,38 @@ public class PedidoDaoJdbc implements PedidoDao {
     }
 
     @Override
+    public List<Pedido> buscarPorCodigoCliente(int codigoCliente) throws SQLException {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = SELECT_PEDIDOS + " WHERE p.codigo_cliente = ? ORDER BY p.codigo";
+
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+            pstmt.setInt(1, codigoCliente);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    pedidos.add(mapearPedido(rs));
+                }
+            }
+        }
+        return pedidos;
+    }
+
+    @Override
+    public List<Pedido> buscarPorCodigoReserva(int codigoReserva) throws SQLException {
+        List<Pedido> pedidos = new ArrayList<>();
+        String sql = SELECT_PEDIDOS + " WHERE p.codigo_reserva = ? ORDER BY p.codigo";
+
+        try (Connection conexao = ConexaoBanco.obter(); PreparedStatement pstmt = conexao.prepareStatement(sql)) {
+            pstmt.setInt(1, codigoReserva);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    pedidos.add(mapearPedido(rs));
+                }
+            }
+        }
+        return pedidos;
+    }
+
+    @Override
     public boolean atualizar(Pedido pedido) throws SQLException {
         String sql = "UPDATE pedidos SET mesa = ?, quantidade_pessoas = ?, status = ?  WHERE codigo = ?";
 
