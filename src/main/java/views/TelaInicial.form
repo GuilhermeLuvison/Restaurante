@@ -24,21 +24,30 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="250" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="jLabel1" alignment="1" min="-2" pref="300" max="-2" attributes="0"/>
                   <Component id="btnListarItensPedido" min="-2" pref="300" max="-2" attributes="0"/>
                   <Component id="btnCadastrarItemPedido" min="-2" pref="300" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace pref="77" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnCadastrarCliente" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                  <Component id="btnListarClientes" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                  <Component id="btnCadastrarReserva" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                  <Component id="btnListarReservas" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="btnListarPedidos" min="-2" pref="300" max="-2" attributes="0"/>
                   <Component id="btnCadastrarPedido" min="-2" pref="300" max="-2" attributes="0"/>
-                  <Component id="btnListarItensCardapio" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
-                  <Component id="btnListarReservas" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
-                  <Component id="btnCadastrarReserva" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
-                  <Component id="btnCadastrarItemCardapio" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
-                  <Component id="btnCadastrarCliente" min="-2" pref="300" max="-2" attributes="0"/>
-                  <Component id="btnListarClientes" alignment="1" min="-2" pref="300" max="-2" attributes="0"/>
+                  <Component id="btnListarItensCardapio" min="-2" pref="300" max="-2" attributes="0"/>
+                  <Component id="btnCadastrarItemCardapio" min="-2" pref="300" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="250" max="32767" attributes="0"/>
+              <EmptySpace pref="76" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,26 +57,30 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnCadastrarCliente" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnCadastrarCliente" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCadastrarItemCardapio" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnListarClientes" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnListarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnListarItensCardapio" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnCadastrarItemCardapio" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnCadastrarReserva" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnCadastrarPedido" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnListarItensCardapio" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnCadastrarReserva" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnListarReservas" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="btnCadastrarPedido" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="btnListarPedidos" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnListarReservas" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnListarPedidos" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="btnCadastrarItemPedido" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnListarItensPedido" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="188" max="32767" attributes="0"/>
+              <EmptySpace pref="344" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
